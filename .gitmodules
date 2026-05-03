@@ -1,4 +1,4 @@
 [submodule "physx-sys/physx"]
 	path = physx-sys/physx
-	url = https://github.com/EmbarkStudios/Physx-5
-	branch = main
+	url = https://github.com/coffeenotfound/neophysx-rs-physx5
+	branch = jan/physx_55
