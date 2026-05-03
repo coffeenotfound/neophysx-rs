@@ -31,7 +31,13 @@ struct PodStructGen {
     }
 
     void pass_thru(const char* code) { fputs(code, cfile); }
-
+	
+	void opaque(const char* tagAndName, uint32_t bytes) {
+		fprintf(cfile, "%s {\n", tagAndName);
+		fprintf(cfile, "    char structgen_pad%u[%u];\n", 0, bytes);
+		fprintf(cfile, "};\n", tagAndName);
+	}
+	
     void begin_struct(const char* cname, const char* rname) {
         fprintf(cfile, "struct %s {\n", cname);
 

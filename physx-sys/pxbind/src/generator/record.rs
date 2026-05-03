@@ -6,7 +6,12 @@ impl<'ast> crate::consumer::RecBindingDef<'ast> {
         if self.calc_layout {
             self.emit_structgen_calc(writer, level);
         } else {
-            self.emit_structgen_passthrough(writer, level);
+	        // I don't know what the FUCK passthrough is supposed
+	        // to solve, because it just outputs types of the wrong
+	        // size
+//            self.emit_structgen_passthrough(writer, level);
+	        
+	        self.emit_structgen_opaque(writer, level);
         }
     }
 
@@ -69,7 +74,25 @@ impl<'ast> crate::consumer::RecBindingDef<'ast> {
         writesln!(w, "{indent1}}}\n{indent}}};");
         writesln!(w, "{indent}physx_{name}_Pod::dump_layout({SG});");
     }
+	
+	fn emit_structgen_opaque(&self, w: &mut String, level: u32) {
+        let indent = Indent(level);
+        let cindent = Indent(1);
 
+        writes!(
+            w,
+            "{indent}{SG}.opaque(\"{} physx_{}_Pod\", sizeof(physx::{}));",
+            if !matches!(self.ast.tag_used, Some(crate::consumer::Tag::Union)) {
+                "struct"
+            } else {
+                "union"
+            },
+            self.name,
+	        self.name,
+        );
+    }
+	
+	/*
     fn emit_structgen_passthrough(&self, w: &mut String, level: u32) {
         let indent = Indent(level);
         let cindent = Indent(1);
@@ -106,6 +129,7 @@ impl<'ast> crate::consumer::RecBindingDef<'ast> {
 
         writes!(w, "}};\\n\");");
     }
+    */
 
     pub fn emit_rust(&self, w: &mut String, level: u32) -> bool {
         if self.calc_layout {

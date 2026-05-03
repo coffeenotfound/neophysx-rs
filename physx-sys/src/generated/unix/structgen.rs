@@ -1312,6 +1312,108 @@ pub struct PxSceneWriteLock {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
+pub struct PxContactPairExtraDataItem {
+    pub type_: u8,
+}
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-structs", derive(Debug))]
+#[repr(C)]
+pub struct PxContactPairVelocity {
+    pub structgen_pad0: [u8; 4],
+    pub linearVelocity: [PxVec3; 2],
+    pub angularVelocity: [PxVec3; 2],
+}
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-structs", derive(Debug))]
+#[repr(C)]
+pub struct PxContactPairPose {
+    pub structgen_pad0: [u8; 4],
+    pub globalPose: [PxTransform; 2],
+}
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-structs", derive(Debug))]
+#[repr(C)]
+pub struct PxContactPairIndex {
+    pub structgen_pad0: [u8; 2],
+    pub index: u16,
+}
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-structs", derive(Debug))]
+#[repr(C)]
+pub struct PxContactPairExtraDataIterator {
+    pub currPtr: *const u8,
+    pub endPtr: *const u8,
+    pub preSolverVelocity: *const PxContactPairVelocity,
+    pub postSolverVelocity: *const PxContactPairVelocity,
+    pub eventPose: *const PxContactPairPose,
+    pub contactPairIndex: u32,
+    pub structgen_pad0: [u8; 4],
+}
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-structs", derive(Debug))]
+#[repr(C)]
+pub struct PxContactPairHeader {
+    pub actors: [*mut PxActor; 2],
+    pub extraDataStream: *const u8,
+    pub extraDataStreamSize: u16,
+    pub flags: PxContactPairHeaderFlags,
+    pub structgen_pad0: [u8; 4],
+    pub pairs: *const PxContactPair,
+    pub nbPairs: u32,
+    pub structgen_pad1: [u8; 4],
+}
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-structs", derive(Debug))]
+#[repr(C)]
+pub struct PxContactPairPoint {
+    pub position: PxVec3,
+    pub separation: f32,
+    pub normal: PxVec3,
+    pub internalFaceIndex0: u32,
+    pub impulse: PxVec3,
+    pub internalFaceIndex1: u32,
+}
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-structs", derive(Debug))]
+#[repr(C)]
+pub struct PxContactPair {
+    pub shapes: [*mut PxShape; 2],
+    pub contactPatches: *const u8,
+    pub contactPoints: *const u8,
+    pub contactImpulses: *const f32,
+    pub requiredBufferSize: u32,
+    pub contactCount: u8,
+    pub patchCount: u8,
+    pub contactStreamSize: u16,
+    pub flags: PxContactPairFlags,
+    pub events: PxPairFlags,
+    pub internalData: [u32; 2],
+    pub structgen_pad0: [u8; 4],
+}
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-structs", derive(Debug))]
+#[repr(C)]
+pub struct PxTriggerPair {
+    pub triggerShape: *mut PxShape,
+    pub triggerActor: *mut PxActor,
+    pub otherShape: *mut PxShape,
+    pub otherActor: *mut PxActor,
+    pub status: PxPairFlag,
+    pub flags: PxTriggerPairFlags,
+    pub structgen_pad0: [u8; 3],
+}
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-structs", derive(Debug))]
+#[repr(C)]
+pub struct PxConstraintInfo {
+    pub constraint: *mut PxConstraint,
+    pub externalReference: *mut std::ffi::c_void,
+    pub type_: u32,
+    pub structgen_pad0: [u8; 4],
+}
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-structs", derive(Debug))]
+#[repr(C)]
 pub struct PxFEMParameters {
     pub velocityDamping: f32,
     pub settlingThreshold: f32,
@@ -1930,6 +2032,16 @@ mod sizes {
         assert_eq!(size_of::<PxIndexDataPair>(), 16);
         assert_eq!(size_of::<PxSceneReadLock>(), 8);
         assert_eq!(size_of::<PxSceneWriteLock>(), 8);
+        assert_eq!(size_of::<PxContactPairExtraDataItem>(), 1);
+        assert_eq!(size_of::<PxContactPairVelocity>(), 52);
+        assert_eq!(size_of::<PxContactPairPose>(), 60);
+        assert_eq!(size_of::<PxContactPairIndex>(), 4);
+        assert_eq!(size_of::<PxContactPairExtraDataIterator>(), 48);
+        assert_eq!(size_of::<PxContactPairHeader>(), 48);
+        assert_eq!(size_of::<PxContactPairPoint>(), 48);
+        assert_eq!(size_of::<PxContactPair>(), 64);
+        assert_eq!(size_of::<PxTriggerPair>(), 40);
+        assert_eq!(size_of::<PxConstraintInfo>(), 24);
         assert_eq!(size_of::<PxFEMParameters>(), 24);
         assert_eq!(size_of::<PxExtendedVec3>(), 24);
         assert_eq!(size_of::<PxObstacle>(), 56);

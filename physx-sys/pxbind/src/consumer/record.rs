@@ -5,6 +5,7 @@ use crate::Node;
 use anyhow::Context as _;
 use functions::*;
 use serde::Deserialize;
+use crate::consumer::ignore::should_ignore_method;
 
 #[derive(Copy, Clone, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
@@ -428,7 +429,7 @@ impl<'ast> super::AstConsumer<'ast> {
         // and exit
         let mut had_enums = false;
         let mut had_more = false;
-
+	    
         for inn in &node.inner {
             match &inn.kind {
                 Item::FieldDecl { .. } => had_more = true,
@@ -540,7 +541,13 @@ impl<'ast> super::AstConsumer<'ast> {
                     if method.name.starts_with("operator") {
                         continue;
                     }
-
+	                
+	                // HACK: ignore functions we can't deal with
+	                if should_ignore_method(rec, method) {
+		                println!("IGNORING METHOD: {:?}::{}", rec.name.as_deref().unwrap_or("<unnamed>"), method.name);
+		                continue;
+	                }
+	                
                     let func_binding = FuncBinding {
                         name: get_name(format!(
                             "{rname}_{}{}",

@@ -208,6 +208,17 @@ static_assert(sizeof(physx::PxIndexDataPair) == sizeof(physx_PxIndexDataPair_Pod
 static_assert(sizeof(physx::PxPvdSceneClient) == sizeof(physx_PxPvdSceneClient_Pod), "POD wrapper for `physx::PxPvdSceneClient` has incorrect size");
 static_assert(sizeof(physx::PxSceneReadLock) == sizeof(physx_PxSceneReadLock_Pod), "POD wrapper for `physx::PxSceneReadLock` has incorrect size");
 static_assert(sizeof(physx::PxSceneWriteLock) == sizeof(physx_PxSceneWriteLock_Pod), "POD wrapper for `physx::PxSceneWriteLock` has incorrect size");
+static_assert(sizeof(physx::PxContactPairExtraDataItem) == sizeof(physx_PxContactPairExtraDataItem_Pod), "POD wrapper for `physx::PxContactPairExtraDataItem` has incorrect size");
+static_assert(sizeof(physx::PxContactPairVelocity) == sizeof(physx_PxContactPairVelocity_Pod), "POD wrapper for `physx::PxContactPairVelocity` has incorrect size");
+static_assert(sizeof(physx::PxContactPairPose) == sizeof(physx_PxContactPairPose_Pod), "POD wrapper for `physx::PxContactPairPose` has incorrect size");
+static_assert(sizeof(physx::PxContactPairIndex) == sizeof(physx_PxContactPairIndex_Pod), "POD wrapper for `physx::PxContactPairIndex` has incorrect size");
+static_assert(sizeof(physx::PxContactPairExtraDataIterator) == sizeof(physx_PxContactPairExtraDataIterator_Pod), "POD wrapper for `physx::PxContactPairExtraDataIterator` has incorrect size");
+static_assert(sizeof(physx::PxContactPairHeader) == sizeof(physx_PxContactPairHeader_Pod), "POD wrapper for `physx::PxContactPairHeader` has incorrect size");
+static_assert(sizeof(physx::PxContactPairPoint) == sizeof(physx_PxContactPairPoint_Pod), "POD wrapper for `physx::PxContactPairPoint` has incorrect size");
+static_assert(sizeof(physx::PxContactPair) == sizeof(physx_PxContactPair_Pod), "POD wrapper for `physx::PxContactPair` has incorrect size");
+static_assert(sizeof(physx::PxTriggerPair) == sizeof(physx_PxTriggerPair_Pod), "POD wrapper for `physx::PxTriggerPair` has incorrect size");
+static_assert(sizeof(physx::PxConstraintInfo) == sizeof(physx_PxConstraintInfo_Pod), "POD wrapper for `physx::PxConstraintInfo` has incorrect size");
+static_assert(sizeof(physx::PxSimulationEventCallback) == sizeof(physx_PxSimulationEventCallback_Pod), "POD wrapper for `physx::PxSimulationEventCallback` has incorrect size");
 static_assert(sizeof(physx::PxFEMParameters) == sizeof(physx_PxFEMParameters_Pod), "POD wrapper for `physx::PxFEMParameters` has incorrect size");
 static_assert(sizeof(physx::PxPruningStructure) == sizeof(physx_PxPruningStructure_Pod), "POD wrapper for `physx::PxPruningStructure` has incorrect size");
 static_assert(sizeof(physx::PxExtendedVec3) == sizeof(physx_PxExtendedVec3_Pod), "POD wrapper for `physx::PxExtendedVec3` has incorrect size");
@@ -4987,21 +4998,6 @@ extern "C" {
         return return_val;
     }
 
-    void PxArticulationTendonJoint_setCoefficient_mut(physx_PxArticulationTendonJoint_Pod* self__pod, physx_PxArticulationAxis::Enum_Pod axis_pod, float coefficient, float recipCoefficient) {
-        physx::PxArticulationTendonJoint* self_ = reinterpret_cast<physx::PxArticulationTendonJoint*>(self__pod);
-        physx::PxArticulationAxis::Enum axis;
-        memcpy(&axis, &axis_pod, sizeof(axis));
-        self_->setCoefficient(axis, coefficient, recipCoefficient);
-    }
-
-    void PxArticulationTendonJoint_getCoefficient(physx_PxArticulationTendonJoint_Pod const* self__pod, physx_PxArticulationAxis::Enum_Pod* axis_pod, float* coefficient_pod, float* recipCoefficient_pod) {
-        physx::PxArticulationTendonJoint const* self_ = reinterpret_cast<physx::PxArticulationTendonJoint const*>(self__pod);
-        physx::PxArticulationAxis::Enum& axis = reinterpret_cast<physx::PxArticulationAxis::Enum&>(*axis_pod);
-        float& coefficient = *coefficient_pod;
-        float& recipCoefficient = *recipCoefficient_pod;
-        self_->getCoefficient(axis, coefficient, recipCoefficient);
-    }
-
     physx_PxArticulationLink_Pod* PxArticulationTendonJoint_getLink(physx_PxArticulationTendonJoint_Pod const* self__pod) {
         physx::PxArticulationTendonJoint const* self_ = reinterpret_cast<physx::PxArticulationTendonJoint const*>(self__pod);
         physx::PxArticulationLink* return_val = self_->getLink();
@@ -5123,17 +5119,6 @@ extern "C" {
     void PxArticulationSpatialTendon_delete(physx_PxArticulationSpatialTendon_Pod* self__pod) {
         physx::PxArticulationSpatialTendon* self_ = reinterpret_cast<physx::PxArticulationSpatialTendon*>(self__pod);
         delete self_;
-    }
-
-    physx_PxArticulationTendonJoint_Pod* PxArticulationFixedTendon_createTendonJoint_mut(physx_PxArticulationFixedTendon_Pod* self__pod, physx_PxArticulationTendonJoint_Pod* parent_pod, physx_PxArticulationAxis::Enum_Pod axis_pod, float coefficient, float recipCoefficient, physx_PxArticulationLink_Pod* link_pod) {
-        physx::PxArticulationFixedTendon* self_ = reinterpret_cast<physx::PxArticulationFixedTendon*>(self__pod);
-        physx::PxArticulationTendonJoint* parent = reinterpret_cast<physx::PxArticulationTendonJoint*>(parent_pod);
-        physx::PxArticulationAxis::Enum axis;
-        memcpy(&axis, &axis_pod, sizeof(axis));
-        physx::PxArticulationLink* link = reinterpret_cast<physx::PxArticulationLink*>(link_pod);
-        physx::PxArticulationTendonJoint* return_val = self_->createTendonJoint(parent, axis, coefficient, recipCoefficient, link);
-        auto return_val_pod = reinterpret_cast<physx_PxArticulationTendonJoint_Pod*>(return_val);
-        return return_val_pod;
     }
 
     uint32_t PxArticulationFixedTendon_getTendonJoints(physx_PxArticulationFixedTendon_Pod const* self__pod, physx_PxArticulationTendonJoint_Pod** userBuffer_pod, uint32_t bufferSize, uint32_t startIndex) {
@@ -5260,659 +5245,6 @@ extern "C" {
 
     char const* PxArticulationSensor_getConcreteTypeName(physx_PxArticulationSensor_Pod const* self__pod) {
         physx::PxArticulationSensor const* self_ = reinterpret_cast<physx::PxArticulationSensor const*>(self__pod);
-        char const* return_val = self_->getConcreteTypeName();
-        return return_val;
-    }
-
-    physx_PxScene_Pod* PxArticulationReducedCoordinate_getScene(physx_PxArticulationReducedCoordinate_Pod const* self__pod) {
-        physx::PxArticulationReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate const*>(self__pod);
-        physx::PxScene* return_val = self_->getScene();
-        auto return_val_pod = reinterpret_cast<physx_PxScene_Pod*>(return_val);
-        return return_val_pod;
-    }
-
-    void PxArticulationReducedCoordinate_setSolverIterationCounts_mut(physx_PxArticulationReducedCoordinate_Pod* self__pod, uint32_t minPositionIters, uint32_t minVelocityIters) {
-        physx::PxArticulationReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate*>(self__pod);
-        self_->setSolverIterationCounts(minPositionIters, minVelocityIters);
-    }
-
-    void PxArticulationReducedCoordinate_getSolverIterationCounts(physx_PxArticulationReducedCoordinate_Pod const* self__pod, uint32_t* minPositionIters_pod, uint32_t* minVelocityIters_pod) {
-        physx::PxArticulationReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate const*>(self__pod);
-        uint32_t& minPositionIters = *minPositionIters_pod;
-        uint32_t& minVelocityIters = *minVelocityIters_pod;
-        self_->getSolverIterationCounts(minPositionIters, minVelocityIters);
-    }
-
-    bool PxArticulationReducedCoordinate_isSleeping(physx_PxArticulationReducedCoordinate_Pod const* self__pod) {
-        physx::PxArticulationReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate const*>(self__pod);
-        bool return_val = self_->isSleeping();
-        return return_val;
-    }
-
-    void PxArticulationReducedCoordinate_setSleepThreshold_mut(physx_PxArticulationReducedCoordinate_Pod* self__pod, float threshold) {
-        physx::PxArticulationReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate*>(self__pod);
-        self_->setSleepThreshold(threshold);
-    }
-
-    float PxArticulationReducedCoordinate_getSleepThreshold(physx_PxArticulationReducedCoordinate_Pod const* self__pod) {
-        physx::PxArticulationReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate const*>(self__pod);
-        float return_val = self_->getSleepThreshold();
-        return return_val;
-    }
-
-    void PxArticulationReducedCoordinate_setStabilizationThreshold_mut(physx_PxArticulationReducedCoordinate_Pod* self__pod, float threshold) {
-        physx::PxArticulationReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate*>(self__pod);
-        self_->setStabilizationThreshold(threshold);
-    }
-
-    float PxArticulationReducedCoordinate_getStabilizationThreshold(physx_PxArticulationReducedCoordinate_Pod const* self__pod) {
-        physx::PxArticulationReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate const*>(self__pod);
-        float return_val = self_->getStabilizationThreshold();
-        return return_val;
-    }
-
-    void PxArticulationReducedCoordinate_setWakeCounter_mut(physx_PxArticulationReducedCoordinate_Pod* self__pod, float wakeCounterValue) {
-        physx::PxArticulationReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate*>(self__pod);
-        self_->setWakeCounter(wakeCounterValue);
-    }
-
-    float PxArticulationReducedCoordinate_getWakeCounter(physx_PxArticulationReducedCoordinate_Pod const* self__pod) {
-        physx::PxArticulationReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate const*>(self__pod);
-        float return_val = self_->getWakeCounter();
-        return return_val;
-    }
-
-    void PxArticulationReducedCoordinate_wakeUp_mut(physx_PxArticulationReducedCoordinate_Pod* self__pod) {
-        physx::PxArticulationReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate*>(self__pod);
-        self_->wakeUp();
-    }
-
-    void PxArticulationReducedCoordinate_putToSleep_mut(physx_PxArticulationReducedCoordinate_Pod* self__pod) {
-        physx::PxArticulationReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate*>(self__pod);
-        self_->putToSleep();
-    }
-
-    void PxArticulationReducedCoordinate_setMaxCOMLinearVelocity_mut(physx_PxArticulationReducedCoordinate_Pod* self__pod, float maxLinearVelocity) {
-        physx::PxArticulationReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate*>(self__pod);
-        self_->setMaxCOMLinearVelocity(maxLinearVelocity);
-    }
-
-    float PxArticulationReducedCoordinate_getMaxCOMLinearVelocity(physx_PxArticulationReducedCoordinate_Pod const* self__pod) {
-        physx::PxArticulationReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate const*>(self__pod);
-        float return_val = self_->getMaxCOMLinearVelocity();
-        return return_val;
-    }
-
-    void PxArticulationReducedCoordinate_setMaxCOMAngularVelocity_mut(physx_PxArticulationReducedCoordinate_Pod* self__pod, float maxAngularVelocity) {
-        physx::PxArticulationReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate*>(self__pod);
-        self_->setMaxCOMAngularVelocity(maxAngularVelocity);
-    }
-
-    float PxArticulationReducedCoordinate_getMaxCOMAngularVelocity(physx_PxArticulationReducedCoordinate_Pod const* self__pod) {
-        physx::PxArticulationReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate const*>(self__pod);
-        float return_val = self_->getMaxCOMAngularVelocity();
-        return return_val;
-    }
-
-    physx_PxArticulationLink_Pod* PxArticulationReducedCoordinate_createLink_mut(physx_PxArticulationReducedCoordinate_Pod* self__pod, physx_PxArticulationLink_Pod* parent_pod, physx_PxTransform_Pod const* pose_pod) {
-        physx::PxArticulationReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate*>(self__pod);
-        physx::PxArticulationLink* parent = reinterpret_cast<physx::PxArticulationLink*>(parent_pod);
-        physx::PxTransform const& pose = reinterpret_cast<physx::PxTransform const&>(*pose_pod);
-        physx::PxArticulationLink* return_val = self_->createLink(parent, pose);
-        auto return_val_pod = reinterpret_cast<physx_PxArticulationLink_Pod*>(return_val);
-        return return_val_pod;
-    }
-
-    void PxArticulationReducedCoordinate_release_mut(physx_PxArticulationReducedCoordinate_Pod* self__pod) {
-        physx::PxArticulationReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate*>(self__pod);
-        self_->release();
-    }
-
-    uint32_t PxArticulationReducedCoordinate_getNbLinks(physx_PxArticulationReducedCoordinate_Pod const* self__pod) {
-        physx::PxArticulationReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate const*>(self__pod);
-        uint32_t return_val = self_->getNbLinks();
-        return return_val;
-    }
-
-    uint32_t PxArticulationReducedCoordinate_getLinks(physx_PxArticulationReducedCoordinate_Pod const* self__pod, physx_PxArticulationLink_Pod** userBuffer_pod, uint32_t bufferSize, uint32_t startIndex) {
-        physx::PxArticulationReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate const*>(self__pod);
-        physx::PxArticulationLink** userBuffer = reinterpret_cast<physx::PxArticulationLink**>(userBuffer_pod);
-        uint32_t return_val = self_->getLinks(userBuffer, bufferSize, startIndex);
-        return return_val;
-    }
-
-    uint32_t PxArticulationReducedCoordinate_getNbShapes(physx_PxArticulationReducedCoordinate_Pod const* self__pod) {
-        physx::PxArticulationReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate const*>(self__pod);
-        uint32_t return_val = self_->getNbShapes();
-        return return_val;
-    }
-
-    void PxArticulationReducedCoordinate_setName_mut(physx_PxArticulationReducedCoordinate_Pod* self__pod, char const* name) {
-        physx::PxArticulationReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate*>(self__pod);
-        self_->setName(name);
-    }
-
-    char const* PxArticulationReducedCoordinate_getName(physx_PxArticulationReducedCoordinate_Pod const* self__pod) {
-        physx::PxArticulationReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate const*>(self__pod);
-        char const* return_val = self_->getName();
-        return return_val;
-    }
-
-    physx_PxBounds3_Pod PxArticulationReducedCoordinate_getWorldBounds(physx_PxArticulationReducedCoordinate_Pod const* self__pod, float inflation) {
-        physx::PxArticulationReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate const*>(self__pod);
-        physx::PxBounds3 return_val = self_->getWorldBounds(inflation);
-        physx_PxBounds3_Pod return_val_pod;
-        memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
-        return return_val_pod;
-    }
-
-    physx_PxAggregate_Pod* PxArticulationReducedCoordinate_getAggregate(physx_PxArticulationReducedCoordinate_Pod const* self__pod) {
-        physx::PxArticulationReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate const*>(self__pod);
-        physx::PxAggregate* return_val = self_->getAggregate();
-        auto return_val_pod = reinterpret_cast<physx_PxAggregate_Pod*>(return_val);
-        return return_val_pod;
-    }
-
-    void PxArticulationReducedCoordinate_setArticulationFlags_mut(physx_PxArticulationReducedCoordinate_Pod* self__pod, physx_PxArticulationFlags_Pod flags_pod) {
-        physx::PxArticulationReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate*>(self__pod);
-        physx::PxArticulationFlags flags;
-        memcpy(&flags, &flags_pod, sizeof(flags));
-        self_->setArticulationFlags(flags);
-    }
-
-    void PxArticulationReducedCoordinate_setArticulationFlag_mut(physx_PxArticulationReducedCoordinate_Pod* self__pod, physx_PxArticulationFlag::Enum_Pod flag_pod, bool value) {
-        physx::PxArticulationReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate*>(self__pod);
-        physx::PxArticulationFlag::Enum flag;
-        memcpy(&flag, &flag_pod, sizeof(flag));
-        self_->setArticulationFlag(flag, value);
-    }
-
-    physx_PxArticulationFlags_Pod PxArticulationReducedCoordinate_getArticulationFlags(physx_PxArticulationReducedCoordinate_Pod const* self__pod) {
-        physx::PxArticulationReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate const*>(self__pod);
-        physx::PxArticulationFlags return_val = self_->getArticulationFlags();
-        physx_PxArticulationFlags_Pod return_val_pod;
-        memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
-        return return_val_pod;
-    }
-
-    uint32_t PxArticulationReducedCoordinate_getDofs(physx_PxArticulationReducedCoordinate_Pod const* self__pod) {
-        physx::PxArticulationReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate const*>(self__pod);
-        uint32_t return_val = self_->getDofs();
-        return return_val;
-    }
-
-    physx_PxArticulationCache_Pod* PxArticulationReducedCoordinate_createCache(physx_PxArticulationReducedCoordinate_Pod const* self__pod) {
-        physx::PxArticulationReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate const*>(self__pod);
-        physx::PxArticulationCache* return_val = self_->createCache();
-        auto return_val_pod = reinterpret_cast<physx_PxArticulationCache_Pod*>(return_val);
-        return return_val_pod;
-    }
-
-    uint32_t PxArticulationReducedCoordinate_getCacheDataSize(physx_PxArticulationReducedCoordinate_Pod const* self__pod) {
-        physx::PxArticulationReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate const*>(self__pod);
-        uint32_t return_val = self_->getCacheDataSize();
-        return return_val;
-    }
-
-    void PxArticulationReducedCoordinate_zeroCache(physx_PxArticulationReducedCoordinate_Pod const* self__pod, physx_PxArticulationCache_Pod* cache_pod) {
-        physx::PxArticulationReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate const*>(self__pod);
-        physx::PxArticulationCache& cache = reinterpret_cast<physx::PxArticulationCache&>(*cache_pod);
-        self_->zeroCache(cache);
-    }
-
-    void PxArticulationReducedCoordinate_applyCache_mut(physx_PxArticulationReducedCoordinate_Pod* self__pod, physx_PxArticulationCache_Pod* cache_pod, uint32_t flags_pod, bool autowake) {
-        physx::PxArticulationReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate*>(self__pod);
-        physx::PxArticulationCache& cache = reinterpret_cast<physx::PxArticulationCache&>(*cache_pod);
-        auto flags = physx::PxArticulationCacheFlags(flags_pod);
-        self_->applyCache(cache, flags, autowake);
-    }
-
-    void PxArticulationReducedCoordinate_copyInternalStateToCache(physx_PxArticulationReducedCoordinate_Pod const* self__pod, physx_PxArticulationCache_Pod* cache_pod, uint32_t flags_pod) {
-        physx::PxArticulationReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate const*>(self__pod);
-        physx::PxArticulationCache& cache = reinterpret_cast<physx::PxArticulationCache&>(*cache_pod);
-        auto flags = physx::PxArticulationCacheFlags(flags_pod);
-        self_->copyInternalStateToCache(cache, flags);
-    }
-
-    void PxArticulationReducedCoordinate_packJointData(physx_PxArticulationReducedCoordinate_Pod const* self__pod, float const* maximum, float* reduced) {
-        physx::PxArticulationReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate const*>(self__pod);
-        self_->packJointData(maximum, reduced);
-    }
-
-    void PxArticulationReducedCoordinate_unpackJointData(physx_PxArticulationReducedCoordinate_Pod const* self__pod, float const* reduced, float* maximum) {
-        physx::PxArticulationReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate const*>(self__pod);
-        self_->unpackJointData(reduced, maximum);
-    }
-
-    void PxArticulationReducedCoordinate_commonInit(physx_PxArticulationReducedCoordinate_Pod const* self__pod) {
-        physx::PxArticulationReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate const*>(self__pod);
-        self_->commonInit();
-    }
-
-    void PxArticulationReducedCoordinate_computeGeneralizedGravityForce(physx_PxArticulationReducedCoordinate_Pod const* self__pod, physx_PxArticulationCache_Pod* cache_pod) {
-        physx::PxArticulationReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate const*>(self__pod);
-        physx::PxArticulationCache& cache = reinterpret_cast<physx::PxArticulationCache&>(*cache_pod);
-        self_->computeGeneralizedGravityForce(cache);
-    }
-
-    void PxArticulationReducedCoordinate_computeCoriolisAndCentrifugalForce(physx_PxArticulationReducedCoordinate_Pod const* self__pod, physx_PxArticulationCache_Pod* cache_pod) {
-        physx::PxArticulationReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate const*>(self__pod);
-        physx::PxArticulationCache& cache = reinterpret_cast<physx::PxArticulationCache&>(*cache_pod);
-        self_->computeCoriolisAndCentrifugalForce(cache);
-    }
-
-    void PxArticulationReducedCoordinate_computeGeneralizedExternalForce(physx_PxArticulationReducedCoordinate_Pod const* self__pod, physx_PxArticulationCache_Pod* cache_pod) {
-        physx::PxArticulationReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate const*>(self__pod);
-        physx::PxArticulationCache& cache = reinterpret_cast<physx::PxArticulationCache&>(*cache_pod);
-        self_->computeGeneralizedExternalForce(cache);
-    }
-
-    void PxArticulationReducedCoordinate_computeJointAcceleration(physx_PxArticulationReducedCoordinate_Pod const* self__pod, physx_PxArticulationCache_Pod* cache_pod) {
-        physx::PxArticulationReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate const*>(self__pod);
-        physx::PxArticulationCache& cache = reinterpret_cast<physx::PxArticulationCache&>(*cache_pod);
-        self_->computeJointAcceleration(cache);
-    }
-
-    void PxArticulationReducedCoordinate_computeJointForce(physx_PxArticulationReducedCoordinate_Pod const* self__pod, physx_PxArticulationCache_Pod* cache_pod) {
-        physx::PxArticulationReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate const*>(self__pod);
-        physx::PxArticulationCache& cache = reinterpret_cast<physx::PxArticulationCache&>(*cache_pod);
-        self_->computeJointForce(cache);
-    }
-
-    void PxArticulationReducedCoordinate_computeDenseJacobian(physx_PxArticulationReducedCoordinate_Pod const* self__pod, physx_PxArticulationCache_Pod* cache_pod, uint32_t* nRows_pod, uint32_t* nCols_pod) {
-        physx::PxArticulationReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate const*>(self__pod);
-        physx::PxArticulationCache& cache = reinterpret_cast<physx::PxArticulationCache&>(*cache_pod);
-        uint32_t& nRows = *nRows_pod;
-        uint32_t& nCols = *nCols_pod;
-        self_->computeDenseJacobian(cache, nRows, nCols);
-    }
-
-    void PxArticulationReducedCoordinate_computeCoefficientMatrix(physx_PxArticulationReducedCoordinate_Pod const* self__pod, physx_PxArticulationCache_Pod* cache_pod) {
-        physx::PxArticulationReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate const*>(self__pod);
-        physx::PxArticulationCache& cache = reinterpret_cast<physx::PxArticulationCache&>(*cache_pod);
-        self_->computeCoefficientMatrix(cache);
-    }
-
-    bool PxArticulationReducedCoordinate_computeLambda(physx_PxArticulationReducedCoordinate_Pod const* self__pod, physx_PxArticulationCache_Pod* cache_pod, physx_PxArticulationCache_Pod* initialState_pod, float const*const jointTorque, uint32_t maxIter) {
-        physx::PxArticulationReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate const*>(self__pod);
-        physx::PxArticulationCache& cache = reinterpret_cast<physx::PxArticulationCache&>(*cache_pod);
-        physx::PxArticulationCache& initialState = reinterpret_cast<physx::PxArticulationCache&>(*initialState_pod);
-        bool return_val = self_->computeLambda(cache, initialState, jointTorque, maxIter);
-        return return_val;
-    }
-
-    void PxArticulationReducedCoordinate_computeGeneralizedMassMatrix(physx_PxArticulationReducedCoordinate_Pod const* self__pod, physx_PxArticulationCache_Pod* cache_pod) {
-        physx::PxArticulationReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate const*>(self__pod);
-        physx::PxArticulationCache& cache = reinterpret_cast<physx::PxArticulationCache&>(*cache_pod);
-        self_->computeGeneralizedMassMatrix(cache);
-    }
-
-    void PxArticulationReducedCoordinate_addLoopJoint_mut(physx_PxArticulationReducedCoordinate_Pod* self__pod, physx_PxConstraint_Pod* joint_pod) {
-        physx::PxArticulationReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate*>(self__pod);
-        physx::PxConstraint* joint = reinterpret_cast<physx::PxConstraint*>(joint_pod);
-        self_->addLoopJoint(joint);
-    }
-
-    void PxArticulationReducedCoordinate_removeLoopJoint_mut(physx_PxArticulationReducedCoordinate_Pod* self__pod, physx_PxConstraint_Pod* joint_pod) {
-        physx::PxArticulationReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate*>(self__pod);
-        physx::PxConstraint* joint = reinterpret_cast<physx::PxConstraint*>(joint_pod);
-        self_->removeLoopJoint(joint);
-    }
-
-    uint32_t PxArticulationReducedCoordinate_getNbLoopJoints(physx_PxArticulationReducedCoordinate_Pod const* self__pod) {
-        physx::PxArticulationReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate const*>(self__pod);
-        uint32_t return_val = self_->getNbLoopJoints();
-        return return_val;
-    }
-
-    uint32_t PxArticulationReducedCoordinate_getLoopJoints(physx_PxArticulationReducedCoordinate_Pod const* self__pod, physx_PxConstraint_Pod** userBuffer_pod, uint32_t bufferSize, uint32_t startIndex) {
-        physx::PxArticulationReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate const*>(self__pod);
-        physx::PxConstraint** userBuffer = reinterpret_cast<physx::PxConstraint**>(userBuffer_pod);
-        uint32_t return_val = self_->getLoopJoints(userBuffer, bufferSize, startIndex);
-        return return_val;
-    }
-
-    uint32_t PxArticulationReducedCoordinate_getCoefficientMatrixSize(physx_PxArticulationReducedCoordinate_Pod const* self__pod) {
-        physx::PxArticulationReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate const*>(self__pod);
-        uint32_t return_val = self_->getCoefficientMatrixSize();
-        return return_val;
-    }
-
-    void PxArticulationReducedCoordinate_setRootGlobalPose_mut(physx_PxArticulationReducedCoordinate_Pod* self__pod, physx_PxTransform_Pod const* pose_pod, bool autowake) {
-        physx::PxArticulationReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate*>(self__pod);
-        physx::PxTransform const& pose = reinterpret_cast<physx::PxTransform const&>(*pose_pod);
-        self_->setRootGlobalPose(pose, autowake);
-    }
-
-    physx_PxTransform_Pod PxArticulationReducedCoordinate_getRootGlobalPose(physx_PxArticulationReducedCoordinate_Pod const* self__pod) {
-        physx::PxArticulationReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate const*>(self__pod);
-        physx::PxTransform return_val = self_->getRootGlobalPose();
-        physx_PxTransform_Pod return_val_pod;
-        memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
-        return return_val_pod;
-    }
-
-    void PxArticulationReducedCoordinate_setRootLinearVelocity_mut(physx_PxArticulationReducedCoordinate_Pod* self__pod, physx_PxVec3_Pod const* linearVelocity_pod, bool autowake) {
-        physx::PxArticulationReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate*>(self__pod);
-        physx::PxVec3 const& linearVelocity = reinterpret_cast<physx::PxVec3 const&>(*linearVelocity_pod);
-        self_->setRootLinearVelocity(linearVelocity, autowake);
-    }
-
-    physx_PxVec3_Pod PxArticulationReducedCoordinate_getRootLinearVelocity(physx_PxArticulationReducedCoordinate_Pod const* self__pod) {
-        physx::PxArticulationReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate const*>(self__pod);
-        physx::PxVec3 return_val = self_->getRootLinearVelocity();
-        physx_PxVec3_Pod return_val_pod;
-        memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
-        return return_val_pod;
-    }
-
-    void PxArticulationReducedCoordinate_setRootAngularVelocity_mut(physx_PxArticulationReducedCoordinate_Pod* self__pod, physx_PxVec3_Pod const* angularVelocity_pod, bool autowake) {
-        physx::PxArticulationReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate*>(self__pod);
-        physx::PxVec3 const& angularVelocity = reinterpret_cast<physx::PxVec3 const&>(*angularVelocity_pod);
-        self_->setRootAngularVelocity(angularVelocity, autowake);
-    }
-
-    physx_PxVec3_Pod PxArticulationReducedCoordinate_getRootAngularVelocity(physx_PxArticulationReducedCoordinate_Pod const* self__pod) {
-        physx::PxArticulationReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate const*>(self__pod);
-        physx::PxVec3 return_val = self_->getRootAngularVelocity();
-        physx_PxVec3_Pod return_val_pod;
-        memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
-        return return_val_pod;
-    }
-
-    physx_PxSpatialVelocity_Pod PxArticulationReducedCoordinate_getLinkAcceleration_mut(physx_PxArticulationReducedCoordinate_Pod* self__pod, uint32_t linkId) {
-        physx::PxArticulationReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate*>(self__pod);
-        physx::PxSpatialVelocity return_val = self_->getLinkAcceleration(linkId);
-        physx_PxSpatialVelocity_Pod return_val_pod;
-        memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
-        return return_val_pod;
-    }
-
-    uint32_t PxArticulationReducedCoordinate_getGpuArticulationIndex_mut(physx_PxArticulationReducedCoordinate_Pod* self__pod) {
-        physx::PxArticulationReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate*>(self__pod);
-        uint32_t return_val = self_->getGpuArticulationIndex();
-        return return_val;
-    }
-
-    physx_PxArticulationSpatialTendon_Pod* PxArticulationReducedCoordinate_createSpatialTendon_mut(physx_PxArticulationReducedCoordinate_Pod* self__pod) {
-        physx::PxArticulationReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate*>(self__pod);
-        physx::PxArticulationSpatialTendon* return_val = self_->createSpatialTendon();
-        auto return_val_pod = reinterpret_cast<physx_PxArticulationSpatialTendon_Pod*>(return_val);
-        return return_val_pod;
-    }
-
-    physx_PxArticulationFixedTendon_Pod* PxArticulationReducedCoordinate_createFixedTendon_mut(physx_PxArticulationReducedCoordinate_Pod* self__pod) {
-        physx::PxArticulationReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate*>(self__pod);
-        physx::PxArticulationFixedTendon* return_val = self_->createFixedTendon();
-        auto return_val_pod = reinterpret_cast<physx_PxArticulationFixedTendon_Pod*>(return_val);
-        return return_val_pod;
-    }
-
-    physx_PxArticulationSensor_Pod* PxArticulationReducedCoordinate_createSensor_mut(physx_PxArticulationReducedCoordinate_Pod* self__pod, physx_PxArticulationLink_Pod* link_pod, physx_PxTransform_Pod const* relativePose_pod) {
-        physx::PxArticulationReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate*>(self__pod);
-        physx::PxArticulationLink* link = reinterpret_cast<physx::PxArticulationLink*>(link_pod);
-        physx::PxTransform const& relativePose = reinterpret_cast<physx::PxTransform const&>(*relativePose_pod);
-        physx::PxArticulationSensor* return_val = self_->createSensor(link, relativePose);
-        auto return_val_pod = reinterpret_cast<physx_PxArticulationSensor_Pod*>(return_val);
-        return return_val_pod;
-    }
-
-    uint32_t PxArticulationReducedCoordinate_getSpatialTendons(physx_PxArticulationReducedCoordinate_Pod const* self__pod, physx_PxArticulationSpatialTendon_Pod** userBuffer_pod, uint32_t bufferSize, uint32_t startIndex) {
-        physx::PxArticulationReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate const*>(self__pod);
-        physx::PxArticulationSpatialTendon** userBuffer = reinterpret_cast<physx::PxArticulationSpatialTendon**>(userBuffer_pod);
-        uint32_t return_val = self_->getSpatialTendons(userBuffer, bufferSize, startIndex);
-        return return_val;
-    }
-
-    uint32_t PxArticulationReducedCoordinate_getNbSpatialTendons_mut(physx_PxArticulationReducedCoordinate_Pod* self__pod) {
-        physx::PxArticulationReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate*>(self__pod);
-        uint32_t return_val = self_->getNbSpatialTendons();
-        return return_val;
-    }
-
-    uint32_t PxArticulationReducedCoordinate_getFixedTendons(physx_PxArticulationReducedCoordinate_Pod const* self__pod, physx_PxArticulationFixedTendon_Pod** userBuffer_pod, uint32_t bufferSize, uint32_t startIndex) {
-        physx::PxArticulationReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate const*>(self__pod);
-        physx::PxArticulationFixedTendon** userBuffer = reinterpret_cast<physx::PxArticulationFixedTendon**>(userBuffer_pod);
-        uint32_t return_val = self_->getFixedTendons(userBuffer, bufferSize, startIndex);
-        return return_val;
-    }
-
-    uint32_t PxArticulationReducedCoordinate_getNbFixedTendons_mut(physx_PxArticulationReducedCoordinate_Pod* self__pod) {
-        physx::PxArticulationReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate*>(self__pod);
-        uint32_t return_val = self_->getNbFixedTendons();
-        return return_val;
-    }
-
-    uint32_t PxArticulationReducedCoordinate_getSensors(physx_PxArticulationReducedCoordinate_Pod const* self__pod, physx_PxArticulationSensor_Pod** userBuffer_pod, uint32_t bufferSize, uint32_t startIndex) {
-        physx::PxArticulationReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate const*>(self__pod);
-        physx::PxArticulationSensor** userBuffer = reinterpret_cast<physx::PxArticulationSensor**>(userBuffer_pod);
-        uint32_t return_val = self_->getSensors(userBuffer, bufferSize, startIndex);
-        return return_val;
-    }
-
-    uint32_t PxArticulationReducedCoordinate_getNbSensors_mut(physx_PxArticulationReducedCoordinate_Pod* self__pod) {
-        physx::PxArticulationReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate*>(self__pod);
-        uint32_t return_val = self_->getNbSensors();
-        return return_val;
-    }
-
-    void PxArticulationReducedCoordinate_updateKinematic_mut(physx_PxArticulationReducedCoordinate_Pod* self__pod, uint8_t flags_pod) {
-        physx::PxArticulationReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate*>(self__pod);
-        auto flags = physx::PxArticulationKinematicFlags(flags_pod);
-        self_->updateKinematic(flags);
-    }
-
-    physx_PxArticulationLink_Pod* PxArticulationJointReducedCoordinate_getParentArticulationLink(physx_PxArticulationJointReducedCoordinate_Pod const* self__pod) {
-        physx::PxArticulationJointReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate const*>(self__pod);
-        physx::PxArticulationLink& return_val = self_->getParentArticulationLink();
-        auto return_val_pod = reinterpret_cast<physx_PxArticulationLink_Pod*>(&return_val);
-        return return_val_pod;
-    }
-
-    void PxArticulationJointReducedCoordinate_setParentPose_mut(physx_PxArticulationJointReducedCoordinate_Pod* self__pod, physx_PxTransform_Pod const* pose_pod) {
-        physx::PxArticulationJointReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate*>(self__pod);
-        physx::PxTransform const& pose = reinterpret_cast<physx::PxTransform const&>(*pose_pod);
-        self_->setParentPose(pose);
-    }
-
-    physx_PxTransform_Pod PxArticulationJointReducedCoordinate_getParentPose(physx_PxArticulationJointReducedCoordinate_Pod const* self__pod) {
-        physx::PxArticulationJointReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate const*>(self__pod);
-        physx::PxTransform return_val = self_->getParentPose();
-        physx_PxTransform_Pod return_val_pod;
-        memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
-        return return_val_pod;
-    }
-
-    physx_PxArticulationLink_Pod* PxArticulationJointReducedCoordinate_getChildArticulationLink(physx_PxArticulationJointReducedCoordinate_Pod const* self__pod) {
-        physx::PxArticulationJointReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate const*>(self__pod);
-        physx::PxArticulationLink& return_val = self_->getChildArticulationLink();
-        auto return_val_pod = reinterpret_cast<physx_PxArticulationLink_Pod*>(&return_val);
-        return return_val_pod;
-    }
-
-    void PxArticulationJointReducedCoordinate_setChildPose_mut(physx_PxArticulationJointReducedCoordinate_Pod* self__pod, physx_PxTransform_Pod const* pose_pod) {
-        physx::PxArticulationJointReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate*>(self__pod);
-        physx::PxTransform const& pose = reinterpret_cast<physx::PxTransform const&>(*pose_pod);
-        self_->setChildPose(pose);
-    }
-
-    physx_PxTransform_Pod PxArticulationJointReducedCoordinate_getChildPose(physx_PxArticulationJointReducedCoordinate_Pod const* self__pod) {
-        physx::PxArticulationJointReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate const*>(self__pod);
-        physx::PxTransform return_val = self_->getChildPose();
-        physx_PxTransform_Pod return_val_pod;
-        memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
-        return return_val_pod;
-    }
-
-    void PxArticulationJointReducedCoordinate_setJointType_mut(physx_PxArticulationJointReducedCoordinate_Pod* self__pod, physx_PxArticulationJointType::Enum_Pod jointType_pod) {
-        physx::PxArticulationJointReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate*>(self__pod);
-        physx::PxArticulationJointType::Enum jointType;
-        memcpy(&jointType, &jointType_pod, sizeof(jointType));
-        self_->setJointType(jointType);
-    }
-
-    physx_PxArticulationJointType::Enum_Pod PxArticulationJointReducedCoordinate_getJointType(physx_PxArticulationJointReducedCoordinate_Pod const* self__pod) {
-        physx::PxArticulationJointReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate const*>(self__pod);
-        physx::PxArticulationJointType::Enum return_val = self_->getJointType();
-        physx_PxArticulationJointType::Enum_Pod return_val_pod;
-        memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
-        return return_val_pod;
-    }
-
-    void PxArticulationJointReducedCoordinate_setMotion_mut(physx_PxArticulationJointReducedCoordinate_Pod* self__pod, physx_PxArticulationAxis::Enum_Pod axis_pod, physx_PxArticulationMotion::Enum_Pod motion_pod) {
-        physx::PxArticulationJointReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate*>(self__pod);
-        physx::PxArticulationAxis::Enum axis;
-        memcpy(&axis, &axis_pod, sizeof(axis));
-        physx::PxArticulationMotion::Enum motion;
-        memcpy(&motion, &motion_pod, sizeof(motion));
-        self_->setMotion(axis, motion);
-    }
-
-    physx_PxArticulationMotion::Enum_Pod PxArticulationJointReducedCoordinate_getMotion(physx_PxArticulationJointReducedCoordinate_Pod const* self__pod, physx_PxArticulationAxis::Enum_Pod axis_pod) {
-        physx::PxArticulationJointReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate const*>(self__pod);
-        physx::PxArticulationAxis::Enum axis;
-        memcpy(&axis, &axis_pod, sizeof(axis));
-        physx::PxArticulationMotion::Enum return_val = self_->getMotion(axis);
-        physx_PxArticulationMotion::Enum_Pod return_val_pod;
-        memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
-        return return_val_pod;
-    }
-
-    void PxArticulationJointReducedCoordinate_setLimitParams_mut(physx_PxArticulationJointReducedCoordinate_Pod* self__pod, physx_PxArticulationAxis::Enum_Pod axis_pod, physx_PxArticulationLimit_Pod const* limit_pod) {
-        physx::PxArticulationJointReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate*>(self__pod);
-        physx::PxArticulationAxis::Enum axis;
-        memcpy(&axis, &axis_pod, sizeof(axis));
-        physx::PxArticulationLimit const& limit = reinterpret_cast<physx::PxArticulationLimit const&>(*limit_pod);
-        self_->setLimitParams(axis, limit);
-    }
-
-    physx_PxArticulationLimit_Pod PxArticulationJointReducedCoordinate_getLimitParams(physx_PxArticulationJointReducedCoordinate_Pod const* self__pod, physx_PxArticulationAxis::Enum_Pod axis_pod) {
-        physx::PxArticulationJointReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate const*>(self__pod);
-        physx::PxArticulationAxis::Enum axis;
-        memcpy(&axis, &axis_pod, sizeof(axis));
-        physx::PxArticulationLimit return_val = self_->getLimitParams(axis);
-        physx_PxArticulationLimit_Pod return_val_pod;
-        memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
-        return return_val_pod;
-    }
-
-    void PxArticulationJointReducedCoordinate_setDriveParams_mut(physx_PxArticulationJointReducedCoordinate_Pod* self__pod, physx_PxArticulationAxis::Enum_Pod axis_pod, physx_PxArticulationDrive_Pod const* drive_pod) {
-        physx::PxArticulationJointReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate*>(self__pod);
-        physx::PxArticulationAxis::Enum axis;
-        memcpy(&axis, &axis_pod, sizeof(axis));
-        physx::PxArticulationDrive const& drive = reinterpret_cast<physx::PxArticulationDrive const&>(*drive_pod);
-        self_->setDriveParams(axis, drive);
-    }
-
-    physx_PxArticulationDrive_Pod PxArticulationJointReducedCoordinate_getDriveParams(physx_PxArticulationJointReducedCoordinate_Pod const* self__pod, physx_PxArticulationAxis::Enum_Pod axis_pod) {
-        physx::PxArticulationJointReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate const*>(self__pod);
-        physx::PxArticulationAxis::Enum axis;
-        memcpy(&axis, &axis_pod, sizeof(axis));
-        physx::PxArticulationDrive return_val = self_->getDriveParams(axis);
-        physx_PxArticulationDrive_Pod return_val_pod;
-        memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
-        return return_val_pod;
-    }
-
-    void PxArticulationJointReducedCoordinate_setDriveTarget_mut(physx_PxArticulationJointReducedCoordinate_Pod* self__pod, physx_PxArticulationAxis::Enum_Pod axis_pod, float target, bool autowake) {
-        physx::PxArticulationJointReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate*>(self__pod);
-        physx::PxArticulationAxis::Enum axis;
-        memcpy(&axis, &axis_pod, sizeof(axis));
-        self_->setDriveTarget(axis, target, autowake);
-    }
-
-    float PxArticulationJointReducedCoordinate_getDriveTarget(physx_PxArticulationJointReducedCoordinate_Pod const* self__pod, physx_PxArticulationAxis::Enum_Pod axis_pod) {
-        physx::PxArticulationJointReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate const*>(self__pod);
-        physx::PxArticulationAxis::Enum axis;
-        memcpy(&axis, &axis_pod, sizeof(axis));
-        float return_val = self_->getDriveTarget(axis);
-        return return_val;
-    }
-
-    void PxArticulationJointReducedCoordinate_setDriveVelocity_mut(physx_PxArticulationJointReducedCoordinate_Pod* self__pod, physx_PxArticulationAxis::Enum_Pod axis_pod, float targetVel, bool autowake) {
-        physx::PxArticulationJointReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate*>(self__pod);
-        physx::PxArticulationAxis::Enum axis;
-        memcpy(&axis, &axis_pod, sizeof(axis));
-        self_->setDriveVelocity(axis, targetVel, autowake);
-    }
-
-    float PxArticulationJointReducedCoordinate_getDriveVelocity(physx_PxArticulationJointReducedCoordinate_Pod const* self__pod, physx_PxArticulationAxis::Enum_Pod axis_pod) {
-        physx::PxArticulationJointReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate const*>(self__pod);
-        physx::PxArticulationAxis::Enum axis;
-        memcpy(&axis, &axis_pod, sizeof(axis));
-        float return_val = self_->getDriveVelocity(axis);
-        return return_val;
-    }
-
-    void PxArticulationJointReducedCoordinate_setArmature_mut(physx_PxArticulationJointReducedCoordinate_Pod* self__pod, physx_PxArticulationAxis::Enum_Pod axis_pod, float armature) {
-        physx::PxArticulationJointReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate*>(self__pod);
-        physx::PxArticulationAxis::Enum axis;
-        memcpy(&axis, &axis_pod, sizeof(axis));
-        self_->setArmature(axis, armature);
-    }
-
-    float PxArticulationJointReducedCoordinate_getArmature(physx_PxArticulationJointReducedCoordinate_Pod const* self__pod, physx_PxArticulationAxis::Enum_Pod axis_pod) {
-        physx::PxArticulationJointReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate const*>(self__pod);
-        physx::PxArticulationAxis::Enum axis;
-        memcpy(&axis, &axis_pod, sizeof(axis));
-        float return_val = self_->getArmature(axis);
-        return return_val;
-    }
-
-    void PxArticulationJointReducedCoordinate_setFrictionCoefficient_mut(physx_PxArticulationJointReducedCoordinate_Pod* self__pod, float coefficient) {
-        physx::PxArticulationJointReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate*>(self__pod);
-        self_->setFrictionCoefficient(coefficient);
-    }
-
-    float PxArticulationJointReducedCoordinate_getFrictionCoefficient(physx_PxArticulationJointReducedCoordinate_Pod const* self__pod) {
-        physx::PxArticulationJointReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate const*>(self__pod);
-        float return_val = self_->getFrictionCoefficient();
-        return return_val;
-    }
-
-    void PxArticulationJointReducedCoordinate_setMaxJointVelocity_mut(physx_PxArticulationJointReducedCoordinate_Pod* self__pod, float maxJointV) {
-        physx::PxArticulationJointReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate*>(self__pod);
-        self_->setMaxJointVelocity(maxJointV);
-    }
-
-    float PxArticulationJointReducedCoordinate_getMaxJointVelocity(physx_PxArticulationJointReducedCoordinate_Pod const* self__pod) {
-        physx::PxArticulationJointReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate const*>(self__pod);
-        float return_val = self_->getMaxJointVelocity();
-        return return_val;
-    }
-
-    void PxArticulationJointReducedCoordinate_setJointPosition_mut(physx_PxArticulationJointReducedCoordinate_Pod* self__pod, physx_PxArticulationAxis::Enum_Pod axis_pod, float jointPos) {
-        physx::PxArticulationJointReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate*>(self__pod);
-        physx::PxArticulationAxis::Enum axis;
-        memcpy(&axis, &axis_pod, sizeof(axis));
-        self_->setJointPosition(axis, jointPos);
-    }
-
-    float PxArticulationJointReducedCoordinate_getJointPosition(physx_PxArticulationJointReducedCoordinate_Pod const* self__pod, physx_PxArticulationAxis::Enum_Pod axis_pod) {
-        physx::PxArticulationJointReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate const*>(self__pod);
-        physx::PxArticulationAxis::Enum axis;
-        memcpy(&axis, &axis_pod, sizeof(axis));
-        float return_val = self_->getJointPosition(axis);
-        return return_val;
-    }
-
-    void PxArticulationJointReducedCoordinate_setJointVelocity_mut(physx_PxArticulationJointReducedCoordinate_Pod* self__pod, physx_PxArticulationAxis::Enum_Pod axis_pod, float jointVel) {
-        physx::PxArticulationJointReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate*>(self__pod);
-        physx::PxArticulationAxis::Enum axis;
-        memcpy(&axis, &axis_pod, sizeof(axis));
-        self_->setJointVelocity(axis, jointVel);
-    }
-
-    float PxArticulationJointReducedCoordinate_getJointVelocity(physx_PxArticulationJointReducedCoordinate_Pod const* self__pod, physx_PxArticulationAxis::Enum_Pod axis_pod) {
-        physx::PxArticulationJointReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate const*>(self__pod);
-        physx::PxArticulationAxis::Enum axis;
-        memcpy(&axis, &axis_pod, sizeof(axis));
-        float return_val = self_->getJointVelocity(axis);
-        return return_val;
-    }
-
-    char const* PxArticulationJointReducedCoordinate_getConcreteTypeName(physx_PxArticulationJointReducedCoordinate_Pod const* self__pod) {
-        physx::PxArticulationJointReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate const*>(self__pod);
         char const* return_val = self_->getConcreteTypeName();
         return return_val;
     }
@@ -8245,16 +7577,6 @@ extern "C" {
         return return_val;
     }
 
-    uint32_t PxSimulationStatistics_getRbPairStats(physx_PxSimulationStatistics_Pod const* self__pod, physx_RbPairStatsType_Pod pairType_pod, int32_t g0_pod, int32_t g1_pod) {
-        physx::PxSimulationStatistics const* self_ = reinterpret_cast<physx::PxSimulationStatistics const*>(self__pod);
-        physx::RbPairStatsType pairType;
-        memcpy(&pairType, &pairType_pod, sizeof(pairType));
-        auto g0 = static_cast<physx::PxGeometryType::Enum>(g0_pod);
-        auto g1 = static_cast<physx::PxGeometryType::Enum>(g1_pod);
-        uint32_t return_val = self_->getRbPairStats(pairType, g0, g1);
-        return return_val;
-    }
-
     physx_PxSimulationStatistics_Pod PxSimulationStatistics_new() {
         PxSimulationStatistics return_val;
         physx_PxSimulationStatistics_Pod return_val_pod;
@@ -8335,6 +7657,145 @@ extern "C" {
 
     void PxSceneWriteLock_delete(physx_PxSceneWriteLock_Pod* self__pod) {
         physx::PxSceneWriteLock* self_ = reinterpret_cast<physx::PxSceneWriteLock*>(self__pod);
+        delete self_;
+    }
+
+    physx_PxContactPairExtraDataItem_Pod PxContactPairExtraDataItem_new() {
+        PxContactPairExtraDataItem return_val;
+        physx_PxContactPairExtraDataItem_Pod return_val_pod;
+        memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
+        return return_val_pod;
+    }
+
+    physx_PxContactPairVelocity_Pod PxContactPairVelocity_new() {
+        PxContactPairVelocity return_val;
+        physx_PxContactPairVelocity_Pod return_val_pod;
+        memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
+        return return_val_pod;
+    }
+
+    physx_PxContactPairPose_Pod PxContactPairPose_new() {
+        PxContactPairPose return_val;
+        physx_PxContactPairPose_Pod return_val_pod;
+        memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
+        return return_val_pod;
+    }
+
+    physx_PxContactPairIndex_Pod PxContactPairIndex_new() {
+        PxContactPairIndex return_val;
+        physx_PxContactPairIndex_Pod return_val_pod;
+        memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
+        return return_val_pod;
+    }
+
+    physx_PxContactPairExtraDataIterator_Pod PxContactPairExtraDataIterator_new(uint8_t const* stream, uint32_t size) {
+        PxContactPairExtraDataIterator return_val(stream, size);
+        physx_PxContactPairExtraDataIterator_Pod return_val_pod;
+        memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
+        return return_val_pod;
+    }
+
+    bool PxContactPairExtraDataIterator_nextItemSet_mut(physx_PxContactPairExtraDataIterator_Pod* self__pod) {
+        physx::PxContactPairExtraDataIterator* self_ = reinterpret_cast<physx::PxContactPairExtraDataIterator*>(self__pod);
+        bool return_val = self_->nextItemSet();
+        return return_val;
+    }
+
+    physx_PxContactPairHeader_Pod PxContactPairHeader_new() {
+        PxContactPairHeader return_val;
+        physx_PxContactPairHeader_Pod return_val_pod;
+        memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
+        return return_val_pod;
+    }
+
+    physx_PxContactPair_Pod PxContactPair_new() {
+        PxContactPair return_val;
+        physx_PxContactPair_Pod return_val_pod;
+        memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
+        return return_val_pod;
+    }
+
+    uint32_t PxContactPair_extractContacts(physx_PxContactPair_Pod const* self__pod, physx_PxContactPairPoint_Pod* userBuffer_pod, uint32_t bufferSize) {
+        physx::PxContactPair const* self_ = reinterpret_cast<physx::PxContactPair const*>(self__pod);
+        physx::PxContactPairPoint* userBuffer = reinterpret_cast<physx::PxContactPairPoint*>(userBuffer_pod);
+        uint32_t return_val = self_->extractContacts(userBuffer, bufferSize);
+        return return_val;
+    }
+
+    void PxContactPair_bufferContacts(physx_PxContactPair_Pod const* self__pod, physx_PxContactPair_Pod* newPair_pod, uint8_t* bufferMemory) {
+        physx::PxContactPair const* self_ = reinterpret_cast<physx::PxContactPair const*>(self__pod);
+        physx::PxContactPair* newPair = reinterpret_cast<physx::PxContactPair*>(newPair_pod);
+        self_->bufferContacts(newPair, bufferMemory);
+    }
+
+    uint32_t const* PxContactPair_getInternalFaceIndices(physx_PxContactPair_Pod const* self__pod) {
+        physx::PxContactPair const* self_ = reinterpret_cast<physx::PxContactPair const*>(self__pod);
+        uint32_t const* return_val = self_->getInternalFaceIndices();
+        return return_val;
+    }
+
+    physx_PxTriggerPair_Pod PxTriggerPair_new() {
+        PxTriggerPair return_val;
+        physx_PxTriggerPair_Pod return_val_pod;
+        memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
+        return return_val_pod;
+    }
+
+    physx_PxConstraintInfo_Pod PxConstraintInfo_new() {
+        PxConstraintInfo return_val;
+        physx_PxConstraintInfo_Pod return_val_pod;
+        memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
+        return return_val_pod;
+    }
+
+    physx_PxConstraintInfo_Pod PxConstraintInfo_new_1(physx_PxConstraint_Pod* c_pod, void* extRef, uint32_t t) {
+        physx::PxConstraint* c = reinterpret_cast<physx::PxConstraint*>(c_pod);
+        PxConstraintInfo return_val(c, extRef, t);
+        physx_PxConstraintInfo_Pod return_val_pod;
+        memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
+        return return_val_pod;
+    }
+
+    void PxSimulationEventCallback_onConstraintBreak_mut(physx_PxSimulationEventCallback_Pod* self__pod, physx_PxConstraintInfo_Pod* constraints_pod, uint32_t count) {
+        physx::PxSimulationEventCallback* self_ = reinterpret_cast<physx::PxSimulationEventCallback*>(self__pod);
+        physx::PxConstraintInfo* constraints = reinterpret_cast<physx::PxConstraintInfo*>(constraints_pod);
+        self_->onConstraintBreak(constraints, count);
+    }
+
+    void PxSimulationEventCallback_onWake_mut(physx_PxSimulationEventCallback_Pod* self__pod, physx_PxActor_Pod** actors_pod, uint32_t count) {
+        physx::PxSimulationEventCallback* self_ = reinterpret_cast<physx::PxSimulationEventCallback*>(self__pod);
+        physx::PxActor** actors = reinterpret_cast<physx::PxActor**>(actors_pod);
+        self_->onWake(actors, count);
+    }
+
+    void PxSimulationEventCallback_onSleep_mut(physx_PxSimulationEventCallback_Pod* self__pod, physx_PxActor_Pod** actors_pod, uint32_t count) {
+        physx::PxSimulationEventCallback* self_ = reinterpret_cast<physx::PxSimulationEventCallback*>(self__pod);
+        physx::PxActor** actors = reinterpret_cast<physx::PxActor**>(actors_pod);
+        self_->onSleep(actors, count);
+    }
+
+    void PxSimulationEventCallback_onContact_mut(physx_PxSimulationEventCallback_Pod* self__pod, physx_PxContactPairHeader_Pod const* pairHeader_pod, physx_PxContactPair_Pod const* pairs_pod, uint32_t nbPairs) {
+        physx::PxSimulationEventCallback* self_ = reinterpret_cast<physx::PxSimulationEventCallback*>(self__pod);
+        physx::PxContactPairHeader const& pairHeader = reinterpret_cast<physx::PxContactPairHeader const&>(*pairHeader_pod);
+        physx::PxContactPair const* pairs = reinterpret_cast<physx::PxContactPair const*>(pairs_pod);
+        self_->onContact(pairHeader, pairs, nbPairs);
+    }
+
+    void PxSimulationEventCallback_onTrigger_mut(physx_PxSimulationEventCallback_Pod* self__pod, physx_PxTriggerPair_Pod* pairs_pod, uint32_t count) {
+        physx::PxSimulationEventCallback* self_ = reinterpret_cast<physx::PxSimulationEventCallback*>(self__pod);
+        physx::PxTriggerPair* pairs = reinterpret_cast<physx::PxTriggerPair*>(pairs_pod);
+        self_->onTrigger(pairs, count);
+    }
+
+    void PxSimulationEventCallback_onAdvance_mut(physx_PxSimulationEventCallback_Pod* self__pod, physx_PxRigidBody_Pod const* const* bodyBuffer_pod, physx_PxTransform_Pod const* poseBuffer_pod, uint32_t count) {
+        physx::PxSimulationEventCallback* self_ = reinterpret_cast<physx::PxSimulationEventCallback*>(self__pod);
+        physx::PxRigidBody const* const* bodyBuffer = reinterpret_cast<physx::PxRigidBody const* const*>(bodyBuffer_pod);
+        physx::PxTransform const* poseBuffer = reinterpret_cast<physx::PxTransform const*>(poseBuffer_pod);
+        self_->onAdvance(bodyBuffer, poseBuffer, count);
+    }
+
+    void PxSimulationEventCallback_delete(physx_PxSimulationEventCallback_Pod* self__pod) {
+        physx::PxSimulationEventCallback* self_ = reinterpret_cast<physx::PxSimulationEventCallback*>(self__pod);
         delete self_;
     }
 
@@ -8977,13 +8438,6 @@ extern "C" {
     void PxControllerManager_purgeControllers_mut(physx_PxControllerManager_Pod* self__pod) {
         physx::PxControllerManager* self_ = reinterpret_cast<physx::PxControllerManager*>(self__pod);
         self_->purgeControllers();
-    }
-
-    physx_PxRenderBuffer_Pod* PxControllerManager_getRenderBuffer_mut(physx_PxControllerManager_Pod* self__pod) {
-        physx::PxControllerManager* self_ = reinterpret_cast<physx::PxControllerManager*>(self__pod);
-        physx::PxRenderBuffer& return_val = self_->getRenderBuffer();
-        auto return_val_pod = reinterpret_cast<physx_PxRenderBuffer_Pod*>(&return_val);
-        return return_val_pod;
     }
 
     void PxControllerManager_setDebugRenderingFlags_mut(physx_PxControllerManager_Pod* self__pod, uint32_t flags_pod) {

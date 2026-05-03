@@ -2375,6 +2375,106 @@ bitflags::bitflags! {
     }
 }
 
+/// Extra data item types for contact pairs.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[repr(i32)]
+pub enum PxContactPairExtraDataType {
+    /// see [`PxContactPairVelocity`]
+    PreSolverVelocity = 0,
+    /// see [`PxContactPairVelocity`]
+    PostSolverVelocity = 1,
+    /// see [`PxContactPairPose`]
+    ContactEventPose = 2,
+    /// see [`PxContactPairIndex`]
+    ContactPairIndex = 3,
+}
+
+/// Collection of flags providing information on contact report pairs.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[repr(i32)]
+pub enum PxContactPairHeaderFlag {
+    /// The actor with index 0 has been removed from the scene.
+    RemovedActor0 = 1,
+    /// The actor with index 1 has been removed from the scene.
+    RemovedActor1 = 2,
+}
+
+bitflags::bitflags! {
+    /// Flags for [`PxContactPairHeaderFlag`]
+    #[derive(Default)]
+    #[repr(transparent)]
+    pub struct PxContactPairHeaderFlags: u16 {
+        const RemovedActor0 = 1 << 0;
+        const RemovedActor1 = 1 << 1;
+    }
+}
+
+/// Collection of flags providing information on contact report pairs.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[repr(i32)]
+pub enum PxContactPairFlag {
+    /// The shape with index 0 has been removed from the actor/scene.
+    RemovedShape0 = 1,
+    /// The shape with index 1 has been removed from the actor/scene.
+    RemovedShape1 = 2,
+    /// First actor pair contact.
+    ///
+    /// The provided shape pair marks the first contact between the two actors, no other shape pair has been touching prior to the current simulation frame.
+    ///
+    /// : This info is only available if [`PxPairFlag::eNOTIFY_TOUCH_FOUND`] has been declared for the pair.
+    ActorPairHasFirstTouch = 4,
+    /// All contact between the actor pair was lost.
+    ///
+    /// All contact between the two actors has been lost, no shape pairs remain touching after the current simulation frame.
+    ActorPairLostTouch = 8,
+    /// Internal flag, used by [`PxContactPair`].extractContacts()
+    ///
+    /// The applied contact impulses are provided for every contact point.
+    /// This is the case if [`PxPairFlag::eSOLVE_CONTACT`] has been set for the pair.
+    InternalHasImpulses = 16,
+    /// Internal flag, used by [`PxContactPair`].extractContacts()
+    ///
+    /// The provided contact point information is flipped with regards to the shapes of the contact pair. This mainly concerns the order of the internal triangle indices.
+    InternalContactsAreFlipped = 32,
+}
+
+bitflags::bitflags! {
+    /// Flags for [`PxContactPairFlag`]
+    #[derive(Default)]
+    #[repr(transparent)]
+    pub struct PxContactPairFlags: u16 {
+        const RemovedShape0 = 1 << 0;
+        const RemovedShape1 = 1 << 1;
+        const ActorPairHasFirstTouch = 1 << 2;
+        const ActorPairLostTouch = 1 << 3;
+        const InternalHasImpulses = 1 << 4;
+        const InternalContactsAreFlipped = 1 << 5;
+    }
+}
+
+/// Collection of flags providing information on trigger report pairs.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[repr(i32)]
+pub enum PxTriggerPairFlag {
+    /// The trigger shape has been removed from the actor/scene.
+    RemovedShapeTrigger = 1,
+    /// The shape causing the trigger event has been removed from the actor/scene.
+    RemovedShapeOther = 2,
+    /// For internal use only.
+    NextFree = 4,
+}
+
+bitflags::bitflags! {
+    /// Flags for [`PxTriggerPairFlag`]
+    #[derive(Default)]
+    #[repr(transparent)]
+    pub struct PxTriggerPairFlags: u8 {
+        const RemovedShapeTrigger = 1 << 0;
+        const RemovedShapeOther = 1 << 1;
+        const NextFree = 1 << 2;
+    }
+}
+
 /// Identifies input and output buffers for PxSoftBody.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[repr(i32)]
@@ -3681,16 +3781,17 @@ pub struct PxBroadPhaseCallback {
     _unused: [u8; 0],
 }
 
-#[derive(Copy, Clone)]
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
-pub struct PxSimulationEventCallback {
-    _unused: [u8; 0],
+pub struct PxPvdSceneClient {
+    vtable_: *const std::ffi::c_void,
 }
 
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
-pub struct PxPvdSceneClient {
+pub struct PxSimulationEventCallback {
     vtable_: *const std::ffi::c_void,
 }
 
@@ -6771,15 +6872,6 @@ extern "C" {
     /// The string name.
     pub fn PxArticulationAttachment_getConcreteTypeName(self_: *const PxArticulationAttachment) -> *const std::ffi::c_char;
 
-    /// Sets the tendon joint coefficient.
-    ///
-    /// RecipCoefficient is commonly expected to be 1/coefficient, but it can be set to different values to tune behavior; for example, zero can be used to
-    /// have a joint axis only participate in the length computation of the tendon, but not have any tendon force applied to it.
-    pub fn PxArticulationTendonJoint_setCoefficient_mut(self_: *mut PxArticulationTendonJoint, axis: PxArticulationAxis::Enum, coefficient: f32, recipCoefficient: f32);
-
-    /// Gets the tendon joint coefficient.
-    pub fn PxArticulationTendonJoint_getCoefficient(self_: *const PxArticulationTendonJoint, axis: *mut PxArticulationAxis::Enum, coefficient: *mut f32, recipCoefficient: *mut f32);
-
     /// Gets the articulation link.
     ///
     /// The articulation link (and its incoming joint in particular) that this tendon joint is associated with.
@@ -6882,17 +6974,6 @@ extern "C" {
     pub fn PxArticulationSpatialTendon_getConcreteTypeName(self_: *const PxArticulationSpatialTendon) -> *const std::ffi::c_char;
 
     pub fn PxArticulationSpatialTendon_delete(self_: *mut PxArticulationSpatialTendon);
-
-    /// Creates an articulation tendon joint and adds it to the list of children in the parent tendon joint.
-    ///
-    /// Creating a tendon joint is not allowed while the articulation is in a scene. In order to
-    /// add the joint, remove and then re-add the articulation to the scene.
-    ///
-    /// The newly-created tendon joint if creation was successful, otherwise a null pointer.
-    ///
-    /// - The axis motion must not be configured as PxArticulationMotion::eLOCKED.
-    /// - The axis cannot be part of a fixed joint, i.e. joint configured as PxArticulationJointType::eFIX.
-    pub fn PxArticulationFixedTendon_createTendonJoint_mut(self_: *mut PxArticulationFixedTendon, parent: *mut PxArticulationTendonJoint, axis: PxArticulationAxis::Enum, coefficient: f32, recipCoefficient: f32, link: *mut PxArticulationLink) -> *mut PxArticulationTendonJoint;
 
     /// Fills a user-provided buffer of tendon-joint pointers with the set of tendon joints.
     ///
@@ -7002,799 +7083,6 @@ extern "C" {
     ///
     /// The string name.
     pub fn PxArticulationSensor_getConcreteTypeName(self_: *const PxArticulationSensor) -> *const std::ffi::c_char;
-
-    /// Returns the scene which this articulation belongs to.
-    ///
-    /// Owner Scene. NULL if not part of a scene.
-    pub fn PxArticulationReducedCoordinate_getScene(self_: *const PxArticulationReducedCoordinate) -> *mut PxScene;
-
-    /// Sets the solver iteration counts for the articulation.
-    ///
-    /// The solver iteration count determines how accurately contacts, drives, and limits are resolved.
-    /// Setting a higher position iteration count may therefore help in scenarios where the articulation
-    /// is subject to many constraints; for example, a manipulator articulation with drives and joint limits
-    /// that is grasping objects, or several such articulations interacting through contacts. Other situations
-    /// where higher position iterations may improve simulation fidelity are: large mass ratios within the
-    /// articulation or between the articulation and an object in contact with it; or strong drives in the
-    /// articulation being used to manipulate a light object.
-    ///
-    /// If intersecting bodies are being depenetrated too violently, increase the number of velocity
-    /// iterations. More velocity iterations will drive the relative exit velocity of the intersecting
-    /// objects closer to the correct value given the restitution.
-    ///
-    /// This call may not be made during simulation.
-    pub fn PxArticulationReducedCoordinate_setSolverIterationCounts_mut(self_: *mut PxArticulationReducedCoordinate, minPositionIters: u32, minVelocityIters: u32);
-
-    /// Returns the solver iteration counts.
-    pub fn PxArticulationReducedCoordinate_getSolverIterationCounts(self_: *const PxArticulationReducedCoordinate, minPositionIters: *mut u32, minVelocityIters: *mut u32);
-
-    /// Returns true if this articulation is sleeping.
-    ///
-    /// When an actor does not move for a period of time, it is no longer simulated in order to save time. This state
-    /// is called sleeping. However, because the object automatically wakes up when it is either touched by an awake object,
-    /// or a sleep-affecting property is changed by the user, the entire sleep mechanism should be transparent to the user.
-    ///
-    /// An articulation can only go to sleep if all links are ready for sleeping. An articulation is guaranteed to be awake
-    /// if at least one of the following holds:
-    ///
-    /// The wake counter is positive (see [`setWakeCounter`]()).
-    ///
-    /// The linear or angular velocity of any link is non-zero.
-    ///
-    /// A non-zero force or torque has been applied to the articulation or any of its links.
-    ///
-    /// If an articulation is sleeping, the following state is guaranteed:
-    ///
-    /// The wake counter is zero.
-    ///
-    /// The linear and angular velocity of all links is zero.
-    ///
-    /// There is no force update pending.
-    ///
-    /// When an articulation gets inserted into a scene, it will be considered asleep if all the points above hold, else it will
-    /// be treated as awake.
-    ///
-    /// If an articulation is asleep after the call to [`PxScene::fetchResults`]() returns, it is guaranteed that the poses of the
-    /// links were not changed. You can use this information to avoid updating the transforms of associated objects.
-    ///
-    /// True if the articulation is sleeping.
-    ///
-    /// This call may only be made on articulations that are in a scene, and may not be made during simulation,
-    /// except in a split simulation in-between [`PxScene::fetchCollision`] and #PxScene::advance.
-    pub fn PxArticulationReducedCoordinate_isSleeping(self_: *const PxArticulationReducedCoordinate) -> bool;
-
-    /// Sets the mass-normalized energy threshold below which the articulation may go to sleep.
-    ///
-    /// The articulation will sleep if the energy of each link is below this threshold.
-    ///
-    /// This call may not be made during simulation.
-    pub fn PxArticulationReducedCoordinate_setSleepThreshold_mut(self_: *mut PxArticulationReducedCoordinate, threshold: f32);
-
-    /// Returns the mass-normalized energy below which the articulation may go to sleep.
-    ///
-    /// The energy threshold for sleeping.
-    pub fn PxArticulationReducedCoordinate_getSleepThreshold(self_: *const PxArticulationReducedCoordinate) -> f32;
-
-    /// Sets the mass-normalized kinetic energy threshold below which the articulation may participate in stabilization.
-    ///
-    /// Articulations whose kinetic energy divided by their mass is above this threshold will not participate in stabilization.
-    ///
-    /// This value has no effect if PxSceneFlag::eENABLE_STABILIZATION was not enabled on the PxSceneDesc.
-    ///
-    /// Default:
-    /// 0.01 * PxTolerancesScale::speed * PxTolerancesScale::speed
-    ///
-    /// This call may not be made during simulation.
-    pub fn PxArticulationReducedCoordinate_setStabilizationThreshold_mut(self_: *mut PxArticulationReducedCoordinate, threshold: f32);
-
-    /// Returns the mass-normalized kinetic energy below which the articulation may participate in stabilization.
-    ///
-    /// Articulations whose kinetic energy divided by their mass is above this threshold will not participate in stabilization.
-    ///
-    /// The energy threshold for participating in stabilization.
-    pub fn PxArticulationReducedCoordinate_getStabilizationThreshold(self_: *const PxArticulationReducedCoordinate) -> f32;
-
-    /// Sets the wake counter for the articulation in seconds.
-    ///
-    /// - The wake counter value determines the minimum amount of time until the articulation can be put to sleep.
-    /// - An articulation will not be put to sleep if the energy is above the specified threshold (see [`setSleepThreshold`]())
-    /// or if other awake objects are touching it.
-    /// - Passing in a positive value will wake up the articulation automatically.
-    ///
-    /// Default:
-    /// 0.4s (which corresponds to 20 frames for a time step of 0.02s)
-    ///
-    /// This call may not be made during simulation, except in a split simulation in-between [`PxScene::fetchCollision`] and #PxScene::advance.
-    pub fn PxArticulationReducedCoordinate_setWakeCounter_mut(self_: *mut PxArticulationReducedCoordinate, wakeCounterValue: f32);
-
-    /// Returns the wake counter of the articulation in seconds.
-    ///
-    /// The wake counter of the articulation in seconds.
-    ///
-    /// This call may not be made during simulation, except in a split simulation in-between [`PxScene::fetchCollision`] and #PxScene::advance.
-    pub fn PxArticulationReducedCoordinate_getWakeCounter(self_: *const PxArticulationReducedCoordinate) -> f32;
-
-    /// Wakes up the articulation if it is sleeping.
-    ///
-    /// - The articulation will get woken up and might cause other touching objects to wake up as well during the next simulation step.
-    /// - This will set the wake counter of the articulation to the value specified in [`PxSceneDesc::wakeCounterResetValue`].
-    ///
-    /// This call may only be made on articulations that are in a scene, and may not be made during simulation,
-    /// except in a split simulation in-between [`PxScene::fetchCollision`] and #PxScene::advance.
-    pub fn PxArticulationReducedCoordinate_wakeUp_mut(self_: *mut PxArticulationReducedCoordinate);
-
-    /// Forces the articulation to sleep.
-    ///
-    /// - The articulation will stay asleep during the next simulation step if not touched by another non-sleeping actor.
-    /// - This will set any applied force, the velocity, and the wake counter of all bodies in the articulation to zero.
-    ///
-    /// This call may not be made during simulation, and may only be made on articulations that are in a scene.
-    pub fn PxArticulationReducedCoordinate_putToSleep_mut(self_: *mut PxArticulationReducedCoordinate);
-
-    /// Sets the limit on the magnitude of the linear velocity of the articulation's center of mass.
-    ///
-    /// - The limit acts on the linear velocity of the entire articulation. The velocity is calculated from the total momentum
-    /// and the spatial inertia of the articulation.
-    /// - The limit only applies to floating-base articulations.
-    /// - A benefit of the COM velocity limit is that it is evenly applied to the whole articulation, which results in fewer visual
-    /// artifacts compared to link rigid-body damping or joint-velocity limits. However, these per-link or per-degree-of-freedom
-    /// limits may still help avoid numerical issues.
-    ///
-    /// This call may not be made during simulation.
-    pub fn PxArticulationReducedCoordinate_setMaxCOMLinearVelocity_mut(self_: *mut PxArticulationReducedCoordinate, maxLinearVelocity: f32);
-
-    /// Gets the limit on the magnitude of the linear velocity of the articulation's center of mass.
-    ///
-    /// The maximal linear velocity magnitude.
-    pub fn PxArticulationReducedCoordinate_getMaxCOMLinearVelocity(self_: *const PxArticulationReducedCoordinate) -> f32;
-
-    /// Sets the limit on the magnitude of the angular velocity at the articulation's center of mass.
-    ///
-    /// - The limit acts on the angular velocity of the entire articulation. The velocity is calculated from the total momentum
-    /// and the spatial inertia of the articulation.
-    /// - The limit only applies to floating-base articulations.
-    /// - A benefit of the COM velocity limit is that it is evenly applied to the whole articulation, which results in fewer visual
-    /// artifacts compared to link rigid-body damping or joint-velocity limits. However, these per-link or per-degree-of-freedom
-    /// limits may still help avoid numerical issues.
-    ///
-    /// This call may not be made during simulation.
-    pub fn PxArticulationReducedCoordinate_setMaxCOMAngularVelocity_mut(self_: *mut PxArticulationReducedCoordinate, maxAngularVelocity: f32);
-
-    /// Gets the limit on the magnitude of the angular velocity at the articulation's center of mass.
-    ///
-    /// The maximal angular velocity magnitude.
-    pub fn PxArticulationReducedCoordinate_getMaxCOMAngularVelocity(self_: *const PxArticulationReducedCoordinate) -> f32;
-
-    /// Adds a link to the articulation with default attribute values.
-    ///
-    /// The new link, or NULL if the link cannot be created.
-    ///
-    /// Creating a link is not allowed while the articulation is in a scene. In order to add a link,
-    /// remove and then re-add the articulation to the scene.
-    pub fn PxArticulationReducedCoordinate_createLink_mut(self_: *mut PxArticulationReducedCoordinate, parent: *mut PxArticulationLink, pose: *const PxTransform) -> *mut PxArticulationLink;
-
-    /// Releases the articulation, and all its links and corresponding joints.
-    ///
-    /// Attached sensors and tendons are released automatically when the articulation is released.
-    ///
-    /// This call may not be made during simulation.
-    pub fn PxArticulationReducedCoordinate_release_mut(self_: *mut PxArticulationReducedCoordinate);
-
-    /// Returns the number of links in the articulation.
-    ///
-    /// The number of links.
-    pub fn PxArticulationReducedCoordinate_getNbLinks(self_: *const PxArticulationReducedCoordinate) -> u32;
-
-    /// Returns the set of links in the articulation in the order that they were added to the articulation using createLink.
-    ///
-    /// The number of links written into the buffer.
-    pub fn PxArticulationReducedCoordinate_getLinks(self_: *const PxArticulationReducedCoordinate, userBuffer: *mut *mut PxArticulationLink, bufferSize: u32, startIndex: u32) -> u32;
-
-    /// Returns the number of shapes in the articulation.
-    ///
-    /// The number of shapes.
-    pub fn PxArticulationReducedCoordinate_getNbShapes(self_: *const PxArticulationReducedCoordinate) -> u32;
-
-    /// Sets a name string for the articulation that can be retrieved with getName().
-    ///
-    /// This is for debugging and is not used by the SDK. The string is not copied by the SDK,
-    /// only the pointer is stored.
-    pub fn PxArticulationReducedCoordinate_setName_mut(self_: *mut PxArticulationReducedCoordinate, name: *const std::ffi::c_char);
-
-    /// Returns the name string set with setName().
-    ///
-    /// Name string associated with the articulation.
-    pub fn PxArticulationReducedCoordinate_getName(self_: *const PxArticulationReducedCoordinate) -> *const std::ffi::c_char;
-
-    /// Returns the axis-aligned bounding box enclosing the articulation.
-    ///
-    /// The articulation's bounding box.
-    ///
-    /// It is not allowed to use this method while the simulation is running, except in a split simulation
-    /// during [`PxScene::collide`]() and up to #PxScene::advance(), and in PxContactModifyCallback or in contact report callbacks.
-    pub fn PxArticulationReducedCoordinate_getWorldBounds(self_: *const PxArticulationReducedCoordinate, inflation: f32) -> PxBounds3;
-
-    /// Returns the aggregate the articulation might be a part of.
-    ///
-    /// The aggregate the articulation is a part of, or NULL if the articulation does not belong to an aggregate.
-    pub fn PxArticulationReducedCoordinate_getAggregate(self_: *const PxArticulationReducedCoordinate) -> *mut PxAggregate;
-
-    /// Sets flags on the articulation.
-    ///
-    /// This call may not be made during simulation.
-    pub fn PxArticulationReducedCoordinate_setArticulationFlags_mut(self_: *mut PxArticulationReducedCoordinate, flags: PxArticulationFlags);
-
-    /// Raises or clears a flag on the articulation.
-    ///
-    /// This call may not be made during simulation.
-    pub fn PxArticulationReducedCoordinate_setArticulationFlag_mut(self_: *mut PxArticulationReducedCoordinate, flag: PxArticulationFlag::Enum, value: bool);
-
-    /// Returns the articulation's flags.
-    ///
-    /// The flags.
-    pub fn PxArticulationReducedCoordinate_getArticulationFlags(self_: *const PxArticulationReducedCoordinate) -> PxArticulationFlags;
-
-    /// Returns the total number of joint degrees-of-freedom (DOFs) of the articulation.
-    ///
-    /// - The six DOFs of the base of a floating-base articulation are not included in this count.
-    /// - Example: Both a fixed-base and a floating-base double-pendulum with two revolute joints will have getDofs() == 2.
-    /// - The return value is only valid for articulations that are in a scene.
-    ///
-    /// The number of joint DOFs, or 0xFFFFFFFF if the articulation is not in a scene.
-    pub fn PxArticulationReducedCoordinate_getDofs(self_: *const PxArticulationReducedCoordinate) -> u32;
-
-    /// Creates an articulation cache that can be used to read and write internal articulation data.
-    ///
-    /// - When the structure of the articulation changes (e.g. adding a link or sensor) after the cache was created,
-    /// the cache needs to be released and recreated.
-    /// - Free the memory allocated for the cache by calling the release() method on the cache.
-    /// - Caches can only be created by articulations that are in a scene.
-    ///
-    /// The cache, or NULL if the articulation is not in a scene.
-    pub fn PxArticulationReducedCoordinate_createCache(self_: *const PxArticulationReducedCoordinate) -> *mut PxArticulationCache;
-
-    /// Returns the size of the articulation cache in bytes.
-    ///
-    /// - The size does not include: the user-allocated memory for the coefficient matrix or lambda values;
-    /// the scratch-related memory/members; and the cache version. See comment in [`PxArticulationCache`].
-    /// - The return value is only valid for articulations that are in a scene.
-    ///
-    /// The byte size of the cache, or 0xFFFFFFFF if the articulation is not in a scene.
-    pub fn PxArticulationReducedCoordinate_getCacheDataSize(self_: *const PxArticulationReducedCoordinate) -> u32;
-
-    /// Zeroes all data in the articulation cache, except user-provided and scratch memory, and cache version.
-    ///
-    /// This call may only be made on articulations that are in a scene.
-    pub fn PxArticulationReducedCoordinate_zeroCache(self_: *const PxArticulationReducedCoordinate, cache: *mut PxArticulationCache);
-
-    /// Applies the data in the cache to the articulation.
-    ///
-    /// This call wakes the articulation if it is sleeping, and the autowake parameter is true (default) or:
-    /// - a nonzero joint velocity is applied or
-    /// - a nonzero joint force is applied or
-    /// - a nonzero root velocity is applied
-    ///
-    /// This call may only be made on articulations that are in a scene, and may not be made during simulation.
-    pub fn PxArticulationReducedCoordinate_applyCache_mut(self_: *mut PxArticulationReducedCoordinate, cache: *mut PxArticulationCache, flags: PxArticulationCacheFlags, autowake: bool);
-
-    /// Copies internal data of the articulation to the cache.
-    ///
-    /// This call may only be made on articulations that are in a scene, and may not be made during simulation.
-    pub fn PxArticulationReducedCoordinate_copyInternalStateToCache(self_: *const PxArticulationReducedCoordinate, cache: *mut PxArticulationCache, flags: PxArticulationCacheFlags);
-
-    /// Converts maximal-coordinate joint DOF data to reduced coordinates.
-    ///
-    /// - Indexing into the maximal joint DOF data is via the link's low-level index minus 1 (the root link is not included).
-    /// - The reduced-coordinate data follows the cache indexing convention, see PxArticulationCache::jointVelocity.
-    ///
-    /// The articulation must be in a scene.
-    pub fn PxArticulationReducedCoordinate_packJointData(self_: *const PxArticulationReducedCoordinate, maximum: *const f32, reduced: *mut f32);
-
-    /// Converts reduced-coordinate joint DOF data to maximal coordinates.
-    ///
-    /// - Indexing into the maximal joint DOF data is via the link's low-level index minus 1 (the root link is not included).
-    /// - The reduced-coordinate data follows the cache indexing convention, see PxArticulationCache::jointVelocity.
-    ///
-    /// The articulation must be in a scene.
-    pub fn PxArticulationReducedCoordinate_unpackJointData(self_: *const PxArticulationReducedCoordinate, reduced: *const f32, maximum: *mut f32);
-
-    /// Prepares common articulation data based on articulation pose for inverse dynamics calculations.
-    ///
-    /// Usage:
-    /// 1. Set articulation pose (joint positions and base transform) via articulation cache and applyCache().
-    /// 1. Call commonInit.
-    /// 1. Call inverse dynamics computation method.
-    ///
-    /// This call may only be made on articulations that are in a scene, and may not be made during simulation.
-    pub fn PxArticulationReducedCoordinate_commonInit(self_: *const PxArticulationReducedCoordinate);
-
-    /// Computes the joint DOF forces required to counteract gravitational forces for the given articulation pose.
-    ///
-    /// - Inputs - Articulation pose (joint positions + base transform).
-    /// - Outputs - Joint forces to counteract gravity (in cache).
-    ///
-    /// - The joint forces returned are determined purely by gravity for the articulation in the current joint and base pose, and joints at rest;
-    /// i.e. external forces, joint velocities, and joint accelerations are set to zero. Joint drives are also not considered in the computation.
-    /// - commonInit() must be called before the computation, and after setting the articulation pose via applyCache().
-    ///
-    /// This call may only be made on articulations that are in a scene, and may not be made during simulation.
-    pub fn PxArticulationReducedCoordinate_computeGeneralizedGravityForce(self_: *const PxArticulationReducedCoordinate, cache: *mut PxArticulationCache);
-
-    /// Computes the joint DOF forces required to counteract Coriolis and centrifugal forces for the given articulation state.
-    ///
-    /// - Inputs - Articulation state (joint positions and velocities (in cache), and base transform and spatial velocity).
-    /// - Outputs - Joint forces to counteract Coriolis and centrifugal forces (in cache).
-    ///
-    /// - The joint forces returned are determined purely by the articulation's state; i.e. external forces, gravity, and joint accelerations are set to zero.
-    /// Joint drives and potential damping terms, such as link angular or linear damping, or joint friction, are also not considered in the computation.
-    /// - Prior to the computation, update/set the base spatial velocity with PxArticulationCache::rootLinkData and applyCache().
-    /// - commonInit() must be called before the computation, and after setting the articulation pose via applyCache().
-    ///
-    /// This call may only be made on articulations that are in a scene, and may not be made during simulation.
-    pub fn PxArticulationReducedCoordinate_computeCoriolisAndCentrifugalForce(self_: *const PxArticulationReducedCoordinate, cache: *mut PxArticulationCache);
-
-    /// Computes the joint DOF forces required to counteract external spatial forces applied to articulation links.
-    ///
-    /// - Inputs - External forces on links (in cache), articulation pose (joint positions + base transform).
-    /// - Outputs - Joint forces to counteract the external forces (in cache).
-    ///
-    /// - Only the external spatial forces provided in the cache and the articulation pose are considered in the computation.
-    /// - The external spatial forces are with respect to the links' centers of mass, and not the actor's origin.
-    /// - commonInit() must be called before the computation, and after setting the articulation pose via applyCache().
-    ///
-    /// This call may only be made on articulations that are in a scene, and may not be made during simulation.
-    pub fn PxArticulationReducedCoordinate_computeGeneralizedExternalForce(self_: *const PxArticulationReducedCoordinate, cache: *mut PxArticulationCache);
-
-    /// Computes the joint accelerations for the given articulation state and joint forces.
-    ///
-    /// - Inputs - Joint forces (in cache) and articulation state (joint positions and velocities (in cache), and base transform and spatial velocity).
-    /// - Outputs - Joint accelerations (in cache).
-    ///
-    /// - The computation includes Coriolis terms and gravity. However, joint drives and potential damping terms are not considered in the computation
-    /// (for example, linear link damping or joint friction).
-    /// - Prior to the computation, update/set the base spatial velocity with PxArticulationCache::rootLinkData and applyCache().
-    /// - commonInit() must be called before the computation, and after setting the articulation pose via applyCache().
-    ///
-    /// This call may only be made on articulations that are in a scene, and may not be made during simulation.
-    pub fn PxArticulationReducedCoordinate_computeJointAcceleration(self_: *const PxArticulationReducedCoordinate, cache: *mut PxArticulationCache);
-
-    /// Computes the joint forces for the given articulation state and joint accelerations, not considering gravity.
-    ///
-    /// - Inputs - Joint accelerations (in cache) and articulation state (joint positions and velocities (in cache), and base transform and spatial velocity).
-    /// - Outputs - Joint forces (in cache).
-    ///
-    /// - The computation includes Coriolis terms. However, joint drives and potential damping terms are not considered in the computation
-    /// (for example, linear link damping or joint friction).
-    /// - Prior to the computation, update/set the base spatial velocity with PxArticulationCache::rootLinkData and applyCache().
-    /// - commonInit() must be called before the computation, and after setting the articulation pose via applyCache().
-    ///
-    /// This call may only be made on articulations that are in a scene, and may not be made during simulation.
-    pub fn PxArticulationReducedCoordinate_computeJointForce(self_: *const PxArticulationReducedCoordinate, cache: *mut PxArticulationCache);
-
-    /// Compute the dense Jacobian for the articulation in world space, including the DOFs of a potentially floating base.
-    ///
-    /// This computes the dense representation of an inherently sparse matrix. Multiplication with this matrix maps
-    /// joint space velocities to world-space linear and angular (i.e. spatial) velocities of the centers of mass of the links.
-    ///
-    /// This call may only be made on articulations that are in a scene, and may not be made during simulation.
-    pub fn PxArticulationReducedCoordinate_computeDenseJacobian(self_: *const PxArticulationReducedCoordinate, cache: *mut PxArticulationCache, nRows: *mut u32, nCols: *mut u32);
-
-    /// Computes the coefficient matrix for contact forces.
-    ///
-    /// - The matrix dimension is getCoefficientMatrixSize() = getDofs() * getNbLoopJoints(), and the DOF (column) indexing follows the internal DOF order, see PxArticulationCache::jointVelocity.
-    /// - Each column in the matrix is the joint forces effected by a contact based on impulse strength 1.
-    /// - The user must allocate memory for PxArticulationCache::coefficientMatrix where the required size of the PxReal array is equal to getCoefficientMatrixSize().
-    /// - commonInit() must be called before the computation, and after setting the articulation pose via applyCache().
-    ///
-    /// This call may only be made on articulations that are in a scene, and may not be made during simulation.
-    pub fn PxArticulationReducedCoordinate_computeCoefficientMatrix(self_: *const PxArticulationReducedCoordinate, cache: *mut PxArticulationCache);
-
-    /// Computes the lambda values when the test impulse is 1.
-    ///
-    /// - The user must allocate memory for PxArticulationCache::lambda where the required size of the PxReal array is equal to getNbLoopJoints().
-    /// - commonInit() must be called before the computation, and after setting the articulation pose via applyCache().
-    ///
-    /// True if convergence was achieved within maxIter; False if convergence was not achieved or the operation failed otherwise.
-    ///
-    /// This call may only be made on articulations that are in a scene, and may not be made during simulation.
-    pub fn PxArticulationReducedCoordinate_computeLambda(self_: *const PxArticulationReducedCoordinate, cache: *mut PxArticulationCache, initialState: *mut PxArticulationCache, jointTorque: *const f32, maxIter: u32) -> bool;
-
-    /// Compute the joint-space inertia matrix that maps joint accelerations to joint forces: forces = M * accelerations.
-    ///
-    /// - Inputs - Articulation pose (joint positions and base transform).
-    /// - Outputs - Mass matrix (in cache).
-    ///
-    /// commonInit() must be called before the computation, and after setting the articulation pose via applyCache().
-    ///
-    /// This call may only be made on articulations that are in a scene, and may not be made during simulation.
-    pub fn PxArticulationReducedCoordinate_computeGeneralizedMassMatrix(self_: *const PxArticulationReducedCoordinate, cache: *mut PxArticulationCache);
-
-    /// Adds a loop joint to the articulation system for inverse dynamics.
-    ///
-    /// This call may not be made during simulation.
-    pub fn PxArticulationReducedCoordinate_addLoopJoint_mut(self_: *mut PxArticulationReducedCoordinate, joint: *mut PxConstraint);
-
-    /// Removes a loop joint from the articulation for inverse dynamics.
-    ///
-    /// This call may not be made during simulation.
-    pub fn PxArticulationReducedCoordinate_removeLoopJoint_mut(self_: *mut PxArticulationReducedCoordinate, joint: *mut PxConstraint);
-
-    /// Returns the number of loop joints in the articulation for inverse dynamics.
-    ///
-    /// The number of loop joints.
-    pub fn PxArticulationReducedCoordinate_getNbLoopJoints(self_: *const PxArticulationReducedCoordinate) -> u32;
-
-    /// Returns the set of loop constraints (i.e. joints) in the articulation.
-    ///
-    /// The number of constraints written into the buffer.
-    pub fn PxArticulationReducedCoordinate_getLoopJoints(self_: *const PxArticulationReducedCoordinate, userBuffer: *mut *mut PxConstraint, bufferSize: u32, startIndex: u32) -> u32;
-
-    /// Returns the required size of the coefficient matrix in the articulation.
-    ///
-    /// Size of the coefficient matrix (equal to getDofs() * getNbLoopJoints()).
-    ///
-    /// This call may only be made on articulations that are in a scene.
-    pub fn PxArticulationReducedCoordinate_getCoefficientMatrixSize(self_: *const PxArticulationReducedCoordinate) -> u32;
-
-    /// Sets the root link transform (world to actor frame).
-    ///
-    /// - For performance, prefer PxArticulationCache::rootLinkData to set the root link transform in a batch articulation state update.
-    /// - Use updateKinematic() after all state updates to the articulation via non-cache API such as this method,
-    /// in order to update link states for the next simulation frame or querying.
-    ///
-    /// This call may not be made during simulation.
-    pub fn PxArticulationReducedCoordinate_setRootGlobalPose_mut(self_: *mut PxArticulationReducedCoordinate, pose: *const PxTransform, autowake: bool);
-
-    /// Returns the root link transform (world to actor frame).
-    ///
-    /// For performance, prefer PxArticulationCache::rootLinkData to get the root link transform in a batch query.
-    ///
-    /// The root link transform.
-    ///
-    /// This call is not allowed while the simulation is running except in a split simulation during [`PxScene::collide`]() and up to #PxScene::advance(),
-    /// and in PxContactModifyCallback or in contact report callbacks.
-    pub fn PxArticulationReducedCoordinate_getRootGlobalPose(self_: *const PxArticulationReducedCoordinate) -> PxTransform;
-
-    /// Sets the root link linear center-of-mass velocity.
-    ///
-    /// - The linear velocity is with respect to the link's center of mass and not the actor frame origin.
-    /// - For performance, prefer PxArticulationCache::rootLinkData to set the root link velocity in a batch articulation state update.
-    /// - The articulation is woken up if the input velocity is nonzero (ignoring autowake) and the articulation is in a scene.
-    /// - Use updateKinematic() after all state updates to the articulation via non-cache API such as this method,
-    /// in order to update link states for the next simulation frame or querying.
-    ///
-    /// This call may not be made during simulation, except in a split simulation in-between [`PxScene::fetchCollision`] and #PxScene::advance.
-    pub fn PxArticulationReducedCoordinate_setRootLinearVelocity_mut(self_: *mut PxArticulationReducedCoordinate, linearVelocity: *const PxVec3, autowake: bool);
-
-    /// Gets the root link center-of-mass linear velocity.
-    ///
-    /// - The linear velocity is with respect to the link's center of mass and not the actor frame origin.
-    /// - For performance, prefer PxArticulationCache::rootLinkData to get the root link velocity in a batch query.
-    ///
-    /// The root link center-of-mass linear velocity.
-    ///
-    /// This call is not allowed while the simulation is running except in a split simulation during [`PxScene::collide`]() and up to #PxScene::advance(),
-    /// and in PxContactModifyCallback or in contact report callbacks.
-    pub fn PxArticulationReducedCoordinate_getRootLinearVelocity(self_: *const PxArticulationReducedCoordinate) -> PxVec3;
-
-    /// Sets the root link angular velocity.
-    ///
-    /// - For performance, prefer PxArticulationCache::rootLinkData to set the root link velocity in a batch articulation state update.
-    /// - The articulation is woken up if the input velocity is nonzero (ignoring autowake) and the articulation is in a scene.
-    /// - Use updateKinematic() after all state updates to the articulation via non-cache API such as this method,
-    /// in order to update link states for the next simulation frame or querying.
-    ///
-    /// This call may not be made during simulation, except in a split simulation in-between [`PxScene::fetchCollision`] and #PxScene::advance.
-    pub fn PxArticulationReducedCoordinate_setRootAngularVelocity_mut(self_: *mut PxArticulationReducedCoordinate, angularVelocity: *const PxVec3, autowake: bool);
-
-    /// Gets the root link angular velocity.
-    ///
-    /// For performance, prefer PxArticulationCache::rootLinkData to get the root link velocity in a batch query.
-    ///
-    /// The root link angular velocity.
-    ///
-    /// This call is not allowed while the simulation is running except in a split simulation during [`PxScene::collide`]() and up to #PxScene::advance(),
-    /// and in PxContactModifyCallback or in contact report callbacks.
-    pub fn PxArticulationReducedCoordinate_getRootAngularVelocity(self_: *const PxArticulationReducedCoordinate) -> PxVec3;
-
-    /// Returns the (classical) link acceleration in world space for the given low-level link index.
-    ///
-    /// - The returned acceleration is not a spatial, but a classical, i.e. body-fixed acceleration (https://en.wikipedia.org/wiki/Spatial_acceleration).
-    /// - The (linear) acceleration is with respect to the link's center of mass and not the actor frame origin.
-    ///
-    /// The link's center-of-mass classical acceleration, or 0 if the call is made before the articulation participated in a first simulation step.
-    ///
-    /// This call may only be made on articulations that are in a scene, and it is not allowed to use this method while the simulation
-    /// is running except in a split simulation during [`PxScene::collide`]() and up to #PxScene::advance(), and in PxContactModifyCallback or in contact report callbacks.
-    pub fn PxArticulationReducedCoordinate_getLinkAcceleration_mut(self_: *mut PxArticulationReducedCoordinate, linkId: u32) -> PxSpatialVelocity;
-
-    /// Returns the GPU articulation index.
-    ///
-    /// The GPU index, or 0xFFFFFFFF if the articulation is not in a scene or PxSceneFlag::eSUPPRESS_READBACK is not set.
-    pub fn PxArticulationReducedCoordinate_getGpuArticulationIndex_mut(self_: *mut PxArticulationReducedCoordinate) -> u32;
-
-    /// Creates a spatial tendon to attach to the articulation with default attribute values.
-    ///
-    /// The new spatial tendon.
-    ///
-    /// Creating a spatial tendon is not allowed while the articulation is in a scene. In order to
-    /// add the tendon, remove and then re-add the articulation to the scene.
-    pub fn PxArticulationReducedCoordinate_createSpatialTendon_mut(self_: *mut PxArticulationReducedCoordinate) -> *mut PxArticulationSpatialTendon;
-
-    /// Creates a fixed tendon to attach to the articulation with default attribute values.
-    ///
-    /// The new fixed tendon.
-    ///
-    /// Creating a fixed tendon is not allowed while the articulation is in a scene. In order to
-    /// add the tendon, remove and then re-add the articulation to the scene.
-    pub fn PxArticulationReducedCoordinate_createFixedTendon_mut(self_: *mut PxArticulationReducedCoordinate) -> *mut PxArticulationFixedTendon;
-
-    /// Creates a force sensor attached to a link of the articulation.
-    ///
-    /// The new sensor.
-    ///
-    /// Creating a sensor is not allowed while the articulation is in a scene. In order to
-    /// add the sensor, remove and then re-add the articulation to the scene.
-    pub fn PxArticulationReducedCoordinate_createSensor_mut(self_: *mut PxArticulationReducedCoordinate, link: *mut PxArticulationLink, relativePose: *const PxTransform) -> *mut PxArticulationSensor;
-
-    /// Returns the spatial tendons attached to the articulation.
-    ///
-    /// The order of the tendons in the buffer is not necessarily identical to the order in which the tendons were added to the articulation.
-    ///
-    /// The number of tendons written into the buffer.
-    pub fn PxArticulationReducedCoordinate_getSpatialTendons(self_: *const PxArticulationReducedCoordinate, userBuffer: *mut *mut PxArticulationSpatialTendon, bufferSize: u32, startIndex: u32) -> u32;
-
-    /// Returns the number of spatial tendons in the articulation.
-    ///
-    /// The number of tendons.
-    pub fn PxArticulationReducedCoordinate_getNbSpatialTendons_mut(self_: *mut PxArticulationReducedCoordinate) -> u32;
-
-    /// Returns the fixed tendons attached to the articulation.
-    ///
-    /// The order of the tendons in the buffer is not necessarily identical to the order in which the tendons were added to the articulation.
-    ///
-    /// The number of tendons written into the buffer.
-    pub fn PxArticulationReducedCoordinate_getFixedTendons(self_: *const PxArticulationReducedCoordinate, userBuffer: *mut *mut PxArticulationFixedTendon, bufferSize: u32, startIndex: u32) -> u32;
-
-    /// Returns the number of fixed tendons in the articulation.
-    ///
-    /// The number of tendons.
-    pub fn PxArticulationReducedCoordinate_getNbFixedTendons_mut(self_: *mut PxArticulationReducedCoordinate) -> u32;
-
-    /// Returns the sensors attached to the articulation.
-    ///
-    /// The order of the sensors in the buffer is not necessarily identical to the order in which the sensors were added to the articulation.
-    ///
-    /// The number of sensors written into the buffer.
-    pub fn PxArticulationReducedCoordinate_getSensors(self_: *const PxArticulationReducedCoordinate, userBuffer: *mut *mut PxArticulationSensor, bufferSize: u32, startIndex: u32) -> u32;
-
-    /// Returns the number of sensors in the articulation.
-    ///
-    /// The number of sensors.
-    pub fn PxArticulationReducedCoordinate_getNbSensors_mut(self_: *mut PxArticulationReducedCoordinate) -> u32;
-
-    /// Update link velocities and/or positions in the articulation.
-    ///
-    /// For performance, prefer the PxArticulationCache API that performs batch articulation state updates.
-    ///
-    /// If the application updates the root state (position and velocity) or joint state via any combination of
-    /// the non-cache API calls
-    ///
-    /// - setRootGlobalPose(), setRootLinearVelocity(), setRootAngularVelocity()
-    /// - PxArticulationJointReducedCoordinate::setJointPosition(), PxArticulationJointReducedCoordinate::setJointVelocity()
-    ///
-    /// the application needs to call this method after the state setting in order to update the link states for
-    /// the next simulation frame or querying.
-    ///
-    /// Use
-    /// - PxArticulationKinematicFlag::ePOSITION after any changes to the articulation root or joint positions using non-cache API calls. Updates links' positions and velocities.
-    /// - PxArticulationKinematicFlag::eVELOCITY after velocity-only changes to the articulation root or joints using non-cache API calls. Updates links' velocities only.
-    ///
-    /// This call may only be made on articulations that are in a scene, and may not be made during simulation.
-    pub fn PxArticulationReducedCoordinate_updateKinematic_mut(self_: *mut PxArticulationReducedCoordinate, flags: PxArticulationKinematicFlags);
-
-    /// Gets the parent articulation link of this joint.
-    ///
-    /// The parent link.
-    pub fn PxArticulationJointReducedCoordinate_getParentArticulationLink(self_: *const PxArticulationJointReducedCoordinate) -> *mut PxArticulationLink;
-
-    /// Sets the joint pose in the parent link actor frame.
-    ///
-    /// This call is not allowed while the simulation is running.
-    pub fn PxArticulationJointReducedCoordinate_setParentPose_mut(self_: *mut PxArticulationJointReducedCoordinate, pose: *const PxTransform);
-
-    /// Gets the joint pose in the parent link actor frame.
-    ///
-    /// The joint pose.
-    pub fn PxArticulationJointReducedCoordinate_getParentPose(self_: *const PxArticulationJointReducedCoordinate) -> PxTransform;
-
-    /// Gets the child articulation link of this joint.
-    ///
-    /// The child link.
-    pub fn PxArticulationJointReducedCoordinate_getChildArticulationLink(self_: *const PxArticulationJointReducedCoordinate) -> *mut PxArticulationLink;
-
-    /// Sets the joint pose in the child link actor frame.
-    ///
-    /// This call is not allowed while the simulation is running.
-    pub fn PxArticulationJointReducedCoordinate_setChildPose_mut(self_: *mut PxArticulationJointReducedCoordinate, pose: *const PxTransform);
-
-    /// Gets the joint pose in the child link actor frame.
-    ///
-    /// The joint pose.
-    pub fn PxArticulationJointReducedCoordinate_getChildPose(self_: *const PxArticulationJointReducedCoordinate) -> PxTransform;
-
-    /// Sets the joint type (e.g. revolute).
-    ///
-    /// Setting the joint type is not allowed while the articulation is in a scene.
-    /// In order to set the joint type, remove and then re-add the articulation to the scene.
-    pub fn PxArticulationJointReducedCoordinate_setJointType_mut(self_: *mut PxArticulationJointReducedCoordinate, jointType: PxArticulationJointType::Enum);
-
-    /// Gets the joint type.
-    ///
-    /// The joint type.
-    pub fn PxArticulationJointReducedCoordinate_getJointType(self_: *const PxArticulationJointReducedCoordinate) -> PxArticulationJointType::Enum;
-
-    /// Sets the joint motion for a given axis.
-    ///
-    /// Setting the motion of joint axes is not allowed while the articulation is in a scene.
-    /// In order to set the motion, remove and then re-add the articulation to the scene.
-    pub fn PxArticulationJointReducedCoordinate_setMotion_mut(self_: *mut PxArticulationJointReducedCoordinate, axis: PxArticulationAxis::Enum, motion: PxArticulationMotion::Enum);
-
-    /// Returns the joint motion for the given axis.
-    ///
-    /// The joint motion of the given axis.
-    pub fn PxArticulationJointReducedCoordinate_getMotion(self_: *const PxArticulationJointReducedCoordinate, axis: PxArticulationAxis::Enum) -> PxArticulationMotion::Enum;
-
-    /// Sets the joint limits for a given axis.
-    ///
-    /// - The motion of the corresponding axis should be set to PxArticulationMotion::eLIMITED in order for the limits to be enforced.
-    /// - The lower limit should be strictly smaller than the higher limit. If the limits should be equal, use PxArticulationMotion::eLOCKED
-    /// and an appropriate offset in the parent/child joint frames.
-    ///
-    /// This call is not allowed while the simulation is running.
-    ///
-    /// For spherical joints, limit.min and limit.max must both be in range [-Pi, Pi].
-    pub fn PxArticulationJointReducedCoordinate_setLimitParams_mut(self_: *mut PxArticulationJointReducedCoordinate, axis: PxArticulationAxis::Enum, limit: *const PxArticulationLimit);
-
-    /// Returns the joint limits for a given axis.
-    ///
-    /// The joint limits.
-    pub fn PxArticulationJointReducedCoordinate_getLimitParams(self_: *const PxArticulationJointReducedCoordinate, axis: PxArticulationAxis::Enum) -> PxArticulationLimit;
-
-    /// Configures a joint drive for the given axis.
-    ///
-    /// See PxArticulationDrive for parameter details; and the manual for further information, and the drives' implicit spring-damper (i.e. PD control) implementation in particular.
-    ///
-    /// This call is not allowed while the simulation is running.
-    pub fn PxArticulationJointReducedCoordinate_setDriveParams_mut(self_: *mut PxArticulationJointReducedCoordinate, axis: PxArticulationAxis::Enum, drive: *const PxArticulationDrive);
-
-    /// Gets the joint drive configuration for the given axis.
-    ///
-    /// The drive parameters.
-    pub fn PxArticulationJointReducedCoordinate_getDriveParams(self_: *const PxArticulationJointReducedCoordinate, axis: PxArticulationAxis::Enum) -> PxArticulationDrive;
-
-    /// Sets the joint drive position target for the given axis.
-    ///
-    /// The target units are linear units (equivalent to scene units) for a translational axis, or rad for a rotational axis.
-    ///
-    /// This call is not allowed while the simulation is running.
-    ///
-    /// For spherical joints, target must be in range [-Pi, Pi].
-    ///
-    /// The target is specified in the parent frame of the joint. If Gp, Gc are the parent and child actor poses in the world frame and Lp, Lc are the parent and child joint frames expressed in the parent and child actor frames then the joint will drive the parent and child links to poses that obey Gp * Lp * J = Gc * Lc. For joints restricted to angular motion, J has the form PxTranfsorm(PxVec3(PxZero), PxExp(PxVec3(twistTarget, swing1Target, swing2Target))).  For joints restricted to linear motion, J has the form PxTransform(PxVec3(XTarget, YTarget, ZTarget), PxQuat(PxIdentity)).
-    ///
-    /// For spherical joints with more than 1 degree of freedom, the joint target angles taken together can collectively represent a rotation of greater than Pi around a vector. When this happens the rotation that matches the joint drive target is not the shortest path rotation.  The joint pose J that is the outcome after driving to the target pose will always be the equivalent of the shortest path rotation.
-    pub fn PxArticulationJointReducedCoordinate_setDriveTarget_mut(self_: *mut PxArticulationJointReducedCoordinate, axis: PxArticulationAxis::Enum, target: f32, autowake: bool);
-
-    /// Returns the joint drive position target for the given axis.
-    ///
-    /// The target position.
-    pub fn PxArticulationJointReducedCoordinate_getDriveTarget(self_: *const PxArticulationJointReducedCoordinate, axis: PxArticulationAxis::Enum) -> f32;
-
-    /// Sets the joint drive velocity target for the given axis.
-    ///
-    /// The target units are linear units (equivalent to scene units) per second for a translational axis, or radians per second for a rotational axis.
-    ///
-    /// This call is not allowed while the simulation is running.
-    pub fn PxArticulationJointReducedCoordinate_setDriveVelocity_mut(self_: *mut PxArticulationJointReducedCoordinate, axis: PxArticulationAxis::Enum, targetVel: f32, autowake: bool);
-
-    /// Returns the joint drive velocity target for the given axis.
-    ///
-    /// The target velocity.
-    pub fn PxArticulationJointReducedCoordinate_getDriveVelocity(self_: *const PxArticulationJointReducedCoordinate, axis: PxArticulationAxis::Enum) -> f32;
-
-    /// Sets the joint armature for the given axis.
-    ///
-    /// - The armature is directly added to the joint-space spatial inertia of the corresponding axis.
-    /// - The armature is in mass units for a prismatic (i.e. linear) joint, and in mass units * (scene linear units)^2 for a rotational joint.
-    ///
-    /// This call is not allowed while the simulation is running.
-    pub fn PxArticulationJointReducedCoordinate_setArmature_mut(self_: *mut PxArticulationJointReducedCoordinate, axis: PxArticulationAxis::Enum, armature: f32);
-
-    /// Gets the joint armature for the given axis.
-    ///
-    /// The armature set on the given axis.
-    pub fn PxArticulationJointReducedCoordinate_getArmature(self_: *const PxArticulationJointReducedCoordinate, axis: PxArticulationAxis::Enum) -> f32;
-
-    /// Sets the joint friction coefficient, which applies to all joint axes.
-    ///
-    /// - The joint friction is unitless and relates the magnitude of the spatial force [F_trans, T_trans] transmitted from parent to child link to
-    /// the maximal friction force F_resist that may be applied by the solver to resist joint motion, per axis; i.e. |F_resist|
-    /// <
-    /// = coefficient * (|F_trans| + |T_trans|),
-    /// where F_resist may refer to a linear force or torque depending on the joint axis.
-    /// - The simulated friction effect is therefore similar to static and Coulomb friction. In order to simulate dynamic joint friction, use a joint drive with
-    /// zero stiffness and zero velocity target, and an appropriately dimensioned damping parameter.
-    ///
-    /// This call is not allowed while the simulation is running.
-    pub fn PxArticulationJointReducedCoordinate_setFrictionCoefficient_mut(self_: *mut PxArticulationJointReducedCoordinate, coefficient: f32);
-
-    /// Gets the joint friction coefficient.
-    ///
-    /// The joint friction coefficient.
-    pub fn PxArticulationJointReducedCoordinate_getFrictionCoefficient(self_: *const PxArticulationJointReducedCoordinate) -> f32;
-
-    /// Sets the maximal joint velocity enforced for all axes.
-    ///
-    /// - The solver will apply appropriate joint-space impulses in order to enforce the per-axis joint-velocity limit.
-    /// - The velocity units are linear units (equivalent to scene units) per second for a translational axis, or radians per second for a rotational axis.
-    ///
-    /// This call is not allowed while the simulation is running.
-    pub fn PxArticulationJointReducedCoordinate_setMaxJointVelocity_mut(self_: *mut PxArticulationJointReducedCoordinate, maxJointV: f32);
-
-    /// Gets the maximal joint velocity enforced for all axes.
-    ///
-    /// The maximal per-axis joint velocity.
-    pub fn PxArticulationJointReducedCoordinate_getMaxJointVelocity(self_: *const PxArticulationJointReducedCoordinate) -> f32;
-
-    /// Sets the joint position for the given axis.
-    ///
-    /// - For performance, prefer PxArticulationCache::jointPosition to set joint positions in a batch articulation state update.
-    /// - Use PxArticulationReducedCoordinate::updateKinematic after all state updates to the articulation via non-cache API such as this method,
-    /// in order to update link states for the next simulation frame or querying.
-    ///
-    /// This call is not allowed while the simulation is running.
-    ///
-    /// For spherical joints, jointPos must be in range [-Pi, Pi].
-    ///
-    /// Joint position is specified in the parent frame of the joint. If Gp, Gc are the parent and child actor poses in the world frame and Lp, Lc are the parent and child joint frames expressed in the parent and child actor frames then the parent and child links will be given poses that obey Gp * Lp * J = Gc * Lc with J denoting the joint pose. For joints restricted to angular motion, J has the form PxTranfsorm(PxVec3(PxZero), PxExp(PxVec3(twistPos, swing1Pos, swing2Pos))).  For joints restricted to linear motion, J has the form PxTransform(PxVec3(xPos, yPos, zPos), PxQuat(PxIdentity)).
-    ///
-    /// For spherical joints with more than 1 degree of freedom, the input joint positions taken together can collectively represent a rotation of greater than Pi around a vector. When this happens the rotation that matches the joint positions is not the shortest path rotation.  The joint pose J that is the outcome of setting and applying the joint positions will always be the equivalent of the shortest path rotation.
-    pub fn PxArticulationJointReducedCoordinate_setJointPosition_mut(self_: *mut PxArticulationJointReducedCoordinate, axis: PxArticulationAxis::Enum, jointPos: f32);
-
-    /// Gets the joint position for the given axis, i.e. joint degree of freedom (DOF).
-    ///
-    /// For performance, prefer PxArticulationCache::jointPosition to get joint positions in a batch query.
-    ///
-    /// The joint position in linear units (equivalent to scene units) for a translational axis, or radians for a rotational axis.
-    ///
-    /// This call is not allowed while the simulation is running except in a split simulation during [`PxScene::collide`]() and up to #PxScene::advance(),
-    /// and in PxContactModifyCallback or in contact report callbacks.
-    pub fn PxArticulationJointReducedCoordinate_getJointPosition(self_: *const PxArticulationJointReducedCoordinate, axis: PxArticulationAxis::Enum) -> f32;
-
-    /// Sets the joint velocity for the given axis.
-    ///
-    /// - For performance, prefer PxArticulationCache::jointVelocity to set joint velocities in a batch articulation state update.
-    /// - Use PxArticulationReducedCoordinate::updateKinematic after all state updates to the articulation via non-cache API such as this method,
-    /// in order to update link states for the next simulation frame or querying.
-    ///
-    /// This call is not allowed while the simulation is running.
-    pub fn PxArticulationJointReducedCoordinate_setJointVelocity_mut(self_: *mut PxArticulationJointReducedCoordinate, axis: PxArticulationAxis::Enum, jointVel: f32);
-
-    /// Gets the joint velocity for the given axis.
-    ///
-    /// For performance, prefer PxArticulationCache::jointVelocity to get joint velocities in a batch query.
-    ///
-    /// The joint velocity in linear units (equivalent to scene units) per second for a translational axis, or radians per second for a rotational axis.
-    ///
-    /// This call is not allowed while the simulation is running except in a split simulation during [`PxScene::collide`]() and up to #PxScene::advance(),
-    /// and in PxContactModifyCallback or in contact report callbacks.
-    pub fn PxArticulationJointReducedCoordinate_getJointVelocity(self_: *const PxArticulationJointReducedCoordinate, axis: PxArticulationAxis::Enum) -> f32;
-
-    /// Returns the string name of the dynamic type.
-    ///
-    /// The string name.
-    pub fn PxArticulationJointReducedCoordinate_getConcreteTypeName(self_: *const PxArticulationJointReducedCoordinate) -> *const std::ffi::c_char;
 
     pub fn PxArticulationJointReducedCoordinate_delete(self_: *mut PxArticulationJointReducedCoordinate);
 
@@ -10287,16 +9575,6 @@ extern "C" {
     /// Number of broadphase volumes removed.
     pub fn PxSimulationStatistics_getNbBroadPhaseRemoves(self_: *const PxSimulationStatistics) -> u32;
 
-    /// Get number of shape collision pairs of a certain type processed for the current simulation step.
-    ///
-    /// There is an entry for each geometry pair type.
-    ///
-    /// entry[i][j] = entry[j][i], hence, if you want the sum of all pair
-    /// types, you need to discard the symmetric entries
-    ///
-    /// Number of processed pairs of the specified geometry types.
-    pub fn PxSimulationStatistics_getRbPairStats(self_: *const PxSimulationStatistics, pairType: RbPairStatsType, g0: PxGeometryType, g1: PxGeometryType) -> u32;
-
     pub fn PxSimulationStatistics_new() -> PxSimulationStatistics;
 
     /// Sets the PVD flag. See PxPvdSceneFlag.
@@ -10332,6 +9610,127 @@ extern "C" {
     pub fn PxSceneWriteLock_new_alloc(scene: *mut PxScene, file: *const std::ffi::c_char, line: u32) -> *mut PxSceneWriteLock;
 
     pub fn PxSceneWriteLock_delete(self_: *mut PxSceneWriteLock);
+
+    pub fn PxContactPairExtraDataItem_new() -> PxContactPairExtraDataItem;
+
+    pub fn PxContactPairVelocity_new() -> PxContactPairVelocity;
+
+    pub fn PxContactPairPose_new() -> PxContactPairPose;
+
+    pub fn PxContactPairIndex_new() -> PxContactPairIndex;
+
+    /// Constructor
+    pub fn PxContactPairExtraDataIterator_new(stream: *const u8, size: u32) -> PxContactPairExtraDataIterator;
+
+    /// Advances the iterator to next set of extra data items.
+    ///
+    /// The contact pair extra data stream contains sets of items as requested by the corresponding [`PxPairFlag`] flags
+    /// [`PxPairFlag::ePRE_SOLVER_VELOCITY`], #PxPairFlag::ePOST_SOLVER_VELOCITY, #PxPairFlag::eCONTACT_EVENT_POSE. A set can contain one
+    /// item of each plus the PxContactPairIndex item. This method parses the stream and points the iterator
+    /// member variables to the corresponding items of the current set, if they are available. If CCD is not enabled,
+    /// you should only get one set of items. If CCD with multiple passes is enabled, you might get more than one item
+    /// set.
+    ///
+    /// Even though contact pair extra data is requested per shape pair, you will not get an item set per shape pair
+    /// but one per actor pair. If, for example, an actor has two shapes and both collide with another actor, then
+    /// there will only be one item set (since it applies to both shape pairs).
+    ///
+    /// True if there was another set of extra data items in the stream, else false.
+    pub fn PxContactPairExtraDataIterator_nextItemSet_mut(self_: *mut PxContactPairExtraDataIterator) -> bool;
+
+    pub fn PxContactPairHeader_new() -> PxContactPairHeader;
+
+    pub fn PxContactPair_new() -> PxContactPair;
+
+    /// Extracts the contact points from the stream and stores them in a convenient format.
+    ///
+    /// Number of contact points written to the buffer.
+    pub fn PxContactPair_extractContacts(self_: *const PxContactPair, userBuffer: *mut PxContactPairPoint, bufferSize: u32) -> u32;
+
+    /// Helper method to clone the contact pair and copy the contact data stream into a user buffer.
+    ///
+    /// The contact data stream is only accessible during the contact report callback. This helper function provides copy functionality
+    /// to buffer the contact stream information such that it can get accessed at a later stage.
+    pub fn PxContactPair_bufferContacts(self_: *const PxContactPair, newPair: *mut PxContactPair, bufferMemory: *mut u8);
+
+    pub fn PxContactPair_getInternalFaceIndices(self_: *const PxContactPair) -> *const u32;
+
+    pub fn PxTriggerPair_new() -> PxTriggerPair;
+
+    pub fn PxConstraintInfo_new() -> PxConstraintInfo;
+
+    pub fn PxConstraintInfo_new_1(c: *mut PxConstraint, extRef: *mut std::ffi::c_void, t: u32) -> PxConstraintInfo;
+
+    /// This is called when a breakable constraint breaks.
+    ///
+    /// The user should not release the constraint shader inside this call!
+    ///
+    /// No event will get reported if the constraint breaks but gets deleted while the time step is still being simulated.
+    pub fn PxSimulationEventCallback_onConstraintBreak_mut(self_: *mut PxSimulationEventCallback, constraints: *mut PxConstraintInfo, count: u32);
+
+    /// This is called with the actors which have just been woken up.
+    ///
+    /// Only supported by rigid bodies yet.
+    ///
+    /// Only called on actors for which the PxActorFlag eSEND_SLEEP_NOTIFIES has been set.
+    ///
+    /// Only the latest sleep state transition happening between fetchResults() of the previous frame and fetchResults() of the current frame
+    /// will get reported. For example, let us assume actor A is awake, then A->putToSleep() gets called, then later A->wakeUp() gets called.
+    /// At the next simulate/fetchResults() step only an onWake() event will get triggered because that was the last transition.
+    ///
+    /// If an actor gets newly added to a scene with properties such that it is awake and the sleep state does not get changed by
+    /// the user or simulation, then an onWake() event will get sent at the next simulate/fetchResults() step.
+    pub fn PxSimulationEventCallback_onWake_mut(self_: *mut PxSimulationEventCallback, actors: *mut *mut PxActor, count: u32);
+
+    /// This is called with the actors which have just been put to sleep.
+    ///
+    /// Only supported by rigid bodies yet.
+    ///
+    /// Only called on actors for which the PxActorFlag eSEND_SLEEP_NOTIFIES has been set.
+    ///
+    /// Only the latest sleep state transition happening between fetchResults() of the previous frame and fetchResults() of the current frame
+    /// will get reported. For example, let us assume actor A is asleep, then A->wakeUp() gets called, then later A->putToSleep() gets called.
+    /// At the next simulate/fetchResults() step only an onSleep() event will get triggered because that was the last transition (assuming the simulation
+    /// does not wake the actor up).
+    ///
+    /// If an actor gets newly added to a scene with properties such that it is asleep and the sleep state does not get changed by
+    /// the user or simulation, then an onSleep() event will get sent at the next simulate/fetchResults() step.
+    pub fn PxSimulationEventCallback_onSleep_mut(self_: *mut PxSimulationEventCallback, actors: *mut *mut PxActor, count: u32);
+
+    /// This is called when certain contact events occur.
+    ///
+    /// The method will be called for a pair of actors if one of the colliding shape pairs requested contact notification.
+    /// You request which events are reported using the filter shader/callback mechanism (see [`PxSimulationFilterShader`],
+    /// [`PxSimulationFilterCallback`], #PxPairFlag).
+    ///
+    /// Do not keep references to the passed objects, as they will be
+    /// invalid after this function returns.
+    pub fn PxSimulationEventCallback_onContact_mut(self_: *mut PxSimulationEventCallback, pairHeader: *const PxContactPairHeader, pairs: *const PxContactPair, nbPairs: u32);
+
+    /// This is called with the current trigger pair events.
+    ///
+    /// Shapes which have been marked as triggers using PxShapeFlag::eTRIGGER_SHAPE will send events
+    /// according to the pair flag specification in the filter shader (see [`PxPairFlag`], #PxSimulationFilterShader).
+    ///
+    /// Trigger shapes will no longer send notification events for interactions with other trigger shapes.
+    pub fn PxSimulationEventCallback_onTrigger_mut(self_: *mut PxSimulationEventCallback, pairs: *mut PxTriggerPair, count: u32);
+
+    /// Provides early access to the new pose of moving rigid bodies.
+    ///
+    /// When this call occurs, rigid bodies having the [`PxRigidBodyFlag::eENABLE_POSE_INTEGRATION_PREVIEW`]
+    /// flag set, were moved by the simulation and their new poses can be accessed through the provided buffers.
+    ///
+    /// The provided buffers are valid and can be read until the next call to [`PxScene::simulate`]() or #PxScene::collide().
+    ///
+    /// This callback gets triggered while the simulation is running. If the provided rigid body references are used to
+    /// read properties of the object, then the callback has to guarantee no other thread is writing to the same body at the same
+    /// time.
+    ///
+    /// The code in this callback should be lightweight as it can block the simulation, that is, the
+    /// [`PxScene::fetchResults`]() call.
+    pub fn PxSimulationEventCallback_onAdvance_mut(self_: *mut PxSimulationEventCallback, bodyBuffer: *const *const PxRigidBody, poseBuffer: *const PxTransform, count: u32);
+
+    pub fn PxSimulationEventCallback_delete(self_: *mut PxSimulationEventCallback);
 
     pub fn PxFEMParameters_new() -> PxFEMParameters;
 
@@ -10783,11 +10182,6 @@ extern "C" {
 
     /// Releases all the controllers that are being managed.
     pub fn PxControllerManager_purgeControllers_mut(self_: *mut PxControllerManager);
-
-    /// Retrieves debug data.
-    ///
-    /// The render buffer filled with debug-render data
-    pub fn PxControllerManager_getRenderBuffer_mut(self_: *mut PxControllerManager) -> *mut PxRenderBuffer;
 
     /// Sets debug rendering flags
     pub fn PxControllerManager_setDebugRenderingFlags_mut(self_: *mut PxControllerManager, flags: PxControllerDebugRenderFlags);
