@@ -810,112 +810,6 @@ pub enum ConstraintType {
     JointConstraint = 1,
 }
 
-/// Data structure used for preparing constraints before solving them
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-#[repr(i32)]
-pub enum BodyState {
-    DynamicBody = 1,
-    StaticBody = 2,
-    KinematicBody = 4,
-    Articulation = 8,
-}
-
-/// @
-/// {
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-#[repr(i32)]
-pub enum PxArticulationAxis {
-    /// Rotational about eX
-    Twist = 0,
-    /// Rotational about eY
-    Swing1 = 1,
-    /// Rotational about eZ
-    Swing2 = 2,
-    /// Linear in eX
-    X = 3,
-    /// Linear in eY
-    Y = 4,
-    /// Linear in eZ
-    Z = 5,
-    Count = 6,
-}
-
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-#[repr(i32)]
-pub enum PxArticulationMotion {
-    /// Locked axis, i.e. degree of freedom (DOF)
-    Locked = 0,
-    /// Limited DOF - set limits of joint DOF together with this flag, see PxArticulationJointReducedCoordinate::setLimitParams
-    Limited = 1,
-    /// Free DOF
-    Free = 2,
-}
-
-bitflags::bitflags! {
-    /// Flags for [`PxArticulationMotion`]
-    #[derive(Default)]
-    #[repr(transparent)]
-    pub struct PxArticulationMotions: u8 {
-        const Limited = 1 << 0;
-        const Free = 1 << 1;
-    }
-}
-
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-#[repr(i32)]
-pub enum PxArticulationJointType {
-    /// All joint axes, i.e. degrees of freedom (DOFs) locked
-    Fix = 0,
-    /// Single linear DOF, e.g. cart on a rail
-    Prismatic = 1,
-    /// Single rotational DOF, e.g. an elbow joint or a rotational motor, position wrapped at 2pi radians
-    Revolute = 2,
-    /// Single rotational DOF, e.g. an elbow joint or a rotational motor, position not wrapped
-    RevoluteUnwrapped = 3,
-    /// Ball and socket joint with two or three DOFs
-    Spherical = 4,
-    Undefined = 5,
-}
-
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-#[repr(i32)]
-pub enum PxArticulationFlag {
-    /// Set articulation base to be fixed.
-    FixBase = 1,
-    /// Limits for drive effort are forces and torques rather than impulses, see PxArticulationDrive::maxForce.
-    DriveLimitsAreForces = 2,
-    /// Disable collisions between the articulation's links (note that parent/child collisions are disabled internally in either case).
-    DisableSelfCollision = 4,
-    /// Enable in order to be able to query joint solver (i.e. constraint) forces using PxArticulationCache::jointSolverForces.
-    ComputeJointForces = 8,
-}
-
-bitflags::bitflags! {
-    /// Flags for [`PxArticulationFlag`]
-    #[derive(Default)]
-    #[repr(transparent)]
-    pub struct PxArticulationFlags: u8 {
-        const FixBase = 1 << 0;
-        const DriveLimitsAreForces = 1 << 1;
-        const DisableSelfCollision = 1 << 2;
-        const ComputeJointForces = 1 << 3;
-    }
-}
-
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-#[repr(i32)]
-pub enum PxArticulationDriveType {
-    /// The output of the implicit spring drive controller is a force/torque.
-    Force = 0,
-    /// The output of the implicit spring drive controller is a joint acceleration (use this to get (spatial)-inertia-invariant behavior of the drive).
-    Acceleration = 1,
-    /// Sets the drive gains internally to track a target position almost kinematically (i.e. with very high drive gains).
-    Target = 2,
-    /// Sets the drive gains internally to track a target velocity almost kinematically (i.e. with very high drive gains).
-    Velocity = 3,
-    None = 4,
-}
-
 /// A description of the types of articulation data that may be directly written to and read from the GPU using the functions
 /// PxScene::copyArticulationData() and PxScene::applyArticulationData(). Types that are read-only may only be used in conjunction with
 /// PxScene::copyArticulationData(). Types that are write-only may only be used in conjunction with PxScene::applyArticulationData().
@@ -1272,15 +1166,6 @@ pub enum PxContactPatchFlags {
     /// Indicates this contact stream needs patches re-generated. This is required if the application modified either the contact normal or the material properties
     RegeneratePatches = 64,
     CompressedModifiedContact = 128,
-}
-
-/// A class to iterate over a compressed contact stream. This supports read-only access to the various contact formats.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-#[repr(i32)]
-pub enum StreamFormat {
-    SimpleStream = 0,
-    ModifiableStream = 1,
-    CompressedModifiableStream = 2,
 }
 
 /// Flags specifying deletion event types.
@@ -2490,128 +2375,6 @@ bitflags::bitflags! {
     }
 }
 
-/// Identifies each type of actor for retrieving actors from a scene.
-///
-/// [`PxArticulationLink`] objects are not supported. Use the #PxArticulationReducedCoordinate object to retrieve all its links.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-#[repr(i32)]
-pub enum PxActorTypeFlag {
-    /// A static rigid body
-    RigidStatic = 1,
-    /// A dynamic rigid body
-    RigidDynamic = 2,
-}
-
-bitflags::bitflags! {
-    /// Flags for [`PxActorTypeFlag`]
-    #[derive(Default)]
-    #[repr(transparent)]
-    pub struct PxActorTypeFlags: u16 {
-        const RigidStatic = 1 << 0;
-        const RigidDynamic = 1 << 1;
-    }
-}
-
-/// Extra data item types for contact pairs.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-#[repr(i32)]
-pub enum PxContactPairExtraDataType {
-    /// see [`PxContactPairVelocity`]
-    PreSolverVelocity = 0,
-    /// see [`PxContactPairVelocity`]
-    PostSolverVelocity = 1,
-    /// see [`PxContactPairPose`]
-    ContactEventPose = 2,
-    /// see [`PxContactPairIndex`]
-    ContactPairIndex = 3,
-}
-
-/// Collection of flags providing information on contact report pairs.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-#[repr(i32)]
-pub enum PxContactPairHeaderFlag {
-    /// The actor with index 0 has been removed from the scene.
-    RemovedActor0 = 1,
-    /// The actor with index 1 has been removed from the scene.
-    RemovedActor1 = 2,
-}
-
-bitflags::bitflags! {
-    /// Flags for [`PxContactPairHeaderFlag`]
-    #[derive(Default)]
-    #[repr(transparent)]
-    pub struct PxContactPairHeaderFlags: u16 {
-        const RemovedActor0 = 1 << 0;
-        const RemovedActor1 = 1 << 1;
-    }
-}
-
-/// Collection of flags providing information on contact report pairs.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-#[repr(i32)]
-pub enum PxContactPairFlag {
-    /// The shape with index 0 has been removed from the actor/scene.
-    RemovedShape0 = 1,
-    /// The shape with index 1 has been removed from the actor/scene.
-    RemovedShape1 = 2,
-    /// First actor pair contact.
-    ///
-    /// The provided shape pair marks the first contact between the two actors, no other shape pair has been touching prior to the current simulation frame.
-    ///
-    /// : This info is only available if [`PxPairFlag::eNOTIFY_TOUCH_FOUND`] has been declared for the pair.
-    ActorPairHasFirstTouch = 4,
-    /// All contact between the actor pair was lost.
-    ///
-    /// All contact between the two actors has been lost, no shape pairs remain touching after the current simulation frame.
-    ActorPairLostTouch = 8,
-    /// Internal flag, used by [`PxContactPair`].extractContacts()
-    ///
-    /// The applied contact impulses are provided for every contact point.
-    /// This is the case if [`PxPairFlag::eSOLVE_CONTACT`] has been set for the pair.
-    InternalHasImpulses = 16,
-    /// Internal flag, used by [`PxContactPair`].extractContacts()
-    ///
-    /// The provided contact point information is flipped with regards to the shapes of the contact pair. This mainly concerns the order of the internal triangle indices.
-    InternalContactsAreFlipped = 32,
-}
-
-bitflags::bitflags! {
-    /// Flags for [`PxContactPairFlag`]
-    #[derive(Default)]
-    #[repr(transparent)]
-    pub struct PxContactPairFlags: u16 {
-        const RemovedShape0 = 1 << 0;
-        const RemovedShape1 = 1 << 1;
-        const ActorPairHasFirstTouch = 1 << 2;
-        const ActorPairLostTouch = 1 << 3;
-        const InternalHasImpulses = 1 << 4;
-        const InternalContactsAreFlipped = 1 << 5;
-    }
-}
-
-/// Collection of flags providing information on trigger report pairs.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-#[repr(i32)]
-pub enum PxTriggerPairFlag {
-    /// The trigger shape has been removed from the actor/scene.
-    RemovedShapeTrigger = 1,
-    /// The shape causing the trigger event has been removed from the actor/scene.
-    RemovedShapeOther = 2,
-    /// For internal use only.
-    NextFree = 4,
-}
-
-bitflags::bitflags! {
-    /// Flags for [`PxTriggerPairFlag`]
-    #[derive(Default)]
-    #[repr(transparent)]
-    pub struct PxTriggerPairFlags: u8 {
-        const RemovedShapeTrigger = 1 << 0;
-        const RemovedShapeOther = 1 << 1;
-        const NextFree = 1 << 2;
-    }
-}
-
 /// Identifies input and output buffers for PxSoftBody.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[repr(i32)]
@@ -3320,20 +3083,6 @@ pub struct PxVirtualAllocatorCallback {
     vtable_: *const std::ffi::c_void,
 }
 
-#[derive(Clone, Copy)]
-#[repr(C)]
-pub union PxTempAllocatorChunk {
-    pub mNext: *mut PxTempAllocatorChunk,
-    pub mIndex: u32,
-    pub mPad: [u8; 16],
-}
-#[cfg(feature = "debug-structs")]
-impl std::fmt::Debug for PxTempAllocatorChunk {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_str("PxTempAllocatorChunk")
-    }
-}
-
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct PxLogTwo {
@@ -3398,13 +3147,6 @@ pub struct PxProfilerCallback {
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
 pub struct PxRunnable {
-    vtable_: *const std::ffi::c_void,
-}
-
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
-pub struct PxRenderBuffer {
     vtable_: *const std::ffi::c_void,
 }
 
@@ -3559,6 +3301,13 @@ pub struct PxParticleRigidBuffer {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
+pub struct PxRefCounted {
+    vtable_: *const std::ffi::c_void,
+}
+
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-structs", derive(Debug))]
+#[repr(C)]
 pub struct PxStringTable {
     vtable_: *const std::ffi::c_void,
 }
@@ -3612,6 +3361,20 @@ pub struct PxBVHTraversalCallback {
     vtable_: *const std::ffi::c_void,
 }
 
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-structs", derive(Debug))]
+#[repr(C)]
+pub struct PxBVH {
+    vtable_: *const std::ffi::c_void,
+}
+
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-structs", derive(Debug))]
+#[repr(C)]
+pub struct PxConvexMesh {
+    vtable_: *const std::ffi::c_void,
+}
+
 #[derive(Copy, Clone)]
 #[repr(C)]
 pub struct PxContactBuffer {
@@ -3629,6 +3392,75 @@ pub struct PxRenderOutput {
 #[repr(C)]
 pub struct PxCustomGeometryCallbacks {
     vtable_: *const std::ffi::c_void,
+}
+
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-structs", derive(Debug))]
+#[repr(C)]
+pub struct PxHeightField {
+    vtable_: *const std::ffi::c_void,
+}
+
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-structs", derive(Debug))]
+#[repr(C)]
+pub struct PxTriangleMesh {
+    vtable_: *const std::ffi::c_void,
+}
+
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-structs", derive(Debug))]
+#[repr(C)]
+pub struct PxBVH34TriangleMesh {
+    vtable_: *const std::ffi::c_void,
+}
+
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-structs", derive(Debug))]
+#[repr(C)]
+pub struct PxSoftBodyAuxData {
+    vtable_: *const std::ffi::c_void,
+}
+
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-structs", derive(Debug))]
+#[repr(C)]
+pub struct PxTetrahedronMesh {
+    vtable_: *const std::ffi::c_void,
+}
+
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-structs", derive(Debug))]
+#[repr(C)]
+pub struct PxSoftBodyMesh {
+    vtable_: *const std::ffi::c_void,
+}
+
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-structs", derive(Debug))]
+#[repr(C)]
+pub struct PxCollisionMeshMappingData {
+    vtable_: *const std::ffi::c_void,
+}
+
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-structs", derive(Debug))]
+#[repr(C)]
+pub struct PxCollisionTetrahedronMeshData {
+    vtable_: *const std::ffi::c_void,
+}
+
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-structs", derive(Debug))]
+#[repr(C)]
+pub struct PxSimulationTetrahedronMeshData {
+    vtable_: *const std::ffi::c_void,
+}
+
+#[derive(Copy, Clone)]
+#[repr(C)]
+pub struct PxScene {
+    _unused: [u8; 0],
 }
 
 #[derive(Clone, Copy)]
@@ -3658,10 +3490,44 @@ pub struct PxConstraintConnector {
     vtable_: *const std::ffi::c_void,
 }
 
+#[derive(Copy, Clone)]
+#[repr(C)]
+pub struct PxTGSSolverBodyVel {
+    _unused: [u8; 0],
+}
+
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
-pub struct PxConstraintAllocator {
+pub struct PxArticulationSpatialTendon {
+    vtable_: *const std::ffi::c_void,
+}
+
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-structs", derive(Debug))]
+#[repr(C)]
+pub struct PxArticulationFixedTendon {
+    vtable_: *const std::ffi::c_void,
+}
+
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-structs", derive(Debug))]
+#[repr(C)]
+pub struct PxRigidActor {
+    vtable_: *const std::ffi::c_void,
+}
+
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-structs", derive(Debug))]
+#[repr(C)]
+pub struct PxRigidBody {
+    vtable_: *const std::ffi::c_void,
+}
+
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-structs", derive(Debug))]
+#[repr(C)]
+pub struct PxArticulationLink {
     vtable_: *const std::ffi::c_void,
 }
 
@@ -3689,6 +3555,13 @@ pub struct PxDeletionListener {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
+pub struct PxFEMMaterial {
+    vtable_: *const std::ffi::c_void,
+}
+
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-structs", derive(Debug))]
+#[repr(C)]
 pub struct PxSimulationFilterCallback {
     vtable_: *const std::ffi::c_void,
 }
@@ -3697,6 +3570,13 @@ pub struct PxSimulationFilterCallback {
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
 pub struct PxLockedData {
+    vtable_: *const std::ffi::c_void,
+}
+
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-structs", derive(Debug))]
+#[repr(C)]
+pub struct PxMaterial {
     vtable_: *const std::ffi::c_void,
 }
 
@@ -3710,6 +3590,13 @@ pub struct PxCudaContextManager {
 #[repr(C)]
 pub struct PxParticleRigidAttachment {
     _unused: [u8; 0],
+}
+
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-structs", derive(Debug))]
+#[repr(C)]
+pub struct PxParticleMaterial {
+    vtable_: *const std::ffi::c_void,
 }
 
 #[derive(Copy, Clone)]
@@ -3729,6 +3616,20 @@ pub struct PxPhysics {
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
 pub struct PxQueryFilterCallback {
+    vtable_: *const std::ffi::c_void,
+}
+
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-structs", derive(Debug))]
+#[repr(C)]
+pub struct PxRigidDynamic {
+    vtable_: *const std::ffi::c_void,
+}
+
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-structs", derive(Debug))]
+#[repr(C)]
+pub struct PxRigidStatic {
     vtable_: *const std::ffi::c_void,
 }
 
@@ -3774,6 +3675,18 @@ pub struct PxAABBManager {
     vtable_: *const std::ffi::c_void,
 }
 
+#[derive(Copy, Clone)]
+#[repr(C)]
+pub struct PxBroadPhaseCallback {
+    _unused: [u8; 0],
+}
+
+#[derive(Copy, Clone)]
+#[repr(C)]
+pub struct PxSimulationEventCallback {
+    _unused: [u8; 0],
+}
+
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
@@ -3784,14 +3697,7 @@ pub struct PxPvdSceneClient {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
-pub struct PxBroadPhaseCallback {
-    vtable_: *const std::ffi::c_void,
-}
-
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
-pub struct PxSimulationEventCallback {
+pub struct PxPruningStructure {
     vtable_: *const std::ffi::c_void,
 }
 
@@ -3861,6 +3767,69 @@ pub struct PxDefaultAllocator {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
+pub struct PxDistanceJoint {
+    vtable_: *const std::ffi::c_void,
+}
+
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-structs", derive(Debug))]
+#[repr(C)]
+pub struct PxContactJoint {
+    vtable_: *const std::ffi::c_void,
+}
+
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-structs", derive(Debug))]
+#[repr(C)]
+pub struct PxFixedJoint {
+    vtable_: *const std::ffi::c_void,
+}
+
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-structs", derive(Debug))]
+#[repr(C)]
+pub struct PxPrismaticJoint {
+    vtable_: *const std::ffi::c_void,
+}
+
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-structs", derive(Debug))]
+#[repr(C)]
+pub struct PxRevoluteJoint {
+    vtable_: *const std::ffi::c_void,
+}
+
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-structs", derive(Debug))]
+#[repr(C)]
+pub struct PxSphericalJoint {
+    vtable_: *const std::ffi::c_void,
+}
+
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-structs", derive(Debug))]
+#[repr(C)]
+pub struct PxD6Joint {
+    vtable_: *const std::ffi::c_void,
+}
+
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-structs", derive(Debug))]
+#[repr(C)]
+pub struct PxGearJoint {
+    vtable_: *const std::ffi::c_void,
+}
+
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-structs", derive(Debug))]
+#[repr(C)]
+pub struct PxRackAndPinionJoint {
+    vtable_: *const std::ffi::c_void,
+}
+
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-structs", derive(Debug))]
+#[repr(C)]
 pub struct PxDefaultErrorCallback {
     vtable_: *const std::ffi::c_void,
 }
@@ -3896,6 +3865,20 @@ pub struct PxCustomSceneQuerySystem {
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
 pub struct PxCustomSceneQuerySystemAdapter {
+    vtable_: *const std::ffi::c_void,
+}
+
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-structs", derive(Debug))]
+#[repr(C)]
+pub struct PxPoissonSampler {
+    vtable_: *const std::ffi::c_void,
+}
+
+#[derive(Clone, Copy)]
+#[cfg_attr(feature = "debug-structs", derive(Debug))]
+#[repr(C)]
+pub struct PxTriangleMeshPoissonSampler {
     vtable_: *const std::ffi::c_void,
 }
 
@@ -4104,14 +4087,6 @@ extern "C" {
     pub fn PxVirtualAllocator_allocate_mut(self_: *mut PxVirtualAllocator, size: usize, file: *const std::ffi::c_char, line: i32) -> *mut std::ffi::c_void;
 
     pub fn PxVirtualAllocator_deallocate_mut(self_: *mut PxVirtualAllocator, ptr: *mut std::ffi::c_void);
-
-    pub fn PxTempAllocatorChunk_new() -> PxTempAllocatorChunk;
-
-    pub fn PxTempAllocator_new(anon_param0: *const std::ffi::c_char) -> PxTempAllocator;
-
-    pub fn PxTempAllocator_allocate_mut(self_: *mut PxTempAllocator, size: usize, file: *const std::ffi::c_char, line: i32) -> *mut std::ffi::c_void;
-
-    pub fn PxTempAllocator_deallocate_mut(self_: *mut PxTempAllocator, ptr: *mut std::ffi::c_void);
 
     /// Sets the bytes of the provided buffer to zero.
     ///
@@ -4910,22 +4885,6 @@ extern "C" {
 
     pub fn PxProfileScoped_delete(self_: *mut PxProfileScoped);
 
-    pub fn PxSListEntry_new() -> PxSListEntry;
-
-    pub fn PxSListEntry_next_mut(self_: *mut PxSListEntry) -> *mut PxSListEntry;
-
-    pub fn PxSListImpl_new_alloc() -> *mut PxSListImpl;
-
-    pub fn PxSListImpl_delete(self_: *mut PxSListImpl);
-
-    pub fn PxSListImpl_push_mut(self_: *mut PxSListImpl, entry: *mut PxSListEntry);
-
-    pub fn PxSListImpl_pop_mut(self_: *mut PxSListImpl) -> *mut PxSListEntry;
-
-    pub fn PxSListImpl_flush_mut(self_: *mut PxSListImpl) -> *mut PxSListEntry;
-
-    pub fn PxSListImpl_getSize() -> u32;
-
     pub fn PxSyncImpl_new_alloc() -> *mut PxSyncImpl;
 
     pub fn PxSyncImpl_delete(self_: *mut PxSyncImpl);
@@ -5050,38 +5009,6 @@ extern "C" {
     pub fn PxDebugText_new() -> PxDebugText;
 
     pub fn PxDebugText_new_1(pos: *const PxVec3, sz: *const f32, clr: *const u32, str: *const std::ffi::c_char) -> PxDebugText;
-
-    pub fn PxRenderBuffer_delete(self_: *mut PxRenderBuffer);
-
-    pub fn PxRenderBuffer_getNbPoints(self_: *const PxRenderBuffer) -> u32;
-
-    pub fn PxRenderBuffer_getPoints(self_: *const PxRenderBuffer) -> *const PxDebugPoint;
-
-    pub fn PxRenderBuffer_addPoint_mut(self_: *mut PxRenderBuffer, point: *const PxDebugPoint);
-
-    pub fn PxRenderBuffer_getNbLines(self_: *const PxRenderBuffer) -> u32;
-
-    pub fn PxRenderBuffer_getLines(self_: *const PxRenderBuffer) -> *const PxDebugLine;
-
-    pub fn PxRenderBuffer_addLine_mut(self_: *mut PxRenderBuffer, line: *const PxDebugLine);
-
-    pub fn PxRenderBuffer_reserveLines_mut(self_: *mut PxRenderBuffer, nbLines: u32) -> *mut PxDebugLine;
-
-    pub fn PxRenderBuffer_reservePoints_mut(self_: *mut PxRenderBuffer, nbLines: u32) -> *mut PxDebugPoint;
-
-    pub fn PxRenderBuffer_getNbTriangles(self_: *const PxRenderBuffer) -> u32;
-
-    pub fn PxRenderBuffer_getTriangles(self_: *const PxRenderBuffer) -> *const PxDebugTriangle;
-
-    pub fn PxRenderBuffer_addTriangle_mut(self_: *mut PxRenderBuffer, triangle: *const PxDebugTriangle);
-
-    pub fn PxRenderBuffer_append_mut(self_: *mut PxRenderBuffer, other: *const PxRenderBuffer);
-
-    pub fn PxRenderBuffer_clear_mut(self_: *mut PxRenderBuffer);
-
-    pub fn PxRenderBuffer_shift_mut(self_: *mut PxRenderBuffer, delta: *const PxVec3);
-
-    pub fn PxRenderBuffer_empty(self_: *const PxRenderBuffer) -> bool;
 
     pub fn PxProcessPxBaseCallback_delete(self_: *mut PxProcessPxBaseCallback);
 
@@ -6777,35 +6704,6 @@ extern "C" {
 
     pub fn PxSolverBodyData_projectVelocity(self_: *const PxSolverBodyData, lin: *const PxVec3, ang: *const PxVec3) -> f32;
 
-    pub fn PxSolverConstraintPrepDesc_delete(self_: *mut PxSolverConstraintPrepDesc);
-
-    /// Allocates constraint data. It is the application's responsibility to release this memory after PxSolveConstraints has completed.
-    ///
-    /// The allocated memory. This address must be 16-byte aligned.
-    pub fn PxConstraintAllocator_reserveConstraintData_mut(self_: *mut PxConstraintAllocator, byteSize: u32) -> *mut u8;
-
-    /// Allocates friction data. Friction data can be retained by the application for a given pair and provided as an input to PxSolverContactDesc to improve simulation stability.
-    /// It is the application's responsibility to release this memory. If this memory is released, the application should ensure it does not pass pointers to this memory to PxSolverContactDesc.
-    ///
-    /// The allocated memory. This address must be 4-byte aligned.
-    pub fn PxConstraintAllocator_reserveFrictionData_mut(self_: *mut PxConstraintAllocator, byteSize: u32) -> *mut u8;
-
-    pub fn PxConstraintAllocator_delete(self_: *mut PxConstraintAllocator);
-
-    pub fn PxArticulationLimit_new() -> PxArticulationLimit;
-
-    pub fn PxArticulationLimit_new_1(low_: f32, high_: f32) -> PxArticulationLimit;
-
-    pub fn PxArticulationDrive_new() -> PxArticulationDrive;
-
-    pub fn PxArticulationDrive_new_1(stiffness_: f32, damping_: f32, maxForce_: f32, driveType_: PxArticulationDriveType) -> PxArticulationDrive;
-
-    pub fn PxTGSSolverBodyVel_projectVelocity(self_: *const PxTGSSolverBodyVel, lin: *const PxVec3, ang: *const PxVec3) -> f32;
-
-    pub fn PxTGSSolverBodyData_projectVelocity(self_: *const PxTGSSolverBodyData, linear: *const PxVec3, angular: *const PxVec3) -> f32;
-
-    pub fn PxTGSSolverConstraintPrepDesc_delete(self_: *mut PxTGSSolverConstraintPrepDesc);
-
     /// Sets the spring rest length for the sub-tendon from the root to this leaf attachment.
     ///
     /// Setting this on non-leaf attachments has no effect.
@@ -6877,10 +6775,10 @@ extern "C" {
     ///
     /// RecipCoefficient is commonly expected to be 1/coefficient, but it can be set to different values to tune behavior; for example, zero can be used to
     /// have a joint axis only participate in the length computation of the tendon, but not have any tendon force applied to it.
-    pub fn PxArticulationTendonJoint_setCoefficient_mut(self_: *mut PxArticulationTendonJoint, axis: PxArticulationAxis, coefficient: f32, recipCoefficient: f32);
+    pub fn PxArticulationTendonJoint_setCoefficient_mut(self_: *mut PxArticulationTendonJoint, axis: PxArticulationAxis::Enum, coefficient: f32, recipCoefficient: f32);
 
     /// Gets the tendon joint coefficient.
-    pub fn PxArticulationTendonJoint_getCoefficient(self_: *const PxArticulationTendonJoint, axis: *mut PxArticulationAxis, coefficient: *mut f32, recipCoefficient: *mut f32);
+    pub fn PxArticulationTendonJoint_getCoefficient(self_: *const PxArticulationTendonJoint, axis: *mut PxArticulationAxis::Enum, coefficient: *mut f32, recipCoefficient: *mut f32);
 
     /// Gets the articulation link.
     ///
@@ -6983,6 +6881,8 @@ extern "C" {
     /// The string name.
     pub fn PxArticulationSpatialTendon_getConcreteTypeName(self_: *const PxArticulationSpatialTendon) -> *const std::ffi::c_char;
 
+    pub fn PxArticulationSpatialTendon_delete(self_: *mut PxArticulationSpatialTendon);
+
     /// Creates an articulation tendon joint and adds it to the list of children in the parent tendon joint.
     ///
     /// Creating a tendon joint is not allowed while the articulation is in a scene. In order to
@@ -6992,7 +6892,7 @@ extern "C" {
     ///
     /// - The axis motion must not be configured as PxArticulationMotion::eLOCKED.
     /// - The axis cannot be part of a fixed joint, i.e. joint configured as PxArticulationJointType::eFIX.
-    pub fn PxArticulationFixedTendon_createTendonJoint_mut(self_: *mut PxArticulationFixedTendon, parent: *mut PxArticulationTendonJoint, axis: PxArticulationAxis, coefficient: f32, recipCoefficient: f32, link: *mut PxArticulationLink) -> *mut PxArticulationTendonJoint;
+    pub fn PxArticulationFixedTendon_createTendonJoint_mut(self_: *mut PxArticulationFixedTendon, parent: *mut PxArticulationTendonJoint, axis: PxArticulationAxis::Enum, coefficient: f32, recipCoefficient: f32, link: *mut PxArticulationLink) -> *mut PxArticulationTendonJoint;
 
     /// Fills a user-provided buffer of tendon-joint pointers with the set of tendon joints.
     ///
@@ -7033,6 +6933,8 @@ extern "C" {
     ///
     /// The string name.
     pub fn PxArticulationFixedTendon_getConcreteTypeName(self_: *const PxArticulationFixedTendon) -> *const std::ffi::c_char;
+
+    pub fn PxArticulationFixedTendon_delete(self_: *mut PxArticulationFixedTendon);
 
     pub fn PxArticulationCache_new() -> PxArticulationCache;
 
@@ -7325,7 +7227,7 @@ extern "C" {
     /// Raises or clears a flag on the articulation.
     ///
     /// This call may not be made during simulation.
-    pub fn PxArticulationReducedCoordinate_setArticulationFlag_mut(self_: *mut PxArticulationReducedCoordinate, flag: PxArticulationFlag, value: bool);
+    pub fn PxArticulationReducedCoordinate_setArticulationFlag_mut(self_: *mut PxArticulationReducedCoordinate, flag: PxArticulationFlag::Enum, value: bool);
 
     /// Returns the articulation's flags.
     ///
@@ -7725,23 +7627,23 @@ extern "C" {
     ///
     /// Setting the joint type is not allowed while the articulation is in a scene.
     /// In order to set the joint type, remove and then re-add the articulation to the scene.
-    pub fn PxArticulationJointReducedCoordinate_setJointType_mut(self_: *mut PxArticulationJointReducedCoordinate, jointType: PxArticulationJointType);
+    pub fn PxArticulationJointReducedCoordinate_setJointType_mut(self_: *mut PxArticulationJointReducedCoordinate, jointType: PxArticulationJointType::Enum);
 
     /// Gets the joint type.
     ///
     /// The joint type.
-    pub fn PxArticulationJointReducedCoordinate_getJointType(self_: *const PxArticulationJointReducedCoordinate) -> PxArticulationJointType;
+    pub fn PxArticulationJointReducedCoordinate_getJointType(self_: *const PxArticulationJointReducedCoordinate) -> PxArticulationJointType::Enum;
 
     /// Sets the joint motion for a given axis.
     ///
     /// Setting the motion of joint axes is not allowed while the articulation is in a scene.
     /// In order to set the motion, remove and then re-add the articulation to the scene.
-    pub fn PxArticulationJointReducedCoordinate_setMotion_mut(self_: *mut PxArticulationJointReducedCoordinate, axis: PxArticulationAxis, motion: PxArticulationMotion);
+    pub fn PxArticulationJointReducedCoordinate_setMotion_mut(self_: *mut PxArticulationJointReducedCoordinate, axis: PxArticulationAxis::Enum, motion: PxArticulationMotion::Enum);
 
     /// Returns the joint motion for the given axis.
     ///
     /// The joint motion of the given axis.
-    pub fn PxArticulationJointReducedCoordinate_getMotion(self_: *const PxArticulationJointReducedCoordinate, axis: PxArticulationAxis) -> PxArticulationMotion;
+    pub fn PxArticulationJointReducedCoordinate_getMotion(self_: *const PxArticulationJointReducedCoordinate, axis: PxArticulationAxis::Enum) -> PxArticulationMotion::Enum;
 
     /// Sets the joint limits for a given axis.
     ///
@@ -7752,24 +7654,24 @@ extern "C" {
     /// This call is not allowed while the simulation is running.
     ///
     /// For spherical joints, limit.min and limit.max must both be in range [-Pi, Pi].
-    pub fn PxArticulationJointReducedCoordinate_setLimitParams_mut(self_: *mut PxArticulationJointReducedCoordinate, axis: PxArticulationAxis, limit: *const PxArticulationLimit);
+    pub fn PxArticulationJointReducedCoordinate_setLimitParams_mut(self_: *mut PxArticulationJointReducedCoordinate, axis: PxArticulationAxis::Enum, limit: *const PxArticulationLimit);
 
     /// Returns the joint limits for a given axis.
     ///
     /// The joint limits.
-    pub fn PxArticulationJointReducedCoordinate_getLimitParams(self_: *const PxArticulationJointReducedCoordinate, axis: PxArticulationAxis) -> PxArticulationLimit;
+    pub fn PxArticulationJointReducedCoordinate_getLimitParams(self_: *const PxArticulationJointReducedCoordinate, axis: PxArticulationAxis::Enum) -> PxArticulationLimit;
 
     /// Configures a joint drive for the given axis.
     ///
     /// See PxArticulationDrive for parameter details; and the manual for further information, and the drives' implicit spring-damper (i.e. PD control) implementation in particular.
     ///
     /// This call is not allowed while the simulation is running.
-    pub fn PxArticulationJointReducedCoordinate_setDriveParams_mut(self_: *mut PxArticulationJointReducedCoordinate, axis: PxArticulationAxis, drive: *const PxArticulationDrive);
+    pub fn PxArticulationJointReducedCoordinate_setDriveParams_mut(self_: *mut PxArticulationJointReducedCoordinate, axis: PxArticulationAxis::Enum, drive: *const PxArticulationDrive);
 
     /// Gets the joint drive configuration for the given axis.
     ///
     /// The drive parameters.
-    pub fn PxArticulationJointReducedCoordinate_getDriveParams(self_: *const PxArticulationJointReducedCoordinate, axis: PxArticulationAxis) -> PxArticulationDrive;
+    pub fn PxArticulationJointReducedCoordinate_getDriveParams(self_: *const PxArticulationJointReducedCoordinate, axis: PxArticulationAxis::Enum) -> PxArticulationDrive;
 
     /// Sets the joint drive position target for the given axis.
     ///
@@ -7782,24 +7684,24 @@ extern "C" {
     /// The target is specified in the parent frame of the joint. If Gp, Gc are the parent and child actor poses in the world frame and Lp, Lc are the parent and child joint frames expressed in the parent and child actor frames then the joint will drive the parent and child links to poses that obey Gp * Lp * J = Gc * Lc. For joints restricted to angular motion, J has the form PxTranfsorm(PxVec3(PxZero), PxExp(PxVec3(twistTarget, swing1Target, swing2Target))).  For joints restricted to linear motion, J has the form PxTransform(PxVec3(XTarget, YTarget, ZTarget), PxQuat(PxIdentity)).
     ///
     /// For spherical joints with more than 1 degree of freedom, the joint target angles taken together can collectively represent a rotation of greater than Pi around a vector. When this happens the rotation that matches the joint drive target is not the shortest path rotation.  The joint pose J that is the outcome after driving to the target pose will always be the equivalent of the shortest path rotation.
-    pub fn PxArticulationJointReducedCoordinate_setDriveTarget_mut(self_: *mut PxArticulationJointReducedCoordinate, axis: PxArticulationAxis, target: f32, autowake: bool);
+    pub fn PxArticulationJointReducedCoordinate_setDriveTarget_mut(self_: *mut PxArticulationJointReducedCoordinate, axis: PxArticulationAxis::Enum, target: f32, autowake: bool);
 
     /// Returns the joint drive position target for the given axis.
     ///
     /// The target position.
-    pub fn PxArticulationJointReducedCoordinate_getDriveTarget(self_: *const PxArticulationJointReducedCoordinate, axis: PxArticulationAxis) -> f32;
+    pub fn PxArticulationJointReducedCoordinate_getDriveTarget(self_: *const PxArticulationJointReducedCoordinate, axis: PxArticulationAxis::Enum) -> f32;
 
     /// Sets the joint drive velocity target for the given axis.
     ///
     /// The target units are linear units (equivalent to scene units) per second for a translational axis, or radians per second for a rotational axis.
     ///
     /// This call is not allowed while the simulation is running.
-    pub fn PxArticulationJointReducedCoordinate_setDriveVelocity_mut(self_: *mut PxArticulationJointReducedCoordinate, axis: PxArticulationAxis, targetVel: f32, autowake: bool);
+    pub fn PxArticulationJointReducedCoordinate_setDriveVelocity_mut(self_: *mut PxArticulationJointReducedCoordinate, axis: PxArticulationAxis::Enum, targetVel: f32, autowake: bool);
 
     /// Returns the joint drive velocity target for the given axis.
     ///
     /// The target velocity.
-    pub fn PxArticulationJointReducedCoordinate_getDriveVelocity(self_: *const PxArticulationJointReducedCoordinate, axis: PxArticulationAxis) -> f32;
+    pub fn PxArticulationJointReducedCoordinate_getDriveVelocity(self_: *const PxArticulationJointReducedCoordinate, axis: PxArticulationAxis::Enum) -> f32;
 
     /// Sets the joint armature for the given axis.
     ///
@@ -7807,12 +7709,12 @@ extern "C" {
     /// - The armature is in mass units for a prismatic (i.e. linear) joint, and in mass units * (scene linear units)^2 for a rotational joint.
     ///
     /// This call is not allowed while the simulation is running.
-    pub fn PxArticulationJointReducedCoordinate_setArmature_mut(self_: *mut PxArticulationJointReducedCoordinate, axis: PxArticulationAxis, armature: f32);
+    pub fn PxArticulationJointReducedCoordinate_setArmature_mut(self_: *mut PxArticulationJointReducedCoordinate, axis: PxArticulationAxis::Enum, armature: f32);
 
     /// Gets the joint armature for the given axis.
     ///
     /// The armature set on the given axis.
-    pub fn PxArticulationJointReducedCoordinate_getArmature(self_: *const PxArticulationJointReducedCoordinate, axis: PxArticulationAxis) -> f32;
+    pub fn PxArticulationJointReducedCoordinate_getArmature(self_: *const PxArticulationJointReducedCoordinate, axis: PxArticulationAxis::Enum) -> f32;
 
     /// Sets the joint friction coefficient, which applies to all joint axes.
     ///
@@ -7858,7 +7760,7 @@ extern "C" {
     /// Joint position is specified in the parent frame of the joint. If Gp, Gc are the parent and child actor poses in the world frame and Lp, Lc are the parent and child joint frames expressed in the parent and child actor frames then the parent and child links will be given poses that obey Gp * Lp * J = Gc * Lc with J denoting the joint pose. For joints restricted to angular motion, J has the form PxTranfsorm(PxVec3(PxZero), PxExp(PxVec3(twistPos, swing1Pos, swing2Pos))).  For joints restricted to linear motion, J has the form PxTransform(PxVec3(xPos, yPos, zPos), PxQuat(PxIdentity)).
     ///
     /// For spherical joints with more than 1 degree of freedom, the input joint positions taken together can collectively represent a rotation of greater than Pi around a vector. When this happens the rotation that matches the joint positions is not the shortest path rotation.  The joint pose J that is the outcome of setting and applying the joint positions will always be the equivalent of the shortest path rotation.
-    pub fn PxArticulationJointReducedCoordinate_setJointPosition_mut(self_: *mut PxArticulationJointReducedCoordinate, axis: PxArticulationAxis, jointPos: f32);
+    pub fn PxArticulationJointReducedCoordinate_setJointPosition_mut(self_: *mut PxArticulationJointReducedCoordinate, axis: PxArticulationAxis::Enum, jointPos: f32);
 
     /// Gets the joint position for the given axis, i.e. joint degree of freedom (DOF).
     ///
@@ -7868,7 +7770,7 @@ extern "C" {
     ///
     /// This call is not allowed while the simulation is running except in a split simulation during [`PxScene::collide`]() and up to #PxScene::advance(),
     /// and in PxContactModifyCallback or in contact report callbacks.
-    pub fn PxArticulationJointReducedCoordinate_getJointPosition(self_: *const PxArticulationJointReducedCoordinate, axis: PxArticulationAxis) -> f32;
+    pub fn PxArticulationJointReducedCoordinate_getJointPosition(self_: *const PxArticulationJointReducedCoordinate, axis: PxArticulationAxis::Enum) -> f32;
 
     /// Sets the joint velocity for the given axis.
     ///
@@ -7877,7 +7779,7 @@ extern "C" {
     /// in order to update link states for the next simulation frame or querying.
     ///
     /// This call is not allowed while the simulation is running.
-    pub fn PxArticulationJointReducedCoordinate_setJointVelocity_mut(self_: *mut PxArticulationJointReducedCoordinate, axis: PxArticulationAxis, jointVel: f32);
+    pub fn PxArticulationJointReducedCoordinate_setJointVelocity_mut(self_: *mut PxArticulationJointReducedCoordinate, axis: PxArticulationAxis::Enum, jointVel: f32);
 
     /// Gets the joint velocity for the given axis.
     ///
@@ -7887,12 +7789,14 @@ extern "C" {
     ///
     /// This call is not allowed while the simulation is running except in a split simulation during [`PxScene::collide`]() and up to #PxScene::advance(),
     /// and in PxContactModifyCallback or in contact report callbacks.
-    pub fn PxArticulationJointReducedCoordinate_getJointVelocity(self_: *const PxArticulationJointReducedCoordinate, axis: PxArticulationAxis) -> f32;
+    pub fn PxArticulationJointReducedCoordinate_getJointVelocity(self_: *const PxArticulationJointReducedCoordinate, axis: PxArticulationAxis::Enum) -> f32;
 
     /// Returns the string name of the dynamic type.
     ///
     /// The string name.
     pub fn PxArticulationJointReducedCoordinate_getConcreteTypeName(self_: *const PxArticulationJointReducedCoordinate) -> *const std::ffi::c_char;
+
+    pub fn PxArticulationJointReducedCoordinate_delete(self_: *mut PxArticulationJointReducedCoordinate);
 
     /// Decrements the reference count of a shape and releases it if the new reference count is zero.
     ///
@@ -8795,130 +8699,6 @@ extern "C" {
 
     pub fn PxConstraint_getConcreteTypeName(self_: *const PxConstraint) -> *const std::ffi::c_char;
 
-    /// Constructor
-    pub fn PxContactStreamIterator_new(contactPatches: *const u8, contactPoints: *const u8, contactFaceIndices: *const u32, nbPatches: u32, nbContacts: u32) -> PxContactStreamIterator;
-
-    /// Returns whether there are more patches in this stream.
-    ///
-    /// Whether there are more patches in this stream.
-    pub fn PxContactStreamIterator_hasNextPatch(self_: *const PxContactStreamIterator) -> bool;
-
-    /// Returns the total contact count.
-    ///
-    /// Total contact count.
-    pub fn PxContactStreamIterator_getTotalContactCount(self_: *const PxContactStreamIterator) -> u32;
-
-    /// Returns the total patch count.
-    ///
-    /// Total patch count.
-    pub fn PxContactStreamIterator_getTotalPatchCount(self_: *const PxContactStreamIterator) -> u32;
-
-    /// Advances iterator to next contact patch.
-    pub fn PxContactStreamIterator_nextPatch_mut(self_: *mut PxContactStreamIterator);
-
-    /// Returns if the current patch has more contacts.
-    ///
-    /// If there are more contacts in the current patch.
-    pub fn PxContactStreamIterator_hasNextContact(self_: *const PxContactStreamIterator) -> bool;
-
-    /// Advances to the next contact in the patch.
-    pub fn PxContactStreamIterator_nextContact_mut(self_: *mut PxContactStreamIterator);
-
-    /// Gets the current contact's normal
-    ///
-    /// The current contact's normal.
-    pub fn PxContactStreamIterator_getContactNormal(self_: *const PxContactStreamIterator) -> *const PxVec3;
-
-    /// Gets the inverse mass scale for body 0.
-    ///
-    /// The inverse mass scale for body 0.
-    pub fn PxContactStreamIterator_getInvMassScale0(self_: *const PxContactStreamIterator) -> f32;
-
-    /// Gets the inverse mass scale for body 1.
-    ///
-    /// The inverse mass scale for body 1.
-    pub fn PxContactStreamIterator_getInvMassScale1(self_: *const PxContactStreamIterator) -> f32;
-
-    /// Gets the inverse inertia scale for body 0.
-    ///
-    /// The inverse inertia scale for body 0.
-    pub fn PxContactStreamIterator_getInvInertiaScale0(self_: *const PxContactStreamIterator) -> f32;
-
-    /// Gets the inverse inertia scale for body 1.
-    ///
-    /// The inverse inertia scale for body 1.
-    pub fn PxContactStreamIterator_getInvInertiaScale1(self_: *const PxContactStreamIterator) -> f32;
-
-    /// Gets the contact's max impulse.
-    ///
-    /// The contact's max impulse.
-    pub fn PxContactStreamIterator_getMaxImpulse(self_: *const PxContactStreamIterator) -> f32;
-
-    /// Gets the contact's target velocity.
-    ///
-    /// The contact's target velocity.
-    pub fn PxContactStreamIterator_getTargetVel(self_: *const PxContactStreamIterator) -> *const PxVec3;
-
-    /// Gets the contact's contact point.
-    ///
-    /// The contact's contact point.
-    pub fn PxContactStreamIterator_getContactPoint(self_: *const PxContactStreamIterator) -> *const PxVec3;
-
-    /// Gets the contact's separation.
-    ///
-    /// The contact's separation.
-    pub fn PxContactStreamIterator_getSeparation(self_: *const PxContactStreamIterator) -> f32;
-
-    /// Gets the contact's face index for shape 0.
-    ///
-    /// The contact's face index for shape 0.
-    pub fn PxContactStreamIterator_getFaceIndex0(self_: *const PxContactStreamIterator) -> u32;
-
-    /// Gets the contact's face index for shape 1.
-    ///
-    /// The contact's face index for shape 1.
-    pub fn PxContactStreamIterator_getFaceIndex1(self_: *const PxContactStreamIterator) -> u32;
-
-    /// Gets the contact's static friction coefficient.
-    ///
-    /// The contact's static friction coefficient.
-    pub fn PxContactStreamIterator_getStaticFriction(self_: *const PxContactStreamIterator) -> f32;
-
-    /// Gets the contact's dynamic friction coefficient.
-    ///
-    /// The contact's dynamic friction coefficient.
-    pub fn PxContactStreamIterator_getDynamicFriction(self_: *const PxContactStreamIterator) -> f32;
-
-    /// Gets the contact's restitution coefficient.
-    ///
-    /// The contact's restitution coefficient.
-    pub fn PxContactStreamIterator_getRestitution(self_: *const PxContactStreamIterator) -> f32;
-
-    /// Gets the contact's damping value.
-    ///
-    /// The contact's damping value.
-    pub fn PxContactStreamIterator_getDamping(self_: *const PxContactStreamIterator) -> f32;
-
-    /// Gets the contact's material flags.
-    ///
-    /// The contact's material flags.
-    pub fn PxContactStreamIterator_getMaterialFlags(self_: *const PxContactStreamIterator) -> u32;
-
-    /// Gets the contact's material index for shape 0.
-    ///
-    /// The contact's material index for shape 0.
-    pub fn PxContactStreamIterator_getMaterialIndex0(self_: *const PxContactStreamIterator) -> u16;
-
-    /// Gets the contact's material index for shape 1.
-    ///
-    /// The contact's material index for shape 1.
-    pub fn PxContactStreamIterator_getMaterialIndex1(self_: *const PxContactStreamIterator) -> u16;
-
-    /// Advances the contact stream iterator to a specific contact index.
-    ///
-    /// True if advancing was possible
-    pub fn PxContactStreamIterator_advanceToIndex_mut(self_: *mut PxContactStreamIterator, initialIndex: u32) -> bool;
-
     /// Get the position of a specific contact point in the set.
     ///
     /// Position to the requested point in world space
@@ -9100,6 +8880,8 @@ extern "C" {
     /// as soon as it is safe to do so. After the destruction of the object and its memory, an eMEMORY_RELEASE event will get fired. In this case it is not
     /// allowed to dereference the object pointer in the callback.
     pub fn PxDeletionListener_onRelease_mut(self_: *mut PxDeletionListener, observed: *const PxBase, userData: *mut std::ffi::c_void, deletionEvent: PxDeletionEventFlag);
+
+    pub fn PxBaseMaterial_delete(self_: *mut PxBaseMaterial);
 
     pub fn PxBaseMaterial_isKindOf(self_: *const PxBaseMaterial, name: *const std::ffi::c_char) -> bool;
 
@@ -10541,876 +10323,6 @@ extern "C" {
     /// draw text on PVD application's render window
     pub fn PxPvdSceneClient_drawText_mut(self_: *mut PxPvdSceneClient, text: *const PxDebugText);
 
-    pub fn PxDominanceGroupPair_new(a: u8, b: u8) -> PxDominanceGroupPair;
-
-    pub fn PxBroadPhaseCallback_delete(self_: *mut PxBroadPhaseCallback);
-
-    /// Out-of-bounds notification.
-    ///
-    /// This function is called when an object leaves the broad-phase.
-    pub fn PxBroadPhaseCallback_onObjectOutOfBounds_mut(self_: *mut PxBroadPhaseCallback, shape: *mut PxShape, actor: *mut PxActor);
-
-    /// Out-of-bounds notification.
-    ///
-    /// This function is called when an aggregate leaves the broad-phase.
-    pub fn PxBroadPhaseCallback_onObjectOutOfBounds_mut_1(self_: *mut PxBroadPhaseCallback, aggregate: *mut PxAggregate);
-
-    /// Deletes the scene.
-    ///
-    /// Removes any actors and constraint shaders from this scene
-    /// (if the user hasn't already done so).
-    ///
-    /// Be sure to not keep a reference to this object after calling release.
-    /// Avoid release calls while the scene is simulating (in between simulate() and fetchResults() calls).
-    pub fn PxScene_release_mut(self_: *mut PxScene);
-
-    /// Sets a scene flag. You can only set one flag at a time.
-    ///
-    /// Not all flags are mutable and changing some will result in an error. Please check [`PxSceneFlag`] to see which flags can be changed.
-    pub fn PxScene_setFlag_mut(self_: *mut PxScene, flag: PxSceneFlag, value: bool);
-
-    /// Get the scene flags.
-    ///
-    /// The scene flags. See [`PxSceneFlag`]
-    pub fn PxScene_getFlags(self_: *const PxScene) -> PxSceneFlags;
-
-    /// Set new scene limits.
-    ///
-    /// Increase the maximum capacity of various data structures in the scene. The new capacities will be
-    /// at least as large as required to deal with the objects currently in the scene. Further, these values
-    /// are for preallocation and do not represent hard limits.
-    pub fn PxScene_setLimits_mut(self_: *mut PxScene, limits: *const PxSceneLimits);
-
-    /// Get current scene limits.
-    ///
-    /// Current scene limits.
-    pub fn PxScene_getLimits(self_: *const PxScene) -> PxSceneLimits;
-
-    /// Call this method to retrieve the Physics SDK.
-    ///
-    /// The physics SDK this scene is associated with.
-    pub fn PxScene_getPhysics_mut(self_: *mut PxScene) -> *mut PxPhysics;
-
-    /// Retrieves the scene's internal timestamp, increased each time a simulation step is completed.
-    ///
-    /// scene timestamp
-    pub fn PxScene_getTimestamp(self_: *const PxScene) -> u32;
-
-    /// Adds an articulation to this scene.
-    ///
-    /// If the articulation is already assigned to a scene (see [`PxArticulationReducedCoordinate::getScene`]), the call is ignored and an error is issued.
-    ///
-    /// True if success
-    pub fn PxScene_addArticulation_mut(self_: *mut PxScene, articulation: *mut PxArticulationReducedCoordinate) -> bool;
-
-    /// Removes an articulation from this scene.
-    ///
-    /// If the articulation is not part of this scene (see [`PxArticulationReducedCoordinate::getScene`]), the call is ignored and an error is issued.
-    ///
-    /// If the articulation is in an aggregate it will be removed from the aggregate.
-    pub fn PxScene_removeArticulation_mut(self_: *mut PxScene, articulation: *mut PxArticulationReducedCoordinate, wakeOnLostTouch: bool);
-
-    /// Adds an actor to this scene.
-    ///
-    /// If the actor is already assigned to a scene (see [`PxActor::getScene`]), the call is ignored and an error is issued.
-    ///
-    /// If the actor has an invalid constraint, in checked builds the call is ignored and an error is issued.
-    ///
-    /// You can not add individual articulation links (see [`PxArticulationLink`]) to the scene. Use #addArticulation() instead.
-    ///
-    /// If the actor is a PxRigidActor then each assigned PxConstraint object will get added to the scene automatically if
-    /// it connects to another actor that is part of the scene already.
-    ///
-    /// When a BVH is provided the actor shapes are grouped together.
-    /// The scene query pruning structure inside PhysX SDK will store/update one
-    /// bound per actor. The scene queries against such an actor will query actor
-    /// bounds and then make a local space query against the provided BVH, which is in actor's local space.
-    ///
-    /// True if success
-    pub fn PxScene_addActor_mut(self_: *mut PxScene, actor: *mut PxActor, bvh: *const PxBVH) -> bool;
-
-    /// Adds actors to this scene. Only supports actors of type PxRigidStatic and PxRigidDynamic.
-    ///
-    /// This method only supports actors of type PxRigidStatic and PxRigidDynamic. For other actors, use addActor() instead.
-    /// For articulation links, use addArticulation().
-    ///
-    /// If one of the actors is already assigned to a scene (see [`PxActor::getScene`]), the call is ignored and an error is issued.
-    ///
-    /// If an actor in the array contains an invalid constraint, in checked builds the call is ignored and an error is issued.
-    ///
-    /// If an actor in the array is a PxRigidActor then each assigned PxConstraint object will get added to the scene automatically if
-    /// it connects to another actor that is part of the scene already.
-    ///
-    /// this method is optimized for high performance.
-    ///
-    /// True if success
-    pub fn PxScene_addActors_mut(self_: *mut PxScene, actors: *const *mut PxActor, nbActors: u32) -> bool;
-
-    /// Adds a pruning structure together with its actors to this scene. Only supports actors of type PxRigidStatic and PxRigidDynamic.
-    ///
-    /// This method only supports actors of type PxRigidStatic and PxRigidDynamic. For other actors, use addActor() instead.
-    /// For articulation links, use addArticulation().
-    ///
-    /// If an actor in the pruning structure contains an invalid constraint, in checked builds the call is ignored and an error is issued.
-    ///
-    /// For all actors in the pruning structure each assigned PxConstraint object will get added to the scene automatically if
-    /// it connects to another actor that is part of the scene already.
-    ///
-    /// This method is optimized for high performance.
-    ///
-    /// Merging a PxPruningStructure into an active scene query optimization AABB tree might unbalance the tree. A typical use case for
-    /// PxPruningStructure is a large world scenario where blocks of closely positioned actors get streamed in. The merge process finds the
-    /// best node in the active scene query optimization AABB tree and inserts the PxPruningStructure. Therefore using PxPruningStructure
-    /// for actors scattered throughout the world will result in an unbalanced tree.
-    ///
-    /// True if success
-    pub fn PxScene_addActors_mut_1(self_: *mut PxScene, pruningStructure: *const PxPruningStructure) -> bool;
-
-    /// Removes an actor from this scene.
-    ///
-    /// If the actor is not part of this scene (see [`PxActor::getScene`]), the call is ignored and an error is issued.
-    ///
-    /// You can not remove individual articulation links (see [`PxArticulationLink`]) from the scene. Use #removeArticulation() instead.
-    ///
-    /// If the actor is a PxRigidActor then all assigned PxConstraint objects will get removed from the scene automatically.
-    ///
-    /// If the actor is in an aggregate it will be removed from the aggregate.
-    pub fn PxScene_removeActor_mut(self_: *mut PxScene, actor: *mut PxActor, wakeOnLostTouch: bool);
-
-    /// Removes actors from this scene. Only supports actors of type PxRigidStatic and PxRigidDynamic.
-    ///
-    /// This method only supports actors of type PxRigidStatic and PxRigidDynamic. For other actors, use removeActor() instead.
-    /// For articulation links, use removeArticulation().
-    ///
-    /// If some actor is not part of this scene (see [`PxActor::getScene`]), the actor remove is ignored and an error is issued.
-    ///
-    /// You can not remove individual articulation links (see [`PxArticulationLink`]) from the scene. Use #removeArticulation() instead.
-    ///
-    /// If the actor is a PxRigidActor then all assigned PxConstraint objects will get removed from the scene automatically.
-    pub fn PxScene_removeActors_mut(self_: *mut PxScene, actors: *const *mut PxActor, nbActors: u32, wakeOnLostTouch: bool);
-
-    /// Adds an aggregate to this scene.
-    ///
-    /// If the aggregate is already assigned to a scene (see [`PxAggregate::getScene`]), the call is ignored and an error is issued.
-    ///
-    /// If the aggregate contains an actor with an invalid constraint, in checked builds the call is ignored and an error is issued.
-    ///
-    /// If the aggregate already contains actors, those actors are added to the scene as well.
-    ///
-    /// True if success
-    pub fn PxScene_addAggregate_mut(self_: *mut PxScene, aggregate: *mut PxAggregate) -> bool;
-
-    /// Removes an aggregate from this scene.
-    ///
-    /// If the aggregate is not part of this scene (see [`PxAggregate::getScene`]), the call is ignored and an error is issued.
-    ///
-    /// If the aggregate contains actors, those actors are removed from the scene as well.
-    pub fn PxScene_removeAggregate_mut(self_: *mut PxScene, aggregate: *mut PxAggregate, wakeOnLostTouch: bool);
-
-    /// Adds objects in the collection to this scene.
-    ///
-    /// This function adds the following types of objects to this scene: PxRigidActor (except PxArticulationLink), PxAggregate, PxArticulationReducedCoordinate.
-    /// This method is typically used after deserializing the collection in order to populate the scene with deserialized objects.
-    ///
-    /// If the collection contains an actor with an invalid constraint, in checked builds the call is ignored and an error is issued.
-    ///
-    /// True if success
-    pub fn PxScene_addCollection_mut(self_: *mut PxScene, collection: *const PxCollection) -> bool;
-
-    /// Retrieve the number of actors of certain types in the scene. For supported types, see PxActorTypeFlags.
-    ///
-    /// the number of actors.
-    pub fn PxScene_getNbActors(self_: *const PxScene, types: PxActorTypeFlags) -> u32;
-
-    /// Retrieve an array of all the actors of certain types in the scene. For supported types, see PxActorTypeFlags.
-    ///
-    /// Number of actors written to the buffer.
-    pub fn PxScene_getActors(self_: *const PxScene, types: PxActorTypeFlags, userBuffer: *mut *mut PxActor, bufferSize: u32, startIndex: u32) -> u32;
-
-    /// Queries the PxScene for a list of the PxActors whose transforms have been
-    /// updated during the previous simulation step. Only includes actors of type PxRigidDynamic and PxArticulationLink.
-    ///
-    /// PxSceneFlag::eENABLE_ACTIVE_ACTORS must be set.
-    ///
-    /// Do not use this method while the simulation is running. Calls to this method while the simulation is running will be ignored and NULL will be returned.
-    ///
-    /// A pointer to the list of active PxActors generated during the last call to fetchResults().
-    pub fn PxScene_getActiveActors_mut(self_: *mut PxScene, nbActorsOut: *mut u32) -> *mut *mut PxActor;
-
-    /// Returns the number of articulations in the scene.
-    ///
-    /// the number of articulations in this scene.
-    pub fn PxScene_getNbArticulations(self_: *const PxScene) -> u32;
-
-    /// Retrieve all the articulations in the scene.
-    ///
-    /// Number of articulations written to the buffer.
-    pub fn PxScene_getArticulations(self_: *const PxScene, userBuffer: *mut *mut PxArticulationReducedCoordinate, bufferSize: u32, startIndex: u32) -> u32;
-
-    /// Returns the number of constraint shaders in the scene.
-    ///
-    /// the number of constraint shaders in this scene.
-    pub fn PxScene_getNbConstraints(self_: *const PxScene) -> u32;
-
-    /// Retrieve all the constraint shaders in the scene.
-    ///
-    /// Number of constraint shaders written to the buffer.
-    pub fn PxScene_getConstraints(self_: *const PxScene, userBuffer: *mut *mut PxConstraint, bufferSize: u32, startIndex: u32) -> u32;
-
-    /// Returns the number of aggregates in the scene.
-    ///
-    /// the number of aggregates in this scene.
-    pub fn PxScene_getNbAggregates(self_: *const PxScene) -> u32;
-
-    /// Retrieve all the aggregates in the scene.
-    ///
-    /// Number of aggregates written to the buffer.
-    pub fn PxScene_getAggregates(self_: *const PxScene, userBuffer: *mut *mut PxAggregate, bufferSize: u32, startIndex: u32) -> u32;
-
-    /// Specifies the dominance behavior of contacts between two actors with two certain dominance groups.
-    ///
-    /// It is possible to assign each actor to a dominance groups using [`PxActor::setDominanceGroup`]().
-    ///
-    /// With dominance groups one can have all contacts created between actors act in one direction only. This is useful, for example, if you
-    /// want an object to push debris out of its way and be unaffected,while still responding physically to forces and collisions
-    /// with non-debris objects.
-    ///
-    /// Whenever a contact between two actors (a0, a1) needs to be solved, the groups (g0, g1) of both
-    /// actors are retrieved. Then the PxDominanceGroupPair setting for this group pair is retrieved with getDominanceGroupPair(g0, g1).
-    ///
-    /// In the contact, PxDominanceGroupPair::dominance0 becomes the dominance setting for a0, and
-    /// PxDominanceGroupPair::dominance1 becomes the dominance setting for a1. A dominanceN setting of 1.0f, the default,
-    /// will permit aN to be pushed or pulled by a(1-N) through the contact. A dominanceN setting of 0.0f, will however
-    /// prevent aN to be pushed by a(1-N) via the contact. Thus, a PxDominanceGroupPair of (1.0f, 0.0f) makes
-    /// the interaction one-way.
-    ///
-    /// The matrix sampled by getDominanceGroupPair(g1, g2) is initialised by default such that:
-    ///
-    /// if g1 == g2, then (1.0f, 1.0f) is returned
-    /// if g1
-    /// <
-    /// g2, then (0.0f, 1.0f) is returned
-    /// if g1 >  g2, then (1.0f, 0.0f) is returned
-    ///
-    /// In other words, we permit actors in higher groups to be pushed around by actors in lower groups by default.
-    ///
-    /// These settings should cover most applications, and in fact not overriding these settings may likely result in higher performance.
-    ///
-    /// It is not possible to make the matrix asymetric, or to change the diagonal. In other words:
-    ///
-    /// it is not possible to change (g1, g2) if (g1==g2)
-    /// if you set
-    ///
-    /// (g1, g2) to X, then (g2, g1) will implicitly and automatically be set to ~X, where:
-    ///
-    /// ~(1.0f, 1.0f) is (1.0f, 1.0f)
-    /// ~(0.0f, 1.0f) is (1.0f, 0.0f)
-    /// ~(1.0f, 0.0f) is (0.0f, 1.0f)
-    ///
-    /// These two restrictions are to make sure that contacts between two actors will always evaluate to the same dominance
-    /// setting, regardless of the order of the actors.
-    ///
-    /// Dominance settings are currently specified as floats 0.0f or 1.0f because in the future we may permit arbitrary
-    /// fractional settings to express 'partly-one-way' interactions.
-    ///
-    /// Sleeping:
-    /// Does
-    /// NOT
-    /// wake actors up automatically.
-    pub fn PxScene_setDominanceGroupPair_mut(self_: *mut PxScene, group1: u8, group2: u8, dominance: *const PxDominanceGroupPair);
-
-    /// Samples the dominance matrix.
-    pub fn PxScene_getDominanceGroupPair(self_: *const PxScene, group1: u8, group2: u8) -> PxDominanceGroupPair;
-
-    /// Return the cpu dispatcher that was set in PxSceneDesc::cpuDispatcher when creating the scene with PxPhysics::createScene
-    pub fn PxScene_getCpuDispatcher(self_: *const PxScene) -> *mut PxCpuDispatcher;
-
-    /// Reserves a new client ID.
-    ///
-    /// PX_DEFAULT_CLIENT is always available as the default clientID.
-    /// Additional clients are returned by this function. Clients cannot be released once created.
-    /// An error is reported when more than a supported number of clients (currently 128) are created.
-    pub fn PxScene_createClient_mut(self_: *mut PxScene) -> u8;
-
-    /// Sets a user notify object which receives special simulation events when they occur.
-    ///
-    /// Do not set the callback while the simulation is running. Calls to this method while the simulation is running will be ignored.
-    pub fn PxScene_setSimulationEventCallback_mut(self_: *mut PxScene, callback: *mut PxSimulationEventCallback);
-
-    /// Retrieves the simulationEventCallback pointer set with setSimulationEventCallback().
-    ///
-    /// The current user notify pointer. See [`PxSimulationEventCallback`].
-    pub fn PxScene_getSimulationEventCallback(self_: *const PxScene) -> *mut PxSimulationEventCallback;
-
-    /// Sets a user callback object, which receives callbacks on all contacts generated for specified actors.
-    ///
-    /// Do not set the callback while the simulation is running. Calls to this method while the simulation is running will be ignored.
-    pub fn PxScene_setContactModifyCallback_mut(self_: *mut PxScene, callback: *mut PxContactModifyCallback);
-
-    /// Sets a user callback object, which receives callbacks on all CCD contacts generated for specified actors.
-    ///
-    /// Do not set the callback while the simulation is running. Calls to this method while the simulation is running will be ignored.
-    pub fn PxScene_setCCDContactModifyCallback_mut(self_: *mut PxScene, callback: *mut PxCCDContactModifyCallback);
-
-    /// Retrieves the PxContactModifyCallback pointer set with setContactModifyCallback().
-    ///
-    /// The current user contact modify callback pointer. See [`PxContactModifyCallback`].
-    pub fn PxScene_getContactModifyCallback(self_: *const PxScene) -> *mut PxContactModifyCallback;
-
-    /// Retrieves the PxCCDContactModifyCallback pointer set with setContactModifyCallback().
-    ///
-    /// The current user contact modify callback pointer. See [`PxContactModifyCallback`].
-    pub fn PxScene_getCCDContactModifyCallback(self_: *const PxScene) -> *mut PxCCDContactModifyCallback;
-
-    /// Sets a broad-phase user callback object.
-    ///
-    /// Do not set the callback while the simulation is running. Calls to this method while the simulation is running will be ignored.
-    pub fn PxScene_setBroadPhaseCallback_mut(self_: *mut PxScene, callback: *mut PxBroadPhaseCallback);
-
-    /// Retrieves the PxBroadPhaseCallback pointer set with setBroadPhaseCallback().
-    ///
-    /// The current broad-phase callback pointer. See [`PxBroadPhaseCallback`].
-    pub fn PxScene_getBroadPhaseCallback(self_: *const PxScene) -> *mut PxBroadPhaseCallback;
-
-    /// Sets the shared global filter data which will get passed into the filter shader.
-    ///
-    /// It is the user's responsibility to ensure that changing the shared global filter data does not change the filter output value for existing pairs.
-    /// If the filter output for existing pairs does change nonetheless then such a change will not take effect until the pair gets refiltered.
-    /// resetFiltering() can be used to explicitly refilter the pairs of specific objects.
-    ///
-    /// The provided data will get copied to internal buffers and this copy will be used for filtering calls.
-    ///
-    /// Do not use this method while the simulation is running. Calls to this method while the simulation is running will be ignored.
-    pub fn PxScene_setFilterShaderData_mut(self_: *mut PxScene, data: *const std::ffi::c_void, dataSize: u32);
-
-    /// Gets the shared global filter data in use for this scene.
-    ///
-    /// The reference points to a copy of the original filter data specified in [`PxSceneDesc`].filterShaderData or provided by #setFilterShaderData().
-    ///
-    /// Shared filter data for filter shader.
-    pub fn PxScene_getFilterShaderData(self_: *const PxScene) -> *const std::ffi::c_void;
-
-    /// Gets the size of the shared global filter data ([`PxSceneDesc`].filterShaderData)
-    ///
-    /// Size of shared filter data [bytes].
-    pub fn PxScene_getFilterShaderDataSize(self_: *const PxScene) -> u32;
-
-    /// Marks the object to reset interactions and re-run collision filters in the next simulation step.
-    ///
-    /// This call forces the object to remove all existing collision interactions, to search anew for existing contact
-    /// pairs and to run the collision filters again for found collision pairs.
-    ///
-    /// The operation is supported for PxRigidActor objects only.
-    ///
-    /// All persistent state of existing interactions will be lost and can not be retrieved even if the same collison pair
-    /// is found again in the next step. This will mean, for example, that you will not get notified about persistent contact
-    /// for such an interaction (see [`PxPairFlag::eNOTIFY_TOUCH_PERSISTS`]), the contact pair will be interpreted as newly found instead.
-    ///
-    /// Lost touch contact reports will be sent for every collision pair which includes this shape, if they have
-    /// been requested through [`PxPairFlag::eNOTIFY_TOUCH_LOST`] or #PxPairFlag::eNOTIFY_THRESHOLD_FORCE_LOST.
-    ///
-    /// This is an expensive operation, don't use it if you don't have to.
-    ///
-    /// Can be used to retrieve collision pairs that were killed by the collision filters (see [`PxFilterFlag::eKILL`])
-    ///
-    /// It is invalid to use this method if the actor has not been added to a scene already.
-    ///
-    /// It is invalid to use this method if PxActorFlag::eDISABLE_SIMULATION is set.
-    ///
-    /// Do not use this method while the simulation is running.
-    ///
-    /// Sleeping:
-    /// Does wake up the actor.
-    ///
-    /// True if success
-    pub fn PxScene_resetFiltering_mut(self_: *mut PxScene, actor: *mut PxActor) -> bool;
-
-    /// Marks the object to reset interactions and re-run collision filters for specified shapes in the next simulation step.
-    ///
-    /// This is a specialization of the resetFiltering(PxActor
-    /// &
-    /// actor) method and allows to reset interactions for specific shapes of
-    /// a PxRigidActor.
-    ///
-    /// Do not use this method while the simulation is running.
-    ///
-    /// Sleeping:
-    /// Does wake up the actor.
-    pub fn PxScene_resetFiltering_mut_1(self_: *mut PxScene, actor: *mut PxRigidActor, shapes: *const *mut PxShape, shapeCount: u32) -> bool;
-
-    /// Gets the pair filtering mode for kinematic-kinematic pairs.
-    ///
-    /// Filtering mode for kinematic-kinematic pairs.
-    pub fn PxScene_getKinematicKinematicFilteringMode(self_: *const PxScene) -> PxPairFilteringMode;
-
-    /// Gets the pair filtering mode for static-kinematic pairs.
-    ///
-    /// Filtering mode for static-kinematic pairs.
-    pub fn PxScene_getStaticKinematicFilteringMode(self_: *const PxScene) -> PxPairFilteringMode;
-
-    /// Advances the simulation by an elapsedTime time.
-    ///
-    /// Large elapsedTime values can lead to instabilities. In such cases elapsedTime
-    /// should be subdivided into smaller time intervals and simulate() should be called
-    /// multiple times for each interval.
-    ///
-    /// Calls to simulate() should pair with calls to fetchResults():
-    /// Each fetchResults() invocation corresponds to exactly one simulate()
-    /// invocation; calling simulate() twice without an intervening fetchResults()
-    /// or fetchResults() twice without an intervening simulate() causes an error
-    /// condition.
-    ///
-    /// scene->simulate();
-    /// ...do some processing until physics is computed...
-    /// scene->fetchResults();
-    /// ...now results of run may be retrieved.
-    ///
-    /// True if success
-    pub fn PxScene_simulate_mut(self_: *mut PxScene, elapsedTime: f32, completionTask: *mut PxBaseTask, scratchMemBlock: *mut std::ffi::c_void, scratchMemBlockSize: u32, controlSimulation: bool) -> bool;
-
-    /// Performs dynamics phase of the simulation pipeline.
-    ///
-    /// Calls to advance() should follow calls to fetchCollision(). An error message will be issued if this sequence is not followed.
-    ///
-    /// True if success
-    pub fn PxScene_advance_mut(self_: *mut PxScene, completionTask: *mut PxBaseTask) -> bool;
-
-    /// Performs collision detection for the scene over elapsedTime
-    ///
-    /// Calls to collide() should be the first method called to simulate a frame.
-    ///
-    /// True if success
-    pub fn PxScene_collide_mut(self_: *mut PxScene, elapsedTime: f32, completionTask: *mut PxBaseTask, scratchMemBlock: *mut std::ffi::c_void, scratchMemBlockSize: u32, controlSimulation: bool) -> bool;
-
-    /// This checks to see if the simulation run has completed.
-    ///
-    /// This does not cause the data available for reading to be updated with the results of the simulation, it is simply a status check.
-    /// The bool will allow it to either return immediately or block waiting for the condition to be met so that it can return true
-    ///
-    /// True if the results are available.
-    pub fn PxScene_checkResults_mut(self_: *mut PxScene, block: bool) -> bool;
-
-    /// This method must be called after collide() and before advance(). It will wait for the collision phase to finish. If the user makes an illegal simulation call, the SDK will issue an error
-    /// message.
-    pub fn PxScene_fetchCollision_mut(self_: *mut PxScene, block: bool) -> bool;
-
-    /// This is the big brother to checkResults() it basically does the following:
-    ///
-    /// True if the results have been fetched.
-    pub fn PxScene_fetchResults_mut(self_: *mut PxScene, block: bool, errorState: *mut u32) -> bool;
-
-    /// This call performs the first section of fetchResults, and returns a pointer to the contact streams output by the simulation. It can be used to process contact pairs in parallel, which is often a limiting factor
-    /// for fetchResults() performance.
-    ///
-    /// After calling this function and processing the contact streams, call fetchResultsFinish(). Note that writes to the simulation are not
-    /// permitted between the start of fetchResultsStart() and the end of fetchResultsFinish().
-    ///
-    /// True if the results have been fetched.
-    pub fn PxScene_fetchResultsStart_mut(self_: *mut PxScene, contactPairs: *mut *const PxContactPairHeader, nbContactPairs: *mut u32, block: bool) -> bool;
-
-    /// This call processes all event callbacks in parallel. It takes a continuation task, which will be executed once all callbacks have been processed.
-    ///
-    /// This is a utility function to make it easier to process callbacks in parallel using the PhysX task system. It can only be used in conjunction with
-    /// fetchResultsStart(...) and fetchResultsFinish(...)
-    pub fn PxScene_processCallbacks_mut(self_: *mut PxScene, continuation: *mut PxBaseTask);
-
-    /// This call performs the second section of fetchResults.
-    ///
-    /// It must be called after fetchResultsStart() returns and contact reports have been processed.
-    ///
-    /// Note that once fetchResultsFinish() has been called, the contact streams returned in fetchResultsStart() will be invalid.
-    pub fn PxScene_fetchResultsFinish_mut(self_: *mut PxScene, errorState: *mut u32);
-
-    /// This call performs the synchronization of particle system data copies.
-    pub fn PxScene_fetchResultsParticleSystem_mut(self_: *mut PxScene);
-
-    /// Clear internal buffers and free memory.
-    ///
-    /// This method can be used to clear buffers and free internal memory without having to destroy the scene. Can be useful if
-    /// the physics data gets streamed in and a checkpoint with a clean state should be created.
-    ///
-    /// It is not allowed to call this method while the simulation is running. The call will fail.
-    pub fn PxScene_flushSimulation_mut(self_: *mut PxScene, sendPendingReports: bool);
-
-    /// Sets a constant gravity for the entire scene.
-    ///
-    /// Do not use this method while the simulation is running.
-    ///
-    /// Sleeping:
-    /// Does
-    /// NOT
-    /// wake the actor up automatically.
-    pub fn PxScene_setGravity_mut(self_: *mut PxScene, vec: *const PxVec3);
-
-    /// Retrieves the current gravity setting.
-    ///
-    /// The current gravity for the scene.
-    pub fn PxScene_getGravity(self_: *const PxScene) -> PxVec3;
-
-    /// Set the bounce threshold velocity.  Collision speeds below this threshold will not cause a bounce.
-    ///
-    /// Do not use this method while the simulation is running.
-    pub fn PxScene_setBounceThresholdVelocity_mut(self_: *mut PxScene, t: f32);
-
-    /// Return the bounce threshold velocity.
-    pub fn PxScene_getBounceThresholdVelocity(self_: *const PxScene) -> f32;
-
-    /// Sets the maximum number of CCD passes
-    ///
-    /// Do not use this method while the simulation is running.
-    pub fn PxScene_setCCDMaxPasses_mut(self_: *mut PxScene, ccdMaxPasses: u32);
-
-    /// Gets the maximum number of CCD passes.
-    ///
-    /// The maximum number of CCD passes.
-    pub fn PxScene_getCCDMaxPasses(self_: *const PxScene) -> u32;
-
-    /// Set the maximum CCD separation.
-    ///
-    /// Do not use this method while the simulation is running.
-    pub fn PxScene_setCCDMaxSeparation_mut(self_: *mut PxScene, t: f32);
-
-    /// Gets the maximum CCD separation.
-    ///
-    /// The maximum CCD separation.
-    pub fn PxScene_getCCDMaxSeparation(self_: *const PxScene) -> f32;
-
-    /// Set the CCD threshold.
-    ///
-    /// Do not use this method while the simulation is running.
-    pub fn PxScene_setCCDThreshold_mut(self_: *mut PxScene, t: f32);
-
-    /// Gets the CCD threshold.
-    ///
-    /// The CCD threshold.
-    pub fn PxScene_getCCDThreshold(self_: *const PxScene) -> f32;
-
-    /// Set the max bias coefficient.
-    ///
-    /// Do not use this method while the simulation is running.
-    pub fn PxScene_setMaxBiasCoefficient_mut(self_: *mut PxScene, t: f32);
-
-    /// Gets the max bias coefficient.
-    ///
-    /// The max bias coefficient.
-    pub fn PxScene_getMaxBiasCoefficient(self_: *const PxScene) -> f32;
-
-    /// Set the friction offset threshold.
-    ///
-    /// Do not use this method while the simulation is running.
-    pub fn PxScene_setFrictionOffsetThreshold_mut(self_: *mut PxScene, t: f32);
-
-    /// Gets the friction offset threshold.
-    pub fn PxScene_getFrictionOffsetThreshold(self_: *const PxScene) -> f32;
-
-    /// Set the friction correlation distance.
-    ///
-    /// Do not use this method while the simulation is running.
-    pub fn PxScene_setFrictionCorrelationDistance_mut(self_: *mut PxScene, t: f32);
-
-    /// Gets the friction correlation distance.
-    pub fn PxScene_getFrictionCorrelationDistance(self_: *const PxScene) -> f32;
-
-    /// Return the friction model.
-    pub fn PxScene_getFrictionType(self_: *const PxScene) -> PxFrictionType;
-
-    /// Return the solver model.
-    pub fn PxScene_getSolverType(self_: *const PxScene) -> PxSolverType;
-
-    /// Function that lets you set debug visualization parameters.
-    ///
-    /// Returns false if the value passed is out of range for usage specified by the enum.
-    ///
-    /// Do not use this method while the simulation is running.
-    ///
-    /// False if the parameter is out of range.
-    pub fn PxScene_setVisualizationParameter_mut(self_: *mut PxScene, param: PxVisualizationParameter, value: f32) -> bool;
-
-    /// Function that lets you query debug visualization parameters.
-    ///
-    /// The value of the parameter.
-    pub fn PxScene_getVisualizationParameter(self_: *const PxScene, paramEnum: PxVisualizationParameter) -> f32;
-
-    /// Defines a box in world space to which visualization geometry will be (conservatively) culled. Use a non-empty culling box to enable the feature, and an empty culling box to disable it.
-    ///
-    /// Do not use this method while the simulation is running.
-    pub fn PxScene_setVisualizationCullingBox_mut(self_: *mut PxScene, box_: *const PxBounds3);
-
-    /// Retrieves the visualization culling box.
-    ///
-    /// the box to which the geometry will be culled.
-    pub fn PxScene_getVisualizationCullingBox(self_: *const PxScene) -> PxBounds3;
-
-    /// Retrieves the render buffer.
-    ///
-    /// This will contain the results of any active visualization for this scene.
-    ///
-    /// Do not use this method while the simulation is running. Calls to this method while the simulation is running will result in undefined behaviour.
-    ///
-    /// The render buffer.
-    pub fn PxScene_getRenderBuffer_mut(self_: *mut PxScene) -> *const PxRenderBuffer;
-
-    /// Call this method to retrieve statistics for the current simulation step.
-    ///
-    /// Do not use this method while the simulation is running. Calls to this method while the simulation is running will be ignored.
-    pub fn PxScene_getSimulationStatistics(self_: *const PxScene, stats: *mut PxSimulationStatistics);
-
-    /// Returns broad-phase type.
-    ///
-    /// Broad-phase type
-    pub fn PxScene_getBroadPhaseType(self_: *const PxScene) -> PxBroadPhaseType;
-
-    /// Gets broad-phase caps.
-    ///
-    /// True if success
-    pub fn PxScene_getBroadPhaseCaps(self_: *const PxScene, caps: *mut PxBroadPhaseCaps) -> bool;
-
-    /// Returns number of regions currently registered in the broad-phase.
-    ///
-    /// Number of regions
-    pub fn PxScene_getNbBroadPhaseRegions(self_: *const PxScene) -> u32;
-
-    /// Gets broad-phase regions.
-    ///
-    /// Number of written out regions
-    pub fn PxScene_getBroadPhaseRegions(self_: *const PxScene, userBuffer: *mut PxBroadPhaseRegionInfo, bufferSize: u32, startIndex: u32) -> u32;
-
-    /// Adds a new broad-phase region.
-    ///
-    /// The bounds for the new region must be non-empty, otherwise an error occurs and the call is ignored.
-    ///
-    /// Note that by default, objects already existing in the SDK that might touch this region will not be automatically
-    /// added to the region. In other words the newly created region will be empty, and will only be populated with new
-    /// objects when they are added to the simulation, or with already existing objects when they are updated.
-    ///
-    /// It is nonetheless possible to override this default behavior and let the SDK populate the new region automatically
-    /// with already existing objects overlapping the incoming region. This has a cost though, and it should only be used
-    /// when the game can not guarantee that all objects within the new region will be added to the simulation after the
-    /// region itself.
-    ///
-    /// Objects automatically move from one region to another during their lifetime. The system keeps tracks of what
-    /// regions a given object is in. It is legal for an object to be in an arbitrary number of regions. However if an
-    /// object leaves all regions, or is created outside of all regions, several things happen:
-    /// - collisions get disabled for this object
-    /// - if a PxBroadPhaseCallback object is provided, an "out-of-bounds" event is generated via that callback
-    /// - if a PxBroadPhaseCallback object is not provided, a warning/error message is sent to the error stream
-    ///
-    /// If an object goes out-of-bounds and user deletes it during the same frame, neither the out-of-bounds event nor the
-    /// error message is generated.
-    ///
-    /// Handle for newly created region, or 0xffffffff in case of failure.
-    pub fn PxScene_addBroadPhaseRegion_mut(self_: *mut PxScene, region: *const PxBroadPhaseRegion, populateRegion: bool) -> u32;
-
-    /// Removes a new broad-phase region.
-    ///
-    /// If the region still contains objects, and if those objects do not overlap any region any more, they are not
-    /// automatically removed from the simulation. Instead, the PxBroadPhaseCallback::onObjectOutOfBounds notification
-    /// is used for each object. Users are responsible for removing the objects from the simulation if this is the
-    /// desired behavior.
-    ///
-    /// If the handle is invalid, or if a valid handle is removed twice, an error message is sent to the error stream.
-    ///
-    /// True if success
-    pub fn PxScene_removeBroadPhaseRegion_mut(self_: *mut PxScene, handle: u32) -> bool;
-
-    /// Get the task manager associated with this scene
-    ///
-    /// the task manager associated with the scene
-    pub fn PxScene_getTaskManager(self_: *const PxScene) -> *mut PxTaskManager;
-
-    /// Lock the scene for reading from the calling thread.
-    ///
-    /// When the PxSceneFlag::eREQUIRE_RW_LOCK flag is enabled lockRead() must be
-    /// called before any read calls are made on the scene.
-    ///
-    /// Multiple threads may read at the same time, no threads may read while a thread is writing.
-    /// If a call to lockRead() is made while another thread is holding a write lock
-    /// then the calling thread will be blocked until the writing thread calls unlockWrite().
-    ///
-    /// Lock upgrading is *not* supported, that means it is an error to
-    /// call lockRead() followed by lockWrite().
-    ///
-    /// Recursive locking is supported but each lockRead() call must be paired with an unlockRead().
-    pub fn PxScene_lockRead_mut(self_: *mut PxScene, file: *const std::ffi::c_char, line: u32);
-
-    /// Unlock the scene from reading.
-    ///
-    /// Each unlockRead() must be paired with a lockRead() from the same thread.
-    pub fn PxScene_unlockRead_mut(self_: *mut PxScene);
-
-    /// Lock the scene for writing from this thread.
-    ///
-    /// When the PxSceneFlag::eREQUIRE_RW_LOCK flag is enabled lockWrite() must be
-    /// called before any write calls are made on the scene.
-    ///
-    /// Only one thread may write at a time and no threads may read while a thread is writing.
-    /// If a call to lockWrite() is made and there are other threads reading then the
-    /// calling thread will be blocked until the readers complete.
-    ///
-    /// Writers have priority. If a thread is blocked waiting to write then subsequent calls to
-    /// lockRead() from other threads will be blocked until the writer completes.
-    ///
-    /// If multiple threads are waiting to write then the thread that is first
-    /// granted access depends on OS scheduling.
-    ///
-    /// Recursive locking is supported but each lockWrite() call must be paired
-    /// with an unlockWrite().
-    ///
-    /// If a thread has already locked the scene for writing then it may call
-    /// lockRead().
-    pub fn PxScene_lockWrite_mut(self_: *mut PxScene, file: *const std::ffi::c_char, line: u32);
-
-    /// Unlock the scene from writing.
-    ///
-    /// Each unlockWrite() must be paired with a lockWrite() from the same thread.
-    pub fn PxScene_unlockWrite_mut(self_: *mut PxScene);
-
-    /// set the cache blocks that can be used during simulate().
-    ///
-    /// Each frame the simulation requires memory to store contact, friction, and contact cache data. This memory is used in blocks of 16K.
-    /// Each frame the blocks used by the previous frame are freed, and may be retrieved by the application using PxScene::flushSimulation()
-    ///
-    /// This call will force allocation of cache blocks if the numBlocks parameter is greater than the currently allocated number
-    /// of blocks, and less than the max16KContactDataBlocks parameter specified at scene creation time.
-    ///
-    /// Do not use this method while the simulation is running.
-    pub fn PxScene_setNbContactDataBlocks_mut(self_: *mut PxScene, numBlocks: u32);
-
-    /// get the number of cache blocks currently used by the scene
-    ///
-    /// This function may not be called while the scene is simulating
-    ///
-    /// the number of cache blocks currently used by the scene
-    pub fn PxScene_getNbContactDataBlocksUsed(self_: *const PxScene) -> u32;
-
-    /// get the maximum number of cache blocks used by the scene
-    ///
-    /// This function may not be called while the scene is simulating
-    ///
-    /// the maximum number of cache blocks everused by the scene
-    pub fn PxScene_getMaxNbContactDataBlocksUsed(self_: *const PxScene) -> u32;
-
-    /// Return the value of PxSceneDesc::contactReportStreamBufferSize that was set when creating the scene with PxPhysics::createScene
-    pub fn PxScene_getContactReportStreamBufferSize(self_: *const PxScene) -> u32;
-
-    /// Sets the number of actors required to spawn a separate rigid body solver thread.
-    ///
-    /// Do not use this method while the simulation is running.
-    pub fn PxScene_setSolverBatchSize_mut(self_: *mut PxScene, solverBatchSize: u32);
-
-    /// Retrieves the number of actors required to spawn a separate rigid body solver thread.
-    ///
-    /// Current number of actors required to spawn a separate rigid body solver thread.
-    pub fn PxScene_getSolverBatchSize(self_: *const PxScene) -> u32;
-
-    /// Sets the number of articulations required to spawn a separate rigid body solver thread.
-    ///
-    /// Do not use this method while the simulation is running.
-    pub fn PxScene_setSolverArticulationBatchSize_mut(self_: *mut PxScene, solverBatchSize: u32);
-
-    /// Retrieves the number of articulations required to spawn a separate rigid body solver thread.
-    ///
-    /// Current number of articulations required to spawn a separate rigid body solver thread.
-    pub fn PxScene_getSolverArticulationBatchSize(self_: *const PxScene) -> u32;
-
-    /// Returns the wake counter reset value.
-    ///
-    /// Wake counter reset value
-    pub fn PxScene_getWakeCounterResetValue(self_: *const PxScene) -> f32;
-
-    /// Shift the scene origin by the specified vector.
-    ///
-    /// The poses of all objects in the scene and the corresponding data structures will get adjusted to reflect the new origin location
-    /// (the shift vector will get subtracted from all object positions).
-    ///
-    /// It is the user's responsibility to keep track of the summed total origin shift and adjust all input/output to/from PhysX accordingly.
-    ///
-    /// Do not use this method while the simulation is running. Calls to this method while the simulation is running will be ignored.
-    ///
-    /// Make sure to propagate the origin shift to other dependent modules (for example, the character controller module etc.).
-    ///
-    /// This is an expensive operation and we recommend to use it only in the case where distance related precision issues may arise in areas far from the origin.
-    pub fn PxScene_shiftOrigin_mut(self_: *mut PxScene, shift: *const PxVec3);
-
-    /// Returns the Pvd client associated with the scene.
-    ///
-    /// the client, NULL if no PVD supported.
-    pub fn PxScene_getScenePvdClient_mut(self_: *mut PxScene) -> *mut PxPvdSceneClient;
-
-    /// Copy GPU articulation data from the internal GPU buffer to a user-provided device buffer.
-    pub fn PxScene_copyArticulationData_mut(self_: *mut PxScene, data: *mut std::ffi::c_void, index: *mut std::ffi::c_void, dataType: PxArticulationGpuDataType, nbCopyArticulations: u32, copyEvent: *mut std::ffi::c_void);
-
-    /// Apply GPU articulation data from a user-provided device buffer to the internal GPU buffer.
-    pub fn PxScene_applyArticulationData_mut(self_: *mut PxScene, data: *mut std::ffi::c_void, index: *mut std::ffi::c_void, dataType: PxArticulationGpuDataType, nbUpdatedArticulations: u32, waitEvent: *mut std::ffi::c_void, signalEvent: *mut std::ffi::c_void);
-
-    /// Copy GPU softbody data from the internal GPU buffer to a user-provided device buffer.
-    pub fn PxScene_copySoftBodyData_mut(self_: *mut PxScene, data: *mut *mut std::ffi::c_void, dataSizes: *mut std::ffi::c_void, softBodyIndices: *mut std::ffi::c_void, flag: PxSoftBodyDataFlag, nbCopySoftBodies: u32, maxSize: u32, copyEvent: *mut std::ffi::c_void);
-
-    /// Apply user-provided data to the internal softbody system.
-    pub fn PxScene_applySoftBodyData_mut(self_: *mut PxScene, data: *mut *mut std::ffi::c_void, dataSizes: *mut std::ffi::c_void, softBodyIndices: *mut std::ffi::c_void, flag: PxSoftBodyDataFlag, nbUpdatedSoftBodies: u32, maxSize: u32, applyEvent: *mut std::ffi::c_void);
-
-    /// Copy contact data from the internal GPU buffer to a user-provided device buffer.
-    ///
-    /// The contact data contains pointers to internal state and is only valid until the next call to simulate().
-    pub fn PxScene_copyContactData_mut(self_: *mut PxScene, data: *mut std::ffi::c_void, maxContactPairs: u32, numContactPairs: *mut std::ffi::c_void, copyEvent: *mut std::ffi::c_void);
-
-    /// Copy GPU rigid body data from the internal GPU buffer to a user-provided device buffer.
-    pub fn PxScene_copyBodyData_mut(self_: *mut PxScene, data: *mut PxGpuBodyData, index: *mut PxGpuActorPair, nbCopyActors: u32, copyEvent: *mut std::ffi::c_void);
-
-    /// Apply user-provided data to rigid body.
-    pub fn PxScene_applyActorData_mut(self_: *mut PxScene, data: *mut std::ffi::c_void, index: *mut PxGpuActorPair, flag: PxActorCacheFlag, nbUpdatedActors: u32, waitEvent: *mut std::ffi::c_void, signalEvent: *mut std::ffi::c_void);
-
-    /// Compute dense Jacobian matrices for specified articulations on the GPU.
-    ///
-    /// The size of Jacobians can vary by articulation, since it depends on the number of links, degrees-of-freedom, and whether the base is fixed.
-    ///
-    /// The size is determined using these formulas:
-    /// nCols = (fixedBase ? 0 : 6) + dofCount
-    /// nRows = (fixedBase ? 0 : 6) + (linkCount - 1) * 6;
-    ///
-    /// The user must ensure that adequate space is provided for each Jacobian matrix.
-    pub fn PxScene_computeDenseJacobians_mut(self_: *mut PxScene, indices: *const PxIndexDataPair, nbIndices: u32, computeEvent: *mut std::ffi::c_void);
-
-    /// Compute the joint-space inertia matrices that maps joint accelerations to joint forces: forces = M * accelerations on the GPU.
-    ///
-    /// The size of matrices can vary by articulation, since it depends on the number of links and degrees-of-freedom.
-    ///
-    /// The size is determined using this formula:
-    /// sizeof(float) * dofCount * dofCount
-    ///
-    /// The user must ensure that adequate space is provided for each mass matrix.
-    pub fn PxScene_computeGeneralizedMassMatrices_mut(self_: *mut PxScene, indices: *const PxIndexDataPair, nbIndices: u32, computeEvent: *mut std::ffi::c_void);
-
-    /// Computes the joint DOF forces required to counteract gravitational forces for the given articulation pose.
-    ///
-    /// The size of the result can vary by articulation, since it depends on the number of links and degrees-of-freedom.
-    ///
-    /// The size is determined using this formula:
-    /// sizeof(float) * dofCount
-    ///
-    /// The user must ensure that adequate space is provided for each articulation.
-    pub fn PxScene_computeGeneralizedGravityForces_mut(self_: *mut PxScene, indices: *const PxIndexDataPair, nbIndices: u32, computeEvent: *mut std::ffi::c_void);
-
-    /// Computes the joint DOF forces required to counteract coriolis and centrifugal forces for the given articulation pose.
-    ///
-    /// The size of the result can vary by articulation, since it depends on the number of links and degrees-of-freedom.
-    ///
-    /// The size is determined using this formula:
-    /// sizeof(float) * dofCount
-    ///
-    /// The user must ensure that adequate space is provided for each articulation.
-    pub fn PxScene_computeCoriolisAndCentrifugalForces_mut(self_: *mut PxScene, indices: *const PxIndexDataPair, nbIndices: u32, computeEvent: *mut std::ffi::c_void);
-
-    pub fn PxScene_getGpuDynamicsConfig(self_: *const PxScene) -> PxgDynamicsMemoryConfig;
-
-    /// Apply user-provided data to particle buffers.
-    ///
-    /// This function should be used if the particle buffer flags are already on the device. Otherwise, use PxParticleBuffer::raiseFlags()
-    /// from the CPU.
-    ///
-    /// This assumes the data has been changed directly in the PxParticleBuffer.
-    pub fn PxScene_applyParticleBufferData_mut(self_: *mut PxScene, indices: *const u32, bufferIndexPair: *const PxGpuParticleBufferIndexPair, flags: *const PxParticleBufferFlags, nbUpdatedBuffers: u32, waitEvent: *mut std::ffi::c_void, signalEvent: *mut std::ffi::c_void);
-
     /// Constructor
     pub fn PxSceneReadLock_new_alloc(scene: *mut PxScene, file: *const std::ffi::c_char, line: u32) -> *mut PxSceneReadLock;
 
@@ -11420,127 +10332,6 @@ extern "C" {
     pub fn PxSceneWriteLock_new_alloc(scene: *mut PxScene, file: *const std::ffi::c_char, line: u32) -> *mut PxSceneWriteLock;
 
     pub fn PxSceneWriteLock_delete(self_: *mut PxSceneWriteLock);
-
-    pub fn PxContactPairExtraDataItem_new() -> PxContactPairExtraDataItem;
-
-    pub fn PxContactPairVelocity_new() -> PxContactPairVelocity;
-
-    pub fn PxContactPairPose_new() -> PxContactPairPose;
-
-    pub fn PxContactPairIndex_new() -> PxContactPairIndex;
-
-    /// Constructor
-    pub fn PxContactPairExtraDataIterator_new(stream: *const u8, size: u32) -> PxContactPairExtraDataIterator;
-
-    /// Advances the iterator to next set of extra data items.
-    ///
-    /// The contact pair extra data stream contains sets of items as requested by the corresponding [`PxPairFlag`] flags
-    /// [`PxPairFlag::ePRE_SOLVER_VELOCITY`], #PxPairFlag::ePOST_SOLVER_VELOCITY, #PxPairFlag::eCONTACT_EVENT_POSE. A set can contain one
-    /// item of each plus the PxContactPairIndex item. This method parses the stream and points the iterator
-    /// member variables to the corresponding items of the current set, if they are available. If CCD is not enabled,
-    /// you should only get one set of items. If CCD with multiple passes is enabled, you might get more than one item
-    /// set.
-    ///
-    /// Even though contact pair extra data is requested per shape pair, you will not get an item set per shape pair
-    /// but one per actor pair. If, for example, an actor has two shapes and both collide with another actor, then
-    /// there will only be one item set (since it applies to both shape pairs).
-    ///
-    /// True if there was another set of extra data items in the stream, else false.
-    pub fn PxContactPairExtraDataIterator_nextItemSet_mut(self_: *mut PxContactPairExtraDataIterator) -> bool;
-
-    pub fn PxContactPairHeader_new() -> PxContactPairHeader;
-
-    pub fn PxContactPair_new() -> PxContactPair;
-
-    /// Extracts the contact points from the stream and stores them in a convenient format.
-    ///
-    /// Number of contact points written to the buffer.
-    pub fn PxContactPair_extractContacts(self_: *const PxContactPair, userBuffer: *mut PxContactPairPoint, bufferSize: u32) -> u32;
-
-    /// Helper method to clone the contact pair and copy the contact data stream into a user buffer.
-    ///
-    /// The contact data stream is only accessible during the contact report callback. This helper function provides copy functionality
-    /// to buffer the contact stream information such that it can get accessed at a later stage.
-    pub fn PxContactPair_bufferContacts(self_: *const PxContactPair, newPair: *mut PxContactPair, bufferMemory: *mut u8);
-
-    pub fn PxContactPair_getInternalFaceIndices(self_: *const PxContactPair) -> *const u32;
-
-    pub fn PxTriggerPair_new() -> PxTriggerPair;
-
-    pub fn PxConstraintInfo_new() -> PxConstraintInfo;
-
-    pub fn PxConstraintInfo_new_1(c: *mut PxConstraint, extRef: *mut std::ffi::c_void, t: u32) -> PxConstraintInfo;
-
-    /// This is called when a breakable constraint breaks.
-    ///
-    /// The user should not release the constraint shader inside this call!
-    ///
-    /// No event will get reported if the constraint breaks but gets deleted while the time step is still being simulated.
-    pub fn PxSimulationEventCallback_onConstraintBreak_mut(self_: *mut PxSimulationEventCallback, constraints: *mut PxConstraintInfo, count: u32);
-
-    /// This is called with the actors which have just been woken up.
-    ///
-    /// Only supported by rigid bodies yet.
-    ///
-    /// Only called on actors for which the PxActorFlag eSEND_SLEEP_NOTIFIES has been set.
-    ///
-    /// Only the latest sleep state transition happening between fetchResults() of the previous frame and fetchResults() of the current frame
-    /// will get reported. For example, let us assume actor A is awake, then A->putToSleep() gets called, then later A->wakeUp() gets called.
-    /// At the next simulate/fetchResults() step only an onWake() event will get triggered because that was the last transition.
-    ///
-    /// If an actor gets newly added to a scene with properties such that it is awake and the sleep state does not get changed by
-    /// the user or simulation, then an onWake() event will get sent at the next simulate/fetchResults() step.
-    pub fn PxSimulationEventCallback_onWake_mut(self_: *mut PxSimulationEventCallback, actors: *mut *mut PxActor, count: u32);
-
-    /// This is called with the actors which have just been put to sleep.
-    ///
-    /// Only supported by rigid bodies yet.
-    ///
-    /// Only called on actors for which the PxActorFlag eSEND_SLEEP_NOTIFIES has been set.
-    ///
-    /// Only the latest sleep state transition happening between fetchResults() of the previous frame and fetchResults() of the current frame
-    /// will get reported. For example, let us assume actor A is asleep, then A->wakeUp() gets called, then later A->putToSleep() gets called.
-    /// At the next simulate/fetchResults() step only an onSleep() event will get triggered because that was the last transition (assuming the simulation
-    /// does not wake the actor up).
-    ///
-    /// If an actor gets newly added to a scene with properties such that it is asleep and the sleep state does not get changed by
-    /// the user or simulation, then an onSleep() event will get sent at the next simulate/fetchResults() step.
-    pub fn PxSimulationEventCallback_onSleep_mut(self_: *mut PxSimulationEventCallback, actors: *mut *mut PxActor, count: u32);
-
-    /// This is called when certain contact events occur.
-    ///
-    /// The method will be called for a pair of actors if one of the colliding shape pairs requested contact notification.
-    /// You request which events are reported using the filter shader/callback mechanism (see [`PxSimulationFilterShader`],
-    /// [`PxSimulationFilterCallback`], #PxPairFlag).
-    ///
-    /// Do not keep references to the passed objects, as they will be
-    /// invalid after this function returns.
-    pub fn PxSimulationEventCallback_onContact_mut(self_: *mut PxSimulationEventCallback, pairHeader: *const PxContactPairHeader, pairs: *const PxContactPair, nbPairs: u32);
-
-    /// This is called with the current trigger pair events.
-    ///
-    /// Shapes which have been marked as triggers using PxShapeFlag::eTRIGGER_SHAPE will send events
-    /// according to the pair flag specification in the filter shader (see [`PxPairFlag`], #PxSimulationFilterShader).
-    ///
-    /// Trigger shapes will no longer send notification events for interactions with other trigger shapes.
-    pub fn PxSimulationEventCallback_onTrigger_mut(self_: *mut PxSimulationEventCallback, pairs: *mut PxTriggerPair, count: u32);
-
-    /// Provides early access to the new pose of moving rigid bodies.
-    ///
-    /// When this call occurs, rigid bodies having the [`PxRigidBodyFlag::eENABLE_POSE_INTEGRATION_PREVIEW`]
-    /// flag set, were moved by the simulation and their new poses can be accessed through the provided buffers.
-    ///
-    /// The provided buffers are valid and can be read until the next call to [`PxScene::simulate`]() or #PxScene::collide().
-    ///
-    /// This callback gets triggered while the simulation is running. If the provided rigid body references are used to
-    /// read properties of the object, then the callback has to guarantee no other thread is writing to the same body at the same
-    /// time.
-    ///
-    /// The code in this callback should be lightweight as it can block the simulation, that is, the
-    /// [`PxScene::fetchResults`]() call.
-    pub fn PxSimulationEventCallback_onAdvance_mut(self_: *mut PxSimulationEventCallback, bodyBuffer: *const *const PxRigidBody, poseBuffer: *const PxTransform, count: u32);
-
-    pub fn PxSimulationEventCallback_delete(self_: *mut PxSimulationEventCallback);
 
     pub fn PxFEMParameters_new() -> PxFEMParameters;
 
@@ -14039,6 +12830,8 @@ extern "C" {
     ///
     /// An external SQ system instance
     pub fn phys_PxCreateExternalSceneQuerySystem(desc: *const PxSceneQueryDesc, contextID: u64) -> *mut PxSceneQuerySystem;
+
+    pub fn PxCustomSceneQuerySystem_delete(self_: *mut PxCustomSceneQuerySystem);
 
     /// Adds a pruner to the system.
     ///

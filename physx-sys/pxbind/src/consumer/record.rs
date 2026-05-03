@@ -605,7 +605,7 @@ impl<'ast> super::AstConsumer<'ast> {
 
             self.consume_method(inn, method, &[], func)?;
         }
-
+	    
         // Check the fields to see if any records need to be forward declared
         // Note this doesn't apply to function parameters since functions are
         // emitted after all Pod types

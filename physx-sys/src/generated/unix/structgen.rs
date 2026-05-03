@@ -25,12 +25,6 @@ pub struct PxUserAllocated {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
-pub struct PxTempAllocator {
-    pub structgen_pad0: [u8; 1],
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
 pub struct PxBitAndByte {
     pub structgen_pad0: [u8; 1],
 }
@@ -52,9 +46,7 @@ pub struct PxVec3 {
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
 pub struct PxVec3Padded {
-    pub x: f32,
-    pub y: f32,
-    pub z: f32,
+    pub structgen_pad0: [u8; 12],
     pub padding: u32,
 }
 #[derive(Clone, Copy)]
@@ -164,18 +156,6 @@ pub struct PxProfileScoped {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
-pub struct PxSListEntry {
-    pub structgen_pad0: [u8; 16],
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
-pub struct PxSListImpl {
-    pub structgen_pad0: [u8; 1],
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
 pub struct PxSyncImpl {
     pub structgen_pad0: [u8; 1],
 }
@@ -211,9 +191,7 @@ pub struct PxStridedData {
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
 pub struct PxBoundedData {
-    pub stride: u32,
-    pub structgen_pad0: [u8; 4],
-    pub data: *const std::ffi::c_void,
+    pub structgen_pad0: [u8; 16],
     pub count: u32,
     pub structgen_pad1: [u8; 4],
 }
@@ -269,12 +247,6 @@ pub struct PxBase {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
-pub struct PxRefCounted {
-    pub structgen_pad0: [u8; 16],
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
 pub struct PxTolerancesScale {
     pub length: f32,
     pub speed: f32,
@@ -321,22 +293,14 @@ pub struct PxGeometry {
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
 pub struct PxBoxGeometry {
-    pub structgen_pad0: [u8; 4],
-    pub mTypePadding: f32,
+    pub structgen_pad0: [u8; 8],
     pub halfExtents: PxVec3,
 }
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
-pub struct PxBVH {
-    pub structgen_pad0: [u8; 16],
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
 pub struct PxCapsuleGeometry {
-    pub structgen_pad0: [u8; 4],
-    pub mTypePadding: f32,
+    pub structgen_pad0: [u8; 8],
     pub radius: f32,
     pub halfHeight: f32,
 }
@@ -351,12 +315,6 @@ pub struct PxHullPolygon {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
-pub struct PxConvexMesh {
-    pub structgen_pad0: [u8; 16],
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
 pub struct PxMeshScale {
     pub scale: PxVec3,
     pub rotation: PxQuat,
@@ -365,8 +323,7 @@ pub struct PxMeshScale {
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
 pub struct PxConvexMeshGeometry {
-    pub structgen_pad0: [u8; 4],
-    pub mTypePadding: f32,
+    pub structgen_pad0: [u8; 8],
     pub scale: PxMeshScale,
     pub structgen_pad1: [u8; 4],
     pub convexMesh: *mut PxConvexMesh,
@@ -377,23 +334,20 @@ pub struct PxConvexMeshGeometry {
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
 pub struct PxSphereGeometry {
-    pub structgen_pad0: [u8; 4],
-    pub mTypePadding: f32,
+    pub structgen_pad0: [u8; 8],
     pub radius: f32,
 }
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
 pub struct PxPlaneGeometry {
-    pub structgen_pad0: [u8; 4],
-    pub mTypePadding: f32,
+    pub structgen_pad0: [u8; 8],
 }
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
 pub struct PxTriangleMeshGeometry {
-    pub structgen_pad0: [u8; 4],
-    pub mTypePadding: f32,
+    pub structgen_pad0: [u8; 8],
     pub scale: PxMeshScale,
     pub meshFlags: PxMeshGeometryFlags,
     pub structgen_pad1: [u8; 3],
@@ -403,8 +357,7 @@ pub struct PxTriangleMeshGeometry {
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
 pub struct PxHeightFieldGeometry {
-    pub structgen_pad0: [u8; 4],
-    pub mTypePadding: f32,
+    pub structgen_pad0: [u8; 8],
     pub heightField: *mut PxHeightField,
     pub heightScale: f32,
     pub rowScale: f32,
@@ -416,23 +369,20 @@ pub struct PxHeightFieldGeometry {
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
 pub struct PxParticleSystemGeometry {
-    pub structgen_pad0: [u8; 4],
-    pub mTypePadding: f32,
+    pub structgen_pad0: [u8; 8],
     pub mSolverType: PxParticleSolverType,
 }
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
 pub struct PxHairSystemGeometry {
-    pub structgen_pad0: [u8; 4],
-    pub mTypePadding: f32,
+    pub structgen_pad0: [u8; 8],
 }
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
 pub struct PxTetrahedronMeshGeometry {
-    pub structgen_pad0: [u8; 4],
-    pub mTypePadding: f32,
+    pub structgen_pad0: [u8; 8],
     pub tetrahedronMesh: *mut PxTetrahedronMesh,
 }
 #[derive(Clone, Copy)]
@@ -445,9 +395,9 @@ pub struct PxQueryHit {
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
 pub struct PxLocationHit {
-    pub faceIndex: u32,
+    pub structgen_pad0: [u8; 4],
     pub flags: PxHitFlags,
-    pub structgen_pad0: [u8; 2],
+    pub structgen_pad1: [u8; 2],
     pub position: PxVec3,
     pub normal: PxVec3,
     pub distance: f32,
@@ -456,12 +406,7 @@ pub struct PxLocationHit {
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
 pub struct PxGeomRaycastHit {
-    pub faceIndex: u32,
-    pub flags: PxHitFlags,
-    pub structgen_pad0: [u8; 2],
-    pub position: PxVec3,
-    pub normal: PxVec3,
-    pub distance: f32,
+    pub structgen_pad0: [u8; 36],
     pub u: f32,
     pub v: f32,
 }
@@ -469,18 +414,13 @@ pub struct PxGeomRaycastHit {
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
 pub struct PxGeomOverlapHit {
-    pub faceIndex: u32,
+    pub structgen_pad0: [u8; 4],
 }
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
 pub struct PxGeomSweepHit {
-    pub faceIndex: u32,
-    pub flags: PxHitFlags,
-    pub structgen_pad0: [u8; 2],
-    pub position: PxVec3,
-    pub normal: PxVec3,
-    pub distance: f32,
+    pub structgen_pad0: [u8; 36],
 }
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
@@ -505,8 +445,7 @@ pub struct PxCustomGeometryType {
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
 pub struct PxCustomGeometry {
-    pub structgen_pad0: [u8; 4],
-    pub mTypePadding: f32,
+    pub structgen_pad0: [u8; 8],
     pub callbacks: *mut PxCustomGeometryCallbacks,
 }
 #[derive(Clone, Copy)]
@@ -528,12 +467,6 @@ pub struct PxHeightFieldSample {
     pub height: i16,
     pub materialIndex0: PxBitAndByte,
     pub materialIndex1: PxBitAndByte,
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
-pub struct PxHeightField {
-    pub structgen_pad0: [u8; 16],
 }
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
@@ -573,50 +506,14 @@ pub struct PxTriangle {
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
 pub struct PxTrianglePadded {
-    pub verts: [PxVec3; 3],
+    pub structgen_pad0: [u8; 36],
     pub padding: u32,
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
-pub struct PxTriangleMesh {
-    pub structgen_pad0: [u8; 16],
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
-pub struct PxBVH34TriangleMesh {
-    pub structgen_pad0: [u8; 16],
 }
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
 pub struct PxTetrahedron {
     pub verts: [PxVec3; 4],
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
-pub struct PxSoftBodyAuxData {
-    pub structgen_pad0: [u8; 16],
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
-pub struct PxTetrahedronMesh {
-    pub structgen_pad0: [u8; 16],
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
-pub struct PxSoftBodyMesh {
-    pub structgen_pad0: [u8; 16],
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
-pub struct PxCollisionMeshMappingData {
-    pub structgen_pad0: [u8; 8],
 }
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
@@ -635,18 +532,6 @@ pub struct PxTetrahedronMeshData {
 #[repr(C)]
 pub struct PxSoftBodySimulationData {
     pub structgen_pad0: [u8; 1],
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
-pub struct PxCollisionTetrahedronMeshData {
-    pub structgen_pad0: [u8; 8],
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
-pub struct PxSimulationTetrahedronMeshData {
-    pub structgen_pad0: [u8; 8],
 }
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
@@ -776,228 +661,6 @@ pub struct PxSolverConstraintDesc {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
-pub struct PxSolverConstraintPrepDescBase {
-    pub invMassScales: PxConstraintInvMassScale,
-    pub desc: *mut PxSolverConstraintDesc,
-    pub body0: *const PxSolverBody,
-    pub body1: *const PxSolverBody,
-    pub data0: *const PxSolverBodyData,
-    pub data1: *const PxSolverBodyData,
-    pub bodyFrame0: PxTransform,
-    pub bodyFrame1: PxTransform,
-    pub bodyState0: BodyState,
-    pub bodyState1: BodyState,
-    pub structgen_pad0: [u8; 8],
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
-pub struct PxSolverConstraintPrepDesc {
-    pub invMassScales: PxConstraintInvMassScale,
-    pub desc: *mut PxSolverConstraintDesc,
-    pub body0: *const PxSolverBody,
-    pub body1: *const PxSolverBody,
-    pub data0: *const PxSolverBodyData,
-    pub data1: *const PxSolverBodyData,
-    pub bodyFrame0: PxTransform,
-    pub bodyFrame1: PxTransform,
-    pub bodyState0: BodyState,
-    pub bodyState1: BodyState,
-    pub structgen_pad0: [u8; 8],
-    pub rows: *mut Px1DConstraint,
-    pub numRows: u32,
-    pub linBreakForce: f32,
-    pub angBreakForce: f32,
-    pub minResponseThreshold: f32,
-    pub writeback: *mut std::ffi::c_void,
-    pub disablePreprocessing: bool,
-    pub improvedSlerp: bool,
-    pub driveLimitsAreForces: bool,
-    pub extendedLimits: bool,
-    pub disableConstraint: bool,
-    pub structgen_pad1: [u8; 3],
-    pub body0WorldOffset: PxVec3Padded,
-    pub structgen_pad2: [u8; 8],
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
-pub struct PxSolverContactDesc {
-    pub invMassScales: PxConstraintInvMassScale,
-    pub desc: *mut PxSolverConstraintDesc,
-    pub body0: *const PxSolverBody,
-    pub body1: *const PxSolverBody,
-    pub data0: *const PxSolverBodyData,
-    pub data1: *const PxSolverBodyData,
-    pub bodyFrame0: PxTransform,
-    pub bodyFrame1: PxTransform,
-    pub bodyState0: BodyState,
-    pub bodyState1: BodyState,
-    pub shapeInteraction: *mut std::ffi::c_void,
-    pub contacts: *mut PxContactPoint,
-    pub numContacts: u32,
-    pub hasMaxImpulse: bool,
-    pub disableStrongFriction: bool,
-    pub hasForceThresholds: bool,
-    pub structgen_pad0: [u8; 1],
-    pub restDistance: f32,
-    pub maxCCDSeparation: f32,
-    pub frictionPtr: *mut u8,
-    pub frictionCount: u8,
-    pub structgen_pad1: [u8; 7],
-    pub contactForces: *mut f32,
-    pub startFrictionPatchIndex: u32,
-    pub numFrictionPatches: u32,
-    pub startContactPatchIndex: u32,
-    pub numContactPatches: u16,
-    pub axisConstraintCount: u16,
-    pub offsetSlop: f32,
-    pub structgen_pad2: [u8; 12],
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
-pub struct PxArticulationLimit {
-    pub low: f32,
-    pub high: f32,
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
-pub struct PxArticulationDrive {
-    pub stiffness: f32,
-    pub damping: f32,
-    pub maxForce: f32,
-    pub driveType: PxArticulationDriveType,
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
-pub struct PxTGSSolverBodyVel {
-    pub linearVelocity: PxVec3,
-    pub nbStaticInteractions: u16,
-    pub maxDynamicPartition: u16,
-    pub angularVelocity: PxVec3,
-    pub partitionMask: u32,
-    pub deltaAngDt: PxVec3,
-    pub maxAngVel: f32,
-    pub deltaLinDt: PxVec3,
-    pub lockFlags: u16,
-    pub isKinematic: bool,
-    pub pad: u8,
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
-pub struct PxTGSSolverBodyTxInertia {
-    pub deltaBody2World: PxTransform,
-    pub sqrtInvInertia: PxMat33,
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
-pub struct PxTGSSolverBodyData {
-    pub originalLinearVelocity: PxVec3,
-    pub maxContactImpulse: f32,
-    pub originalAngularVelocity: PxVec3,
-    pub penBiasClamp: f32,
-    pub invMass: f32,
-    pub nodeIndex: u32,
-    pub reportThreshold: f32,
-    pub pad: u32,
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
-pub struct PxTGSSolverConstraintPrepDescBase {
-    pub invMassScales: PxConstraintInvMassScale,
-    pub desc: *mut PxSolverConstraintDesc,
-    pub body0: *const PxTGSSolverBodyVel,
-    pub body1: *const PxTGSSolverBodyVel,
-    pub body0TxI: *const PxTGSSolverBodyTxInertia,
-    pub body1TxI: *const PxTGSSolverBodyTxInertia,
-    pub bodyData0: *const PxTGSSolverBodyData,
-    pub bodyData1: *const PxTGSSolverBodyData,
-    pub bodyFrame0: PxTransform,
-    pub bodyFrame1: PxTransform,
-    pub bodyState0: BodyState,
-    pub bodyState1: BodyState,
-    pub structgen_pad0: [u8; 8],
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
-pub struct PxTGSSolverConstraintPrepDesc {
-    pub invMassScales: PxConstraintInvMassScale,
-    pub desc: *mut PxSolverConstraintDesc,
-    pub body0: *const PxTGSSolverBodyVel,
-    pub body1: *const PxTGSSolverBodyVel,
-    pub body0TxI: *const PxTGSSolverBodyTxInertia,
-    pub body1TxI: *const PxTGSSolverBodyTxInertia,
-    pub bodyData0: *const PxTGSSolverBodyData,
-    pub bodyData1: *const PxTGSSolverBodyData,
-    pub bodyFrame0: PxTransform,
-    pub bodyFrame1: PxTransform,
-    pub bodyState0: BodyState,
-    pub bodyState1: BodyState,
-    pub rows: *mut Px1DConstraint,
-    pub numRows: u32,
-    pub linBreakForce: f32,
-    pub angBreakForce: f32,
-    pub minResponseThreshold: f32,
-    pub writeback: *mut std::ffi::c_void,
-    pub disablePreprocessing: bool,
-    pub improvedSlerp: bool,
-    pub driveLimitsAreForces: bool,
-    pub extendedLimits: bool,
-    pub disableConstraint: bool,
-    pub structgen_pad0: [u8; 3],
-    pub body0WorldOffset: PxVec3Padded,
-    pub cA2w: PxVec3Padded,
-    pub cB2w: PxVec3Padded,
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
-pub struct PxTGSSolverContactDesc {
-    pub invMassScales: PxConstraintInvMassScale,
-    pub desc: *mut PxSolverConstraintDesc,
-    pub body0: *const PxTGSSolverBodyVel,
-    pub body1: *const PxTGSSolverBodyVel,
-    pub body0TxI: *const PxTGSSolverBodyTxInertia,
-    pub body1TxI: *const PxTGSSolverBodyTxInertia,
-    pub bodyData0: *const PxTGSSolverBodyData,
-    pub bodyData1: *const PxTGSSolverBodyData,
-    pub bodyFrame0: PxTransform,
-    pub bodyFrame1: PxTransform,
-    pub bodyState0: BodyState,
-    pub bodyState1: BodyState,
-    pub shapeInteraction: *mut std::ffi::c_void,
-    pub contacts: *mut PxContactPoint,
-    pub numContacts: u32,
-    pub hasMaxImpulse: bool,
-    pub disableStrongFriction: bool,
-    pub hasForceThresholds: bool,
-    pub structgen_pad0: [u8; 1],
-    pub restDistance: f32,
-    pub maxCCDSeparation: f32,
-    pub frictionPtr: *mut u8,
-    pub frictionCount: u8,
-    pub structgen_pad1: [u8; 7],
-    pub contactForces: *mut f32,
-    pub startFrictionPatchIndex: u32,
-    pub numFrictionPatches: u32,
-    pub startContactPatchIndex: u32,
-    pub numContactPatches: u16,
-    pub axisConstraintCount: u16,
-    pub maxImpulse: f32,
-    pub torsionalPatchRadius: f32,
-    pub minTorsionalPatchRadius: f32,
-    pub offsetSlop: f32,
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
 pub struct PxArticulationTendonLimit {
     pub lowLimit: f32,
     pub highLimit: f32,
@@ -1020,20 +683,6 @@ pub struct PxArticulationTendonJoint {
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
 pub struct PxArticulationTendon {
-    pub structgen_pad0: [u8; 16],
-    pub userData: *mut std::ffi::c_void,
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
-pub struct PxArticulationSpatialTendon {
-    pub structgen_pad0: [u8; 16],
-    pub userData: *mut std::ffi::c_void,
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
-pub struct PxArticulationFixedTendon {
     pub structgen_pad0: [u8; 16],
     pub userData: *mut std::ffi::c_void,
 }
@@ -1119,29 +768,8 @@ pub struct PxShape {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
-pub struct PxRigidActor {
-    pub structgen_pad0: [u8; 16],
-    pub userData: *mut std::ffi::c_void,
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
 pub struct PxNodeIndex {
     pub structgen_pad0: [u8; 8],
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
-pub struct PxRigidBody {
-    pub structgen_pad0: [u8; 16],
-    pub userData: *mut std::ffi::c_void,
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
-pub struct PxArticulationLink {
-    pub structgen_pad0: [u8; 16],
-    pub userData: *mut std::ffi::c_void,
 }
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
@@ -1214,8 +842,7 @@ pub struct PxContact {
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
 pub struct PxExtendedContact {
-    pub contact: PxVec3,
-    pub separation: f32,
+    pub structgen_pad0: [u8; 16],
     pub targetVelocity: PxVec3,
     pub maxImpulse: f32,
 }
@@ -1223,10 +850,7 @@ pub struct PxExtendedContact {
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
 pub struct PxModifiableContact {
-    pub contact: PxVec3,
-    pub separation: f32,
-    pub targetVelocity: PxVec3,
-    pub maxImpulse: f32,
+    pub structgen_pad0: [u8; 32],
     pub normal: PxVec3,
     pub restitution: f32,
     pub materialFlags: u32,
@@ -1234,44 +858,6 @@ pub struct PxModifiableContact {
     pub materialIndex1: u16,
     pub staticFriction: f32,
     pub dynamicFriction: f32,
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
-pub struct PxContactStreamIterator {
-    pub zero: PxVec3,
-    pub structgen_pad0: [u8; 4],
-    pub patch: *const PxContactPatch,
-    pub contact: *const PxContact,
-    pub faceIndice: *const u32,
-    pub totalPatches: u32,
-    pub totalContacts: u32,
-    pub nextContactIndex: u32,
-    pub nextPatchIndex: u32,
-    pub contactPatchHeaderSize: u32,
-    pub contactPointSize: u32,
-    pub mStreamFormat: StreamFormat,
-    pub forceNoResponse: u32,
-    pub pointStepped: bool,
-    pub structgen_pad1: [u8; 3],
-    pub hasFaceIndices: u32,
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
-pub struct PxGpuContactPair {
-    pub contactPatches: *mut u8,
-    pub contactPoints: *mut u8,
-    pub contactForces: *mut f32,
-    pub transformCacheRef0: u32,
-    pub transformCacheRef1: u32,
-    pub nodeIndex0: PxNodeIndex,
-    pub nodeIndex1: PxNodeIndex,
-    pub actor0: *mut PxActor,
-    pub actor1: *mut PxActor,
-    pub nbContacts: u16,
-    pub nbPatches: u16,
-    pub structgen_pad0: [u8; 4],
 }
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
@@ -1298,13 +884,6 @@ pub struct PxBaseMaterial {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
-pub struct PxFEMMaterial {
-    pub structgen_pad0: [u8; 16],
-    pub userData: *mut std::ffi::c_void,
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
 pub struct PxFilterData {
     pub word0: u32,
     pub word1: u32,
@@ -1317,13 +896,6 @@ pub struct PxFilterData {
 pub struct PxParticleRigidFilterPair {
     pub mID0: u64,
     pub mID1: u64,
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
-pub struct PxMaterial {
-    pub structgen_pad0: [u8; 16],
-    pub userData: *mut std::ffi::c_void,
 }
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
@@ -1370,13 +942,6 @@ pub struct PxParticleSpring {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
-pub struct PxParticleMaterial {
-    pub structgen_pad0: [u8; 16],
-    pub userData: *mut std::ffi::c_void,
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
 pub struct PxActorShape {
     pub actor: *mut PxRigidActor,
     pub shape: *mut PxShape,
@@ -1385,40 +950,19 @@ pub struct PxActorShape {
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
 pub struct PxRaycastHit {
-    pub faceIndex: u32,
-    pub flags: PxHitFlags,
-    pub structgen_pad0: [u8; 2],
-    pub position: PxVec3,
-    pub normal: PxVec3,
-    pub distance: f32,
-    pub u: f32,
-    pub v: f32,
-    pub structgen_pad1: [u8; 4],
-    pub actor: *mut PxRigidActor,
-    pub shape: *mut PxShape,
+    pub structgen_pad0: [u8; 64],
 }
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
 pub struct PxOverlapHit {
-    pub faceIndex: u32,
-    pub structgen_pad0: [u8; 4],
-    pub actor: *mut PxRigidActor,
-    pub shape: *mut PxShape,
+    pub structgen_pad0: [u8; 24],
 }
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
 pub struct PxSweepHit {
-    pub faceIndex: u32,
-    pub flags: PxHitFlags,
-    pub structgen_pad0: [u8; 2],
-    pub position: PxVec3,
-    pub normal: PxVec3,
-    pub distance: f32,
-    pub structgen_pad1: [u8; 4],
-    pub actor: *mut PxRigidActor,
-    pub shape: *mut PxShape,
+    pub structgen_pad0: [u8; 56],
 }
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
@@ -1508,20 +1052,6 @@ pub struct PxQueryFilterData {
     pub data: PxFilterData,
     pub flags: PxQueryFlags,
     pub structgen_pad0: [u8; 2],
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
-pub struct PxRigidDynamic {
-    pub structgen_pad0: [u8; 16],
-    pub userData: *mut std::ffi::c_void,
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
-pub struct PxRigidStatic {
-    pub structgen_pad0: [u8; 16],
-    pub userData: *mut std::ffi::c_void,
 }
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
@@ -1645,28 +1175,20 @@ pub struct PxgDynamicsMemoryConfig {
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
 pub struct PxSceneDesc {
-    pub staticStructure: PxPruningStructureType,
-    pub dynamicStructure: PxPruningStructureType,
-    pub dynamicTreeRebuildRateHint: u32,
-    pub dynamicTreeSecondaryPruner: PxDynamicTreeSecondaryPruner,
-    pub staticBVHBuildStrategy: PxBVHBuildStrategy,
-    pub dynamicBVHBuildStrategy: PxBVHBuildStrategy,
-    pub staticNbObjectsPerNode: u32,
-    pub dynamicNbObjectsPerNode: u32,
-    pub sceneQueryUpdateMode: PxSceneQueryUpdateMode,
+    pub structgen_pad0: [u8; 36],
     pub gravity: PxVec3,
     pub simulationEventCallback: *mut PxSimulationEventCallback,
     pub contactModifyCallback: *mut PxContactModifyCallback,
     pub ccdContactModifyCallback: *mut PxCCDContactModifyCallback,
     pub filterShaderData: *const std::ffi::c_void,
     pub filterShaderDataSize: u32,
-    pub structgen_pad0: [u8; 4],
+    pub structgen_pad1: [u8; 4],
     pub filterShader: *mut std::ffi::c_void,
     pub filterCallback: *mut PxSimulationFilterCallback,
     pub kineKineFilteringMode: PxPairFilteringMode,
     pub staticKineFilteringMode: PxPairFilteringMode,
     pub broadPhaseType: PxBroadPhaseType,
-    pub structgen_pad1: [u8; 4],
+    pub structgen_pad2: [u8; 4],
     pub broadPhaseCallback: *mut PxBroadPhaseCallback,
     pub limits: PxSceneLimits,
     pub frictionType: PxFrictionType,
@@ -1676,7 +1198,7 @@ pub struct PxSceneDesc {
     pub frictionCorrelationDistance: f32,
     pub flags: PxSceneFlags,
     pub cpuDispatcher: *mut PxCpuDispatcher,
-    pub structgen_pad2: [u8; 8],
+    pub structgen_pad3: [u8; 8],
     pub userData: *mut std::ffi::c_void,
     pub solverBatchSize: u32,
     pub solverArticulationBatchSize: u32,
@@ -1695,7 +1217,7 @@ pub struct PxSceneDesc {
     pub gpuComputeVersion: u32,
     pub contactPairSlabSize: u32,
     pub sceneQuerySystem: *mut PxSceneQuerySystem,
-    pub structgen_pad3: [u8; 8],
+    pub structgen_pad4: [u8; 8],
 }
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
@@ -1778,20 +1300,6 @@ pub struct PxIndexDataPair {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
-pub struct PxDominanceGroupPair {
-    pub dominance0: u8,
-    pub dominance1: u8,
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
-pub struct PxScene {
-    pub structgen_pad0: [u8; 8],
-    pub userData: *mut std::ffi::c_void,
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
 pub struct PxSceneReadLock {
     pub structgen_pad0: [u8; 8],
 }
@@ -1804,111 +1312,6 @@ pub struct PxSceneWriteLock {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
-pub struct PxContactPairExtraDataItem {
-    pub type_: u8,
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
-pub struct PxContactPairVelocity {
-    pub type_: u8,
-    pub structgen_pad0: [u8; 3],
-    pub linearVelocity: [PxVec3; 2],
-    pub angularVelocity: [PxVec3; 2],
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
-pub struct PxContactPairPose {
-    pub type_: u8,
-    pub structgen_pad0: [u8; 3],
-    pub globalPose: [PxTransform; 2],
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
-pub struct PxContactPairIndex {
-    pub type_: u8,
-    pub structgen_pad0: [u8; 1],
-    pub index: u16,
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
-pub struct PxContactPairExtraDataIterator {
-    pub currPtr: *const u8,
-    pub endPtr: *const u8,
-    pub preSolverVelocity: *const PxContactPairVelocity,
-    pub postSolverVelocity: *const PxContactPairVelocity,
-    pub eventPose: *const PxContactPairPose,
-    pub contactPairIndex: u32,
-    pub structgen_pad0: [u8; 4],
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
-pub struct PxContactPairHeader {
-    pub actors: [*mut PxActor; 2],
-    pub extraDataStream: *const u8,
-    pub extraDataStreamSize: u16,
-    pub flags: PxContactPairHeaderFlags,
-    pub structgen_pad0: [u8; 4],
-    pub pairs: *const PxContactPair,
-    pub nbPairs: u32,
-    pub structgen_pad1: [u8; 4],
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
-pub struct PxContactPairPoint {
-    pub position: PxVec3,
-    pub separation: f32,
-    pub normal: PxVec3,
-    pub internalFaceIndex0: u32,
-    pub impulse: PxVec3,
-    pub internalFaceIndex1: u32,
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
-pub struct PxContactPair {
-    pub shapes: [*mut PxShape; 2],
-    pub contactPatches: *const u8,
-    pub contactPoints: *const u8,
-    pub contactImpulses: *const f32,
-    pub requiredBufferSize: u32,
-    pub contactCount: u8,
-    pub patchCount: u8,
-    pub contactStreamSize: u16,
-    pub flags: PxContactPairFlags,
-    pub events: PxPairFlags,
-    pub internalData: [u32; 2],
-    pub structgen_pad0: [u8; 4],
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
-pub struct PxTriggerPair {
-    pub triggerShape: *mut PxShape,
-    pub triggerActor: *mut PxActor,
-    pub otherShape: *mut PxShape,
-    pub otherActor: *mut PxActor,
-    pub status: PxPairFlag,
-    pub flags: PxTriggerPairFlags,
-    pub structgen_pad0: [u8; 3],
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
-pub struct PxConstraintInfo {
-    pub constraint: *mut PxConstraint,
-    pub externalReference: *mut std::ffi::c_void,
-    pub type_: u32,
-    pub structgen_pad0: [u8; 4],
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
 pub struct PxFEMParameters {
     pub velocityDamping: f32,
     pub settlingThreshold: f32,
@@ -1916,12 +1319,6 @@ pub struct PxFEMParameters {
     pub sleepDamping: f32,
     pub selfCollisionFilterDistance: f32,
     pub selfCollisionStressTolerance: f32,
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
-pub struct PxPruningStructure {
-    pub structgen_pad0: [u8; 16],
 }
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
@@ -1944,10 +1341,7 @@ pub struct PxObstacle {
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
 pub struct PxBoxObstacle {
-    pub structgen_pad0: [u8; 8],
-    pub mUserData: *mut std::ffi::c_void,
-    pub mPos: PxExtendedVec3,
-    pub mRot: PxQuat,
+    pub structgen_pad0: [u8; 56],
     pub mHalfExtents: PxVec3,
     pub structgen_pad1: [u8; 4],
 }
@@ -1955,10 +1349,7 @@ pub struct PxBoxObstacle {
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
 pub struct PxCapsuleObstacle {
-    pub structgen_pad0: [u8; 8],
-    pub mUserData: *mut std::ffi::c_void,
-    pub mPos: PxExtendedVec3,
-    pub mRot: PxQuat,
+    pub structgen_pad0: [u8; 56],
     pub mHalfHeight: f32,
     pub mRadius: f32,
 }
@@ -2001,12 +1392,7 @@ pub struct PxControllerHit {
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
 pub struct PxControllerShapeHit {
-    pub controller: *mut PxController,
-    pub worldPos: PxExtendedVec3,
-    pub worldNormal: PxVec3,
-    pub dir: PxVec3,
-    pub length: f32,
-    pub structgen_pad0: [u8; 4],
+    pub structgen_pad0: [u8; 64],
     pub shape: *mut PxShape,
     pub actor: *mut PxRigidActor,
     pub triangleIndex: u32,
@@ -2016,24 +1402,14 @@ pub struct PxControllerShapeHit {
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
 pub struct PxControllersHit {
-    pub controller: *mut PxController,
-    pub worldPos: PxExtendedVec3,
-    pub worldNormal: PxVec3,
-    pub dir: PxVec3,
-    pub length: f32,
-    pub structgen_pad0: [u8; 4],
+    pub structgen_pad0: [u8; 64],
     pub other: *mut PxController,
 }
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
 pub struct PxControllerObstacleHit {
-    pub controller: *mut PxController,
-    pub worldPos: PxExtendedVec3,
-    pub worldNormal: PxVec3,
-    pub dir: PxVec3,
-    pub length: f32,
-    pub structgen_pad0: [u8; 4],
+    pub structgen_pad0: [u8; 64],
     pub userData: *const std::ffi::c_void,
 }
 #[derive(Clone, Copy)]
@@ -2077,28 +1453,7 @@ pub struct PxControllerDesc {
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
 pub struct PxBoxControllerDesc {
-    pub structgen_pad0: [u8; 8],
-    pub position: PxExtendedVec3,
-    pub upDirection: PxVec3,
-    pub slopeLimit: f32,
-    pub invisibleWallHeight: f32,
-    pub maxJumpHeight: f32,
-    pub contactOffset: f32,
-    pub stepOffset: f32,
-    pub density: f32,
-    pub scaleCoeff: f32,
-    pub volumeGrowth: f32,
-    pub structgen_pad1: [u8; 4],
-    pub reportCallback: *mut PxUserControllerHitReport,
-    pub behaviorCallback: *mut PxControllerBehaviorCallback,
-    pub nonWalkableMode: PxControllerNonWalkableMode,
-    pub structgen_pad2: [u8; 4],
-    pub material: *mut PxMaterial,
-    pub registerDeletionListener: bool,
-    pub clientID: u8,
-    pub structgen_pad3: [u8; 6],
-    pub userData: *mut std::ffi::c_void,
-    pub structgen_pad4: [u8; 4],
+    pub structgen_pad0: [u8; 132],
     pub halfHeight: f32,
     pub halfSideExtent: f32,
     pub halfForwardExtent: f32,
@@ -2107,28 +1462,7 @@ pub struct PxBoxControllerDesc {
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
 pub struct PxCapsuleControllerDesc {
-    pub structgen_pad0: [u8; 8],
-    pub position: PxExtendedVec3,
-    pub upDirection: PxVec3,
-    pub slopeLimit: f32,
-    pub invisibleWallHeight: f32,
-    pub maxJumpHeight: f32,
-    pub contactOffset: f32,
-    pub stepOffset: f32,
-    pub density: f32,
-    pub scaleCoeff: f32,
-    pub volumeGrowth: f32,
-    pub structgen_pad1: [u8; 4],
-    pub reportCallback: *mut PxUserControllerHitReport,
-    pub behaviorCallback: *mut PxControllerBehaviorCallback,
-    pub nonWalkableMode: PxControllerNonWalkableMode,
-    pub structgen_pad2: [u8; 4],
-    pub material: *mut PxMaterial,
-    pub registerDeletionListener: bool,
-    pub clientID: u8,
-    pub structgen_pad3: [u8; 6],
-    pub userData: *mut std::ffi::c_void,
-    pub structgen_pad4: [u8; 4],
+    pub structgen_pad0: [u8; 132],
     pub radius: f32,
     pub height: f32,
     pub climbingMode: PxCapsuleClimbingMode,
@@ -2177,10 +1511,7 @@ pub struct PxConvexMeshDesc {
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
 pub struct PxTriangleMeshDesc {
-    pub points: PxBoundedData,
-    pub triangles: PxBoundedData,
-    pub flags: PxMeshFlags,
-    pub structgen_pad0: [u8; 22],
+    pub structgen_pad0: [u8; 72],
     pub sdfDesc: *mut PxSDFDesc,
 }
 #[derive(Clone, Copy)]
@@ -2284,32 +1615,11 @@ pub struct PxSpring {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
-pub struct PxDistanceJoint {
-    pub structgen_pad0: [u8; 16],
-    pub userData: *mut std::ffi::c_void,
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
 pub struct PxJacobianRow {
     pub linear0: PxVec3,
     pub linear1: PxVec3,
     pub angular0: PxVec3,
     pub angular1: PxVec3,
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
-pub struct PxContactJoint {
-    pub structgen_pad0: [u8; 16],
-    pub userData: *mut std::ffi::c_void,
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
-pub struct PxFixedJoint {
-    pub structgen_pad0: [u8; 16],
-    pub userData: *mut std::ffi::c_void,
 }
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
@@ -2325,22 +1635,14 @@ pub struct PxJointLimitParameters {
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
 pub struct PxJointLinearLimit {
-    pub restitution: f32,
-    pub bounceThreshold: f32,
-    pub stiffness: f32,
-    pub damping: f32,
-    pub contactDistance_deprecated: f32,
+    pub structgen_pad0: [u8; 20],
     pub value: f32,
 }
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
 pub struct PxJointLinearLimitPair {
-    pub restitution: f32,
-    pub bounceThreshold: f32,
-    pub stiffness: f32,
-    pub damping: f32,
-    pub contactDistance_deprecated: f32,
+    pub structgen_pad0: [u8; 20],
     pub upper: f32,
     pub lower: f32,
 }
@@ -2348,11 +1650,7 @@ pub struct PxJointLinearLimitPair {
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
 pub struct PxJointAngularLimitPair {
-    pub restitution: f32,
-    pub bounceThreshold: f32,
-    pub stiffness: f32,
-    pub damping: f32,
-    pub contactDistance_deprecated: f32,
+    pub structgen_pad0: [u8; 20],
     pub upper: f32,
     pub lower: f32,
 }
@@ -2360,11 +1658,7 @@ pub struct PxJointAngularLimitPair {
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
 pub struct PxJointLimitCone {
-    pub restitution: f32,
-    pub bounceThreshold: f32,
-    pub stiffness: f32,
-    pub damping: f32,
-    pub contactDistance_deprecated: f32,
+    pub structgen_pad0: [u8; 20],
     pub yAngle: f32,
     pub zAngle: f32,
 }
@@ -2372,11 +1666,7 @@ pub struct PxJointLimitCone {
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
 pub struct PxJointLimitPyramid {
-    pub restitution: f32,
-    pub bounceThreshold: f32,
-    pub stiffness: f32,
-    pub damping: f32,
-    pub contactDistance_deprecated: f32,
+    pub structgen_pad0: [u8; 20],
     pub yAngleMin: f32,
     pub yAngleMax: f32,
     pub zAngleMin: f32,
@@ -2385,53 +1675,10 @@ pub struct PxJointLimitPyramid {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
-pub struct PxPrismaticJoint {
-    pub structgen_pad0: [u8; 16],
-    pub userData: *mut std::ffi::c_void,
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
-pub struct PxRevoluteJoint {
-    pub structgen_pad0: [u8; 16],
-    pub userData: *mut std::ffi::c_void,
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
-pub struct PxSphericalJoint {
-    pub structgen_pad0: [u8; 16],
-    pub userData: *mut std::ffi::c_void,
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
 pub struct PxD6JointDrive {
-    pub stiffness: f32,
-    pub damping: f32,
+    pub structgen_pad0: [u8; 8],
     pub forceLimit: f32,
     pub flags: PxD6JointDriveFlags,
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
-pub struct PxD6Joint {
-    pub structgen_pad0: [u8; 16],
-    pub userData: *mut std::ffi::c_void,
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
-pub struct PxGearJoint {
-    pub structgen_pad0: [u8; 16],
-    pub userData: *mut std::ffi::c_void,
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
-pub struct PxRackAndPinionJoint {
-    pub structgen_pad0: [u8; 16],
-    pub userData: *mut std::ffi::c_void,
 }
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
@@ -2514,18 +1761,6 @@ pub struct PxSamplingExt {
 #[derive(Clone, Copy)]
 #[cfg_attr(feature = "debug-structs", derive(Debug))]
 #[repr(C)]
-pub struct PxPoissonSampler {
-    pub structgen_pad0: [u8; 8],
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
-pub struct PxTriangleMeshPoissonSampler {
-    pub structgen_pad0: [u8; 8],
-}
-#[derive(Clone, Copy)]
-#[cfg_attr(feature = "debug-structs", derive(Debug))]
-#[repr(C)]
 pub struct PxTetrahedronMeshExt {
     pub structgen_pad0: [u8; 1],
 }
@@ -2555,7 +1790,6 @@ mod sizes {
         assert_eq!(size_of::<PxRawAllocator>(), 1);
         assert_eq!(size_of::<PxVirtualAllocator>(), 16);
         assert_eq!(size_of::<PxUserAllocated>(), 1);
-        assert_eq!(size_of::<PxTempAllocator>(), 1);
         assert_eq!(size_of::<PxBitAndByte>(), 1);
         assert_eq!(size_of::<PxBitMap>(), 16);
         assert_eq!(size_of::<PxVec3>(), 12);
@@ -2574,8 +1808,6 @@ mod sizes {
         assert_eq!(size_of::<PxMutexImpl>(), 1);
         assert_eq!(size_of::<PxReadWriteLock>(), 8);
         assert_eq!(size_of::<PxProfileScoped>(), 40);
-        assert_eq!(size_of::<PxSListEntry>(), 16);
-        assert_eq!(size_of::<PxSListImpl>(), 1);
         assert_eq!(size_of::<PxSyncImpl>(), 1);
         assert_eq!(size_of::<PxCounterFrequencyToTensOfNanos>(), 16);
         assert_eq!(size_of::<PxTime>(), 8);
@@ -2588,7 +1820,6 @@ mod sizes {
         assert_eq!(size_of::<PxDebugText>(), 32);
         assert_eq!(size_of::<PxDeserializationContext>(), 16);
         assert_eq!(size_of::<PxBase>(), 16);
-        assert_eq!(size_of::<PxRefCounted>(), 16);
         assert_eq!(size_of::<PxTolerancesScale>(), 8);
         assert_eq!(size_of::<PxMetaDataEntry>(), 40);
         assert_eq!(size_of::<PxBaseTask>(), 24);
@@ -2596,10 +1827,8 @@ mod sizes {
         assert_eq!(size_of::<PxLightCpuTask>(), 40);
         assert_eq!(size_of::<PxGeometry>(), 8);
         assert_eq!(size_of::<PxBoxGeometry>(), 20);
-        assert_eq!(size_of::<PxBVH>(), 16);
         assert_eq!(size_of::<PxCapsuleGeometry>(), 16);
         assert_eq!(size_of::<PxHullPolygon>(), 20);
-        assert_eq!(size_of::<PxConvexMesh>(), 16);
         assert_eq!(size_of::<PxMeshScale>(), 28);
         assert_eq!(size_of::<PxConvexMeshGeometry>(), 56);
         assert_eq!(size_of::<PxSphereGeometry>(), 12);
@@ -2621,24 +1850,15 @@ mod sizes {
         assert_eq!(size_of::<PxGeometryHolder>(), 56);
         assert_eq!(size_of::<PxGeometryQuery>(), 1);
         assert_eq!(size_of::<PxHeightFieldSample>(), 4);
-        assert_eq!(size_of::<PxHeightField>(), 16);
         assert_eq!(size_of::<PxHeightFieldDesc>(), 40);
         assert_eq!(size_of::<PxMeshQuery>(), 1);
         assert_eq!(size_of::<PxSimpleTriangleMesh>(), 56);
         assert_eq!(size_of::<PxTriangle>(), 36);
         assert_eq!(size_of::<PxTrianglePadded>(), 40);
-        assert_eq!(size_of::<PxTriangleMesh>(), 16);
-        assert_eq!(size_of::<PxBVH34TriangleMesh>(), 16);
         assert_eq!(size_of::<PxTetrahedron>(), 48);
-        assert_eq!(size_of::<PxSoftBodyAuxData>(), 16);
-        assert_eq!(size_of::<PxTetrahedronMesh>(), 16);
-        assert_eq!(size_of::<PxSoftBodyMesh>(), 16);
-        assert_eq!(size_of::<PxCollisionMeshMappingData>(), 8);
         assert_eq!(size_of::<PxSoftBodyCollisionData>(), 1);
         assert_eq!(size_of::<PxTetrahedronMeshData>(), 1);
         assert_eq!(size_of::<PxSoftBodySimulationData>(), 1);
-        assert_eq!(size_of::<PxCollisionTetrahedronMeshData>(), 8);
-        assert_eq!(size_of::<PxSimulationTetrahedronMeshData>(), 8);
         assert_eq!(size_of::<PxActor>(), 24);
         assert_eq!(size_of::<PxAggregate>(), 24);
         assert_eq!(size_of::<PxSpringModifiers>(), 16);
@@ -2650,23 +1870,10 @@ mod sizes {
         assert_eq!(size_of::<PxSolverBodyData>(), 112);
         assert_eq!(size_of::<PxConstraintBatchHeader>(), 8);
         assert_eq!(size_of::<PxSolverConstraintDesc>(), 64);
-        assert_eq!(size_of::<PxSolverConstraintPrepDescBase>(), 128);
-        assert_eq!(size_of::<PxSolverConstraintPrepDesc>(), 192);
-        assert_eq!(size_of::<PxSolverContactDesc>(), 208);
-        assert_eq!(size_of::<PxArticulationLimit>(), 8);
-        assert_eq!(size_of::<PxArticulationDrive>(), 16);
-        assert_eq!(size_of::<PxTGSSolverBodyVel>(), 64);
-        assert_eq!(size_of::<PxTGSSolverBodyTxInertia>(), 64);
-        assert_eq!(size_of::<PxTGSSolverBodyData>(), 48);
-        assert_eq!(size_of::<PxTGSSolverConstraintPrepDescBase>(), 144);
-        assert_eq!(size_of::<PxTGSSolverConstraintPrepDesc>(), 224);
-        assert_eq!(size_of::<PxTGSSolverContactDesc>(), 224);
         assert_eq!(size_of::<PxArticulationTendonLimit>(), 8);
         assert_eq!(size_of::<PxArticulationAttachment>(), 24);
         assert_eq!(size_of::<PxArticulationTendonJoint>(), 24);
         assert_eq!(size_of::<PxArticulationTendon>(), 24);
-        assert_eq!(size_of::<PxArticulationSpatialTendon>(), 24);
-        assert_eq!(size_of::<PxArticulationFixedTendon>(), 24);
         assert_eq!(size_of::<PxSpatialForce>(), 32);
         assert_eq!(size_of::<PxSpatialVelocity>(), 32);
         assert_eq!(size_of::<PxArticulationRootLinkData>(), 76);
@@ -2675,10 +1882,7 @@ mod sizes {
         assert_eq!(size_of::<PxArticulationReducedCoordinate>(), 24);
         assert_eq!(size_of::<PxArticulationJointReducedCoordinate>(), 24);
         assert_eq!(size_of::<PxShape>(), 24);
-        assert_eq!(size_of::<PxRigidActor>(), 24);
         assert_eq!(size_of::<PxNodeIndex>(), 8);
-        assert_eq!(size_of::<PxRigidBody>(), 24);
-        assert_eq!(size_of::<PxArticulationLink>(), 24);
         assert_eq!(size_of::<PxConeLimitedConstraint>(), 24);
         assert_eq!(size_of::<PxConeLimitParams>(), 32);
         assert_eq!(size_of::<PxConstraintShaderTable>(), 32);
@@ -2688,20 +1892,15 @@ mod sizes {
         assert_eq!(size_of::<PxContact>(), 16);
         assert_eq!(size_of::<PxExtendedContact>(), 32);
         assert_eq!(size_of::<PxModifiableContact>(), 64);
-        assert_eq!(size_of::<PxContactStreamIterator>(), 80);
-        assert_eq!(size_of::<PxGpuContactPair>(), 72);
         assert_eq!(size_of::<PxContactSet>(), 16);
         assert_eq!(size_of::<PxContactModifyPair>(), 104);
         assert_eq!(size_of::<PxBaseMaterial>(), 24);
-        assert_eq!(size_of::<PxFEMMaterial>(), 24);
         assert_eq!(size_of::<PxFilterData>(), 16);
         assert_eq!(size_of::<PxParticleRigidFilterPair>(), 16);
-        assert_eq!(size_of::<PxMaterial>(), 24);
         assert_eq!(size_of::<PxGpuParticleBufferIndexPair>(), 8);
         assert_eq!(size_of::<PxParticleVolume>(), 32);
         assert_eq!(size_of::<PxDiffuseParticleParams>(), 40);
         assert_eq!(size_of::<PxParticleSpring>(), 24);
-        assert_eq!(size_of::<PxParticleMaterial>(), 24);
         assert_eq!(size_of::<PxActorShape>(), 16);
         assert_eq!(size_of::<PxRaycastHit>(), 64);
         assert_eq!(size_of::<PxOverlapHit>(), 24);
@@ -2714,8 +1913,6 @@ mod sizes {
         assert_eq!(size_of::<PxSweepBuffer>(), 88);
         assert_eq!(size_of::<PxQueryCache>(), 24);
         assert_eq!(size_of::<PxQueryFilterData>(), 20);
-        assert_eq!(size_of::<PxRigidDynamic>(), 24);
-        assert_eq!(size_of::<PxRigidStatic>(), 24);
         assert_eq!(size_of::<PxSceneQueryDesc>(), 36);
         assert_eq!(size_of::<PxBroadPhaseRegion>(), 32);
         assert_eq!(size_of::<PxBroadPhaseRegionInfo>(), 48);
@@ -2731,22 +1928,9 @@ mod sizes {
         assert_eq!(size_of::<PxGpuBodyData>(), 64);
         assert_eq!(size_of::<PxGpuActorPair>(), 16);
         assert_eq!(size_of::<PxIndexDataPair>(), 16);
-        assert_eq!(size_of::<PxDominanceGroupPair>(), 2);
-        assert_eq!(size_of::<PxScene>(), 16);
         assert_eq!(size_of::<PxSceneReadLock>(), 8);
         assert_eq!(size_of::<PxSceneWriteLock>(), 8);
-        assert_eq!(size_of::<PxContactPairExtraDataItem>(), 1);
-        assert_eq!(size_of::<PxContactPairVelocity>(), 52);
-        assert_eq!(size_of::<PxContactPairPose>(), 60);
-        assert_eq!(size_of::<PxContactPairIndex>(), 4);
-        assert_eq!(size_of::<PxContactPairExtraDataIterator>(), 48);
-        assert_eq!(size_of::<PxContactPairHeader>(), 48);
-        assert_eq!(size_of::<PxContactPairPoint>(), 48);
-        assert_eq!(size_of::<PxContactPair>(), 64);
-        assert_eq!(size_of::<PxTriggerPair>(), 40);
-        assert_eq!(size_of::<PxConstraintInfo>(), 24);
         assert_eq!(size_of::<PxFEMParameters>(), 24);
-        assert_eq!(size_of::<PxPruningStructure>(), 16);
         assert_eq!(size_of::<PxExtendedVec3>(), 24);
         assert_eq!(size_of::<PxObstacle>(), 56);
         assert_eq!(size_of::<PxBoxObstacle>(), 72);
@@ -2777,23 +1961,14 @@ mod sizes {
         assert_eq!(size_of::<PxDefaultFileInputData>(), 24);
         assert_eq!(size_of::<PxJoint>(), 24);
         assert_eq!(size_of::<PxSpring>(), 8);
-        assert_eq!(size_of::<PxDistanceJoint>(), 24);
         assert_eq!(size_of::<PxJacobianRow>(), 48);
-        assert_eq!(size_of::<PxContactJoint>(), 24);
-        assert_eq!(size_of::<PxFixedJoint>(), 24);
         assert_eq!(size_of::<PxJointLimitParameters>(), 20);
         assert_eq!(size_of::<PxJointLinearLimit>(), 24);
         assert_eq!(size_of::<PxJointLinearLimitPair>(), 28);
         assert_eq!(size_of::<PxJointAngularLimitPair>(), 28);
         assert_eq!(size_of::<PxJointLimitCone>(), 28);
         assert_eq!(size_of::<PxJointLimitPyramid>(), 36);
-        assert_eq!(size_of::<PxPrismaticJoint>(), 24);
-        assert_eq!(size_of::<PxRevoluteJoint>(), 24);
-        assert_eq!(size_of::<PxSphericalJoint>(), 24);
         assert_eq!(size_of::<PxD6JointDrive>(), 16);
-        assert_eq!(size_of::<PxD6Joint>(), 24);
-        assert_eq!(size_of::<PxGearJoint>(), 24);
-        assert_eq!(size_of::<PxRackAndPinionJoint>(), 24);
         assert_eq!(size_of::<PxGroupsMask>(), 8);
         assert_eq!(size_of::<PxRigidActorExt>(), 1);
         assert_eq!(size_of::<PxMassProperties>(), 52);
@@ -2806,8 +1981,6 @@ mod sizes {
         assert_eq!(size_of::<PxBroadPhaseExt>(), 1);
         assert_eq!(size_of::<PxSceneQueryExt>(), 1);
         assert_eq!(size_of::<PxSamplingExt>(), 1);
-        assert_eq!(size_of::<PxPoissonSampler>(), 8);
-        assert_eq!(size_of::<PxTriangleMeshPoissonSampler>(), 8);
         assert_eq!(size_of::<PxTetrahedronMeshExt>(), 1);
         assert_eq!(size_of::<PxRepXObject>(), 24);
         assert_eq!(size_of::<PxRepXInstantiationArgs>(), 24);

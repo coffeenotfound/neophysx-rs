@@ -117,7 +117,13 @@ impl<'ast> crate::consumer::FlagsBinding<'ast> {
                     .iter()
                     .filter_map(|var| {
                         let prev = var.value as u64;
-                        (prev & (prev - 1) == 0 && (prev & val) != 0).then_some(var.name)
+	                    
+	                    // FIX: Prevent underflow
+	                    if prev > 0 {
+                            (prev & (prev - 1) == 0 && (prev & val) != 0).then_some(var.name)
+                        } else {
+		                    None
+	                    }
                     })
                     .enumerate()
                 {

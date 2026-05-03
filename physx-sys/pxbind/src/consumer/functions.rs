@@ -101,6 +101,15 @@ impl<'ast> super::AstConsumer<'ast> {
         if func.name.starts_with("operator") {
             return Ok(());
         }
+	    
+	    // HACK: Ignore functions that fail parsing
+	    let hack_ignored_funcs = [
+//		    "PxGetAssertHandler",
+//		    "PxSetAssertHandler",
+	    ];
+	    if hack_ignored_funcs.contains(&func.name.as_str()) {
+		    return Ok(());
+	    }
 
         // Check the source location for the function
         //

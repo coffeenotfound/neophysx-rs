@@ -295,7 +295,29 @@ impl<'ast> AstConsumer<'ast> {
                     if !in_physx {
                         continue;
                     }
-
+	                
+	                // HACK: Ignore some tys we can't parse
+	                if let Some(rec_name) = &rec.name {
+		                let ignored_records = [
+			                // circular type
+			                "PxTempAllocatorChunk",
+			                // circular type
+			                "PxSListEntry",
+			                // function with self ty
+			                "PxRenderBuffer",
+			                // generator fucks up inner enum
+			                "PxSolverConstraintPrepDescBase",
+			                // generator fucks up inner enum
+			                "PxContactStreamIterator",
+		                ];
+		                if ignored_records.contains(&rec_name.as_str()) ||
+			                rec_name.starts_with("PxContactPair")
+		                {
+			                println!("IGNORING RECORD DECL: `{rec_name}`");
+			                return Ok(());
+		                }
+	                }
+	                
                     // If a record decl doesn't have any inner nodes, it's just
                     // a foreward declaration and we can skip it
                     if inn.inner.is_empty() || rec.definition_data.is_none() {
@@ -490,7 +512,7 @@ impl<'ast> AstConsumer<'ast> {
         }) {
             return Ok(treplace.clone());
         }
-
+	    
         // Builtin types are the most common, we already handle the common typedefs as well
         if let Some(bi) = Self::parse_builtin(type_str) {
             return Ok(QualType::Builtin(bi));
@@ -499,7 +521,14 @@ impl<'ast> AstConsumer<'ast> {
         if type_str.contains("(*)") {
             return Ok(QualType::FunctionPointer);
         }
-
+	    
+	    // FIX: Try get as class
+	    if let Some(_class) = self.classes.get(type_str) {
+		    return Ok(QualType::Record {
+			    name: type_str
+		    });
+	    }
+	    
         if let AstType::Qualified(kind) = &kind {
             if let Some(qt) = &kind.desugared_qual_type {
                 if qt.contains("(*)") {
@@ -578,39 +607,48 @@ impl<'ast> AstConsumer<'ast> {
 
             return Ok(QualType::Array { element, len });
         }
-
+	    
         // Check if it's an enum, we'll always know the enum by the time we hit
         // a reference to it, since physx doesn't do forward declaration of
         // enums, just old school
         if let Some((repr, name)) = self.enum_map.get(type_str) {
-            Ok(QualType::Enum {
+            return Ok(QualType::Enum {
                 name,
                 cxx_qt: type_str,
                 repr: *repr,
-            })
-        } else if let Some(name) = type_str.strip_prefix("physx::") {
-            let qt = if let Some((repr, unqualified)) = self.enum_map.get(name) {
-                QualType::Enum {
+            });
+        }
+	    
+	    if let Some(name) = type_str.strip_prefix("union ") {
+            return Ok(QualType::Record { name });
+        }
+	    
+	    if let Some(name) = type_str.strip_prefix("struct ") {
+            return Ok(QualType::Record { name });
+        }
+	    
+	    {
+	        let name = type_str.strip_prefix("physx::").unwrap_or(type_str);
+		    
+            if let Some((repr, unqualified)) = self.enum_map.get(name) {
+                return Ok(QualType::Enum {
                     name: unqualified,
                     cxx_qt: name,
                     repr: *repr,
-                }
+                })
             } else if let Some(repr) = self.flags_map.get(name) {
-                QualType::Flags { name, repr: *repr }
+                return Ok(QualType::Flags { name, repr: *repr });
             } else if let Some(qt) = self.type_defs.get(name) {
-                qt.clone()
-            } else {
-                QualType::Record { name }
-            };
-
-            Ok(qt)
-        } else if let Some(name) = type_str.strip_prefix("union ") {
-            Ok(QualType::Record { name })
-        } else if let Some(name) = type_str.strip_prefix("struct ") {
-            Ok(QualType::Record { name })
-        } else {
-            anyhow::bail!("Unknown type '{kind:?}'");
+                return Ok(qt.clone());
+            }
+		    
+		    // DUMB HACK: Just assume anything else is a record ty
+		    // this is very dumb but fixes some parsing bugs
+		    // and doesn't seem to be a problem for the generator
+		    Ok(QualType::Record { name })
         }
+	    
+//        anyhow::bail!("Unknown type '{kind:?}'");
     }
 
     fn parse_builtin(kind: impl Into<AstType<'ast>>) -> Option<Builtin> {
@@ -621,7 +659,7 @@ impl<'ast> AstConsumer<'ast> {
             // See PxSimpleTypes for where the physx typedefs come from
             "bool" => Builtin::Bool,
             "float" | "PxReal" | "PxF32" => Builtin::Float,
-            "double" => Builtin::Double,
+            "double" | "PxF64" => Builtin::Double,
             "int8_t" | "char" | "PxI8" => Builtin::Char,
             "uint8_t" | "unsigned char" | "PxU8" => Builtin::UChar,
             "int16_t" | "short" | "PxI16" => Builtin::Short,
@@ -636,6 +674,10 @@ impl<'ast> AstConsumer<'ast> {
             "PxVec4" => Builtin::Vec4,
             "PxMat33" => Builtin::Mat33,
             "PxMat44" => Builtin::Mat44,
+//	        // manual typedefs (Just implement collecting typedefs instead...)
+//	        "PxType" => Builtin::UShort,
+//	        "PxSerialObjectId" => Builtin::ULong,
+	        
             _ => return None,
         };
 

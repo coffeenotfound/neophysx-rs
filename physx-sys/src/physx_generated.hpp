@@ -9,8 +9,6 @@ static_assert(sizeof(physx::PxRawAllocator) == sizeof(physx_PxRawAllocator_Pod),
 static_assert(sizeof(physx::PxVirtualAllocatorCallback) == sizeof(physx_PxVirtualAllocatorCallback_Pod), "POD wrapper for `physx::PxVirtualAllocatorCallback` has incorrect size");
 static_assert(sizeof(physx::PxVirtualAllocator) == sizeof(physx_PxVirtualAllocator_Pod), "POD wrapper for `physx::PxVirtualAllocator` has incorrect size");
 static_assert(sizeof(physx::PxUserAllocated) == sizeof(physx_PxUserAllocated_Pod), "POD wrapper for `physx::PxUserAllocated` has incorrect size");
-static_assert(sizeof(physx::PxTempAllocatorChunk) == sizeof(physx_PxTempAllocatorChunk_Pod), "POD wrapper for `physx::PxTempAllocatorChunk` has incorrect size");
-static_assert(sizeof(physx::PxTempAllocator) == sizeof(physx_PxTempAllocator_Pod), "POD wrapper for `physx::PxTempAllocator` has incorrect size");
 static_assert(sizeof(physx::PxBitAndByte) == sizeof(physx_PxBitAndByte_Pod), "POD wrapper for `physx::PxBitAndByte` has incorrect size");
 static_assert(sizeof(physx::PxBitMap) == sizeof(physx_PxBitMap_Pod), "POD wrapper for `physx::PxBitMap` has incorrect size");
 static_assert(sizeof(physx::PxVec3) == sizeof(physx_PxVec3_Pod), "POD wrapper for `physx::PxVec3` has incorrect size");
@@ -35,8 +33,6 @@ static_assert(sizeof(physx::PxMutexImpl) == sizeof(physx_PxMutexImpl_Pod), "POD 
 static_assert(sizeof(physx::PxReadWriteLock) == sizeof(physx_PxReadWriteLock_Pod), "POD wrapper for `physx::PxReadWriteLock` has incorrect size");
 static_assert(sizeof(physx::PxProfilerCallback) == sizeof(physx_PxProfilerCallback_Pod), "POD wrapper for `physx::PxProfilerCallback` has incorrect size");
 static_assert(sizeof(physx::PxProfileScoped) == sizeof(physx_PxProfileScoped_Pod), "POD wrapper for `physx::PxProfileScoped` has incorrect size");
-static_assert(sizeof(physx::PxSListEntry) == sizeof(physx_PxSListEntry_Pod), "POD wrapper for `physx::PxSListEntry` has incorrect size");
-static_assert(sizeof(physx::PxSListImpl) == sizeof(physx_PxSListImpl_Pod), "POD wrapper for `physx::PxSListImpl` has incorrect size");
 static_assert(sizeof(physx::PxSyncImpl) == sizeof(physx_PxSyncImpl_Pod), "POD wrapper for `physx::PxSyncImpl` has incorrect size");
 static_assert(sizeof(physx::PxRunnable) == sizeof(physx_PxRunnable_Pod), "POD wrapper for `physx::PxRunnable` has incorrect size");
 static_assert(sizeof(physx::PxCounterFrequencyToTensOfNanos) == sizeof(physx_PxCounterFrequencyToTensOfNanos_Pod), "POD wrapper for `physx::PxCounterFrequencyToTensOfNanos` has incorrect size");
@@ -48,7 +44,6 @@ static_assert(sizeof(physx::PxDebugPoint) == sizeof(physx_PxDebugPoint_Pod), "PO
 static_assert(sizeof(physx::PxDebugLine) == sizeof(physx_PxDebugLine_Pod), "POD wrapper for `physx::PxDebugLine` has incorrect size");
 static_assert(sizeof(physx::PxDebugTriangle) == sizeof(physx_PxDebugTriangle_Pod), "POD wrapper for `physx::PxDebugTriangle` has incorrect size");
 static_assert(sizeof(physx::PxDebugText) == sizeof(physx_PxDebugText_Pod), "POD wrapper for `physx::PxDebugText` has incorrect size");
-static_assert(sizeof(physx::PxRenderBuffer) == sizeof(physx_PxRenderBuffer_Pod), "POD wrapper for `physx::PxRenderBuffer` has incorrect size");
 static_assert(sizeof(physx::PxProcessPxBaseCallback) == sizeof(physx_PxProcessPxBaseCallback_Pod), "POD wrapper for `physx::PxProcessPxBaseCallback` has incorrect size");
 static_assert(sizeof(physx::PxSerializationContext) == sizeof(physx_PxSerializationContext_Pod), "POD wrapper for `physx::PxSerializationContext` has incorrect size");
 static_assert(sizeof(physx::PxDeserializationContext) == sizeof(physx_PxDeserializationContext_Pod), "POD wrapper for `physx::PxDeserializationContext` has incorrect size");
@@ -129,18 +124,6 @@ static_assert(sizeof(physx::PxSolverBody) == sizeof(physx_PxSolverBody_Pod), "PO
 static_assert(sizeof(physx::PxSolverBodyData) == sizeof(physx_PxSolverBodyData_Pod), "POD wrapper for `physx::PxSolverBodyData` has incorrect size");
 static_assert(sizeof(physx::PxConstraintBatchHeader) == sizeof(physx_PxConstraintBatchHeader_Pod), "POD wrapper for `physx::PxConstraintBatchHeader` has incorrect size");
 static_assert(sizeof(physx::PxSolverConstraintDesc) == sizeof(physx_PxSolverConstraintDesc_Pod), "POD wrapper for `physx::PxSolverConstraintDesc` has incorrect size");
-static_assert(sizeof(physx::PxSolverConstraintPrepDescBase) == sizeof(physx_PxSolverConstraintPrepDescBase_Pod), "POD wrapper for `physx::PxSolverConstraintPrepDescBase` has incorrect size");
-static_assert(sizeof(physx::PxSolverConstraintPrepDesc) == sizeof(physx_PxSolverConstraintPrepDesc_Pod), "POD wrapper for `physx::PxSolverConstraintPrepDesc` has incorrect size");
-static_assert(sizeof(physx::PxSolverContactDesc) == sizeof(physx_PxSolverContactDesc_Pod), "POD wrapper for `physx::PxSolverContactDesc` has incorrect size");
-static_assert(sizeof(physx::PxConstraintAllocator) == sizeof(physx_PxConstraintAllocator_Pod), "POD wrapper for `physx::PxConstraintAllocator` has incorrect size");
-static_assert(sizeof(physx::PxArticulationLimit) == sizeof(physx_PxArticulationLimit_Pod), "POD wrapper for `physx::PxArticulationLimit` has incorrect size");
-static_assert(sizeof(physx::PxArticulationDrive) == sizeof(physx_PxArticulationDrive_Pod), "POD wrapper for `physx::PxArticulationDrive` has incorrect size");
-static_assert(sizeof(physx::PxTGSSolverBodyVel) == sizeof(physx_PxTGSSolverBodyVel_Pod), "POD wrapper for `physx::PxTGSSolverBodyVel` has incorrect size");
-static_assert(sizeof(physx::PxTGSSolverBodyTxInertia) == sizeof(physx_PxTGSSolverBodyTxInertia_Pod), "POD wrapper for `physx::PxTGSSolverBodyTxInertia` has incorrect size");
-static_assert(sizeof(physx::PxTGSSolverBodyData) == sizeof(physx_PxTGSSolverBodyData_Pod), "POD wrapper for `physx::PxTGSSolverBodyData` has incorrect size");
-static_assert(sizeof(physx::PxTGSSolverConstraintPrepDescBase) == sizeof(physx_PxTGSSolverConstraintPrepDescBase_Pod), "POD wrapper for `physx::PxTGSSolverConstraintPrepDescBase` has incorrect size");
-static_assert(sizeof(physx::PxTGSSolverConstraintPrepDesc) == sizeof(physx_PxTGSSolverConstraintPrepDesc_Pod), "POD wrapper for `physx::PxTGSSolverConstraintPrepDesc` has incorrect size");
-static_assert(sizeof(physx::PxTGSSolverContactDesc) == sizeof(physx_PxTGSSolverContactDesc_Pod), "POD wrapper for `physx::PxTGSSolverContactDesc` has incorrect size");
 static_assert(sizeof(physx::PxArticulationTendonLimit) == sizeof(physx_PxArticulationTendonLimit_Pod), "POD wrapper for `physx::PxArticulationTendonLimit` has incorrect size");
 static_assert(sizeof(physx::PxArticulationAttachment) == sizeof(physx_PxArticulationAttachment_Pod), "POD wrapper for `physx::PxArticulationAttachment` has incorrect size");
 static_assert(sizeof(physx::PxArticulationTendonJoint) == sizeof(physx_PxArticulationTendonJoint_Pod), "POD wrapper for `physx::PxArticulationTendonJoint` has incorrect size");
@@ -168,8 +151,6 @@ static_assert(sizeof(physx::PxContactPatch) == sizeof(physx_PxContactPatch_Pod),
 static_assert(sizeof(physx::PxContact) == sizeof(physx_PxContact_Pod), "POD wrapper for `physx::PxContact` has incorrect size");
 static_assert(sizeof(physx::PxExtendedContact) == sizeof(physx_PxExtendedContact_Pod), "POD wrapper for `physx::PxExtendedContact` has incorrect size");
 static_assert(sizeof(physx::PxModifiableContact) == sizeof(physx_PxModifiableContact_Pod), "POD wrapper for `physx::PxModifiableContact` has incorrect size");
-static_assert(sizeof(physx::PxContactStreamIterator) == sizeof(physx_PxContactStreamIterator_Pod), "POD wrapper for `physx::PxContactStreamIterator` has incorrect size");
-static_assert(sizeof(physx::PxGpuContactPair) == sizeof(physx_PxGpuContactPair_Pod), "POD wrapper for `physx::PxGpuContactPair` has incorrect size");
 static_assert(sizeof(physx::PxContactSet) == sizeof(physx_PxContactSet_Pod), "POD wrapper for `physx::PxContactSet` has incorrect size");
 static_assert(sizeof(physx::PxContactModifyPair) == sizeof(physx_PxContactModifyPair_Pod), "POD wrapper for `physx::PxContactModifyPair` has incorrect size");
 static_assert(sizeof(physx::PxContactModifyCallback) == sizeof(physx_PxContactModifyCallback_Pod), "POD wrapper for `physx::PxContactModifyCallback` has incorrect size");
@@ -225,22 +206,8 @@ static_assert(sizeof(physx::PxGpuBodyData) == sizeof(physx_PxGpuBodyData_Pod), "
 static_assert(sizeof(physx::PxGpuActorPair) == sizeof(physx_PxGpuActorPair_Pod), "POD wrapper for `physx::PxGpuActorPair` has incorrect size");
 static_assert(sizeof(physx::PxIndexDataPair) == sizeof(physx_PxIndexDataPair_Pod), "POD wrapper for `physx::PxIndexDataPair` has incorrect size");
 static_assert(sizeof(physx::PxPvdSceneClient) == sizeof(physx_PxPvdSceneClient_Pod), "POD wrapper for `physx::PxPvdSceneClient` has incorrect size");
-static_assert(sizeof(physx::PxDominanceGroupPair) == sizeof(physx_PxDominanceGroupPair_Pod), "POD wrapper for `physx::PxDominanceGroupPair` has incorrect size");
-static_assert(sizeof(physx::PxBroadPhaseCallback) == sizeof(physx_PxBroadPhaseCallback_Pod), "POD wrapper for `physx::PxBroadPhaseCallback` has incorrect size");
-static_assert(sizeof(physx::PxScene) == sizeof(physx_PxScene_Pod), "POD wrapper for `physx::PxScene` has incorrect size");
 static_assert(sizeof(physx::PxSceneReadLock) == sizeof(physx_PxSceneReadLock_Pod), "POD wrapper for `physx::PxSceneReadLock` has incorrect size");
 static_assert(sizeof(physx::PxSceneWriteLock) == sizeof(physx_PxSceneWriteLock_Pod), "POD wrapper for `physx::PxSceneWriteLock` has incorrect size");
-static_assert(sizeof(physx::PxContactPairExtraDataItem) == sizeof(physx_PxContactPairExtraDataItem_Pod), "POD wrapper for `physx::PxContactPairExtraDataItem` has incorrect size");
-static_assert(sizeof(physx::PxContactPairVelocity) == sizeof(physx_PxContactPairVelocity_Pod), "POD wrapper for `physx::PxContactPairVelocity` has incorrect size");
-static_assert(sizeof(physx::PxContactPairPose) == sizeof(physx_PxContactPairPose_Pod), "POD wrapper for `physx::PxContactPairPose` has incorrect size");
-static_assert(sizeof(physx::PxContactPairIndex) == sizeof(physx_PxContactPairIndex_Pod), "POD wrapper for `physx::PxContactPairIndex` has incorrect size");
-static_assert(sizeof(physx::PxContactPairExtraDataIterator) == sizeof(physx_PxContactPairExtraDataIterator_Pod), "POD wrapper for `physx::PxContactPairExtraDataIterator` has incorrect size");
-static_assert(sizeof(physx::PxContactPairHeader) == sizeof(physx_PxContactPairHeader_Pod), "POD wrapper for `physx::PxContactPairHeader` has incorrect size");
-static_assert(sizeof(physx::PxContactPairPoint) == sizeof(physx_PxContactPairPoint_Pod), "POD wrapper for `physx::PxContactPairPoint` has incorrect size");
-static_assert(sizeof(physx::PxContactPair) == sizeof(physx_PxContactPair_Pod), "POD wrapper for `physx::PxContactPair` has incorrect size");
-static_assert(sizeof(physx::PxTriggerPair) == sizeof(physx_PxTriggerPair_Pod), "POD wrapper for `physx::PxTriggerPair` has incorrect size");
-static_assert(sizeof(physx::PxConstraintInfo) == sizeof(physx_PxConstraintInfo_Pod), "POD wrapper for `physx::PxConstraintInfo` has incorrect size");
-static_assert(sizeof(physx::PxSimulationEventCallback) == sizeof(physx_PxSimulationEventCallback_Pod), "POD wrapper for `physx::PxSimulationEventCallback` has incorrect size");
 static_assert(sizeof(physx::PxFEMParameters) == sizeof(physx_PxFEMParameters_Pod), "POD wrapper for `physx::PxFEMParameters` has incorrect size");
 static_assert(sizeof(physx::PxPruningStructure) == sizeof(physx_PxPruningStructure_Pod), "POD wrapper for `physx::PxPruningStructure` has incorrect size");
 static_assert(sizeof(physx::PxExtendedVec3) == sizeof(physx_PxExtendedVec3_Pod), "POD wrapper for `physx::PxExtendedVec3` has incorrect size");
@@ -568,33 +535,6 @@ extern "C" {
 
     void PxVirtualAllocator_deallocate_mut(physx_PxVirtualAllocator_Pod* self__pod, void* ptr) {
         physx::PxVirtualAllocator* self_ = reinterpret_cast<physx::PxVirtualAllocator*>(self__pod);
-        self_->deallocate(ptr);
-    }
-
-    physx_PxTempAllocatorChunk_Pod PxTempAllocatorChunk_new() {
-        PxTempAllocatorChunk return_val;
-        physx_PxTempAllocatorChunk_Pod return_val_pod;
-        memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
-        return return_val_pod;
-    }
-
-    physx_PxTempAllocator_Pod PxTempAllocator_new(char const* anon_param0) {
-        PxTempAllocator return_val(anon_param0);
-        physx_PxTempAllocator_Pod return_val_pod;
-        memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
-        return return_val_pod;
-    }
-
-    void* PxTempAllocator_allocate_mut(physx_PxTempAllocator_Pod* self__pod, size_t size_pod, char const* file, int32_t line) {
-        physx::PxTempAllocator* self_ = reinterpret_cast<physx::PxTempAllocator*>(self__pod);
-        size_t size;
-        memcpy(&size, &size_pod, sizeof(size));
-        void* return_val = self_->allocate(size, file, line);
-        return return_val;
-    }
-
-    void PxTempAllocator_deallocate_mut(physx_PxTempAllocator_Pod* self__pod, void* ptr) {
-        physx::PxTempAllocator* self_ = reinterpret_cast<physx::PxTempAllocator*>(self__pod);
         self_->deallocate(ptr);
     }
 
@@ -2332,56 +2272,6 @@ extern "C" {
         delete self_;
     }
 
-    physx_PxSListEntry_Pod PxSListEntry_new() {
-        PxSListEntry return_val;
-        physx_PxSListEntry_Pod return_val_pod;
-        memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
-        return return_val_pod;
-    }
-
-    physx_PxSListEntry_Pod* PxSListEntry_next_mut(physx_PxSListEntry_Pod* self__pod) {
-        physx::PxSListEntry* self_ = reinterpret_cast<physx::PxSListEntry*>(self__pod);
-        physx::PxSListEntry* return_val = self_->next();
-        auto return_val_pod = reinterpret_cast<physx_PxSListEntry_Pod*>(return_val);
-        return return_val_pod;
-    }
-
-    physx_PxSListImpl_Pod* PxSListImpl_new_alloc() {
-        auto return_val = new physx::PxSListImpl();
-        auto return_val_pod = reinterpret_cast<physx_PxSListImpl_Pod*>(return_val);
-        return return_val_pod;
-    }
-
-    void PxSListImpl_delete(physx_PxSListImpl_Pod* self__pod) {
-        physx::PxSListImpl* self_ = reinterpret_cast<physx::PxSListImpl*>(self__pod);
-        delete self_;
-    }
-
-    void PxSListImpl_push_mut(physx_PxSListImpl_Pod* self__pod, physx_PxSListEntry_Pod* entry_pod) {
-        physx::PxSListImpl* self_ = reinterpret_cast<physx::PxSListImpl*>(self__pod);
-        physx::PxSListEntry* entry = reinterpret_cast<physx::PxSListEntry*>(entry_pod);
-        self_->push(entry);
-    }
-
-    physx_PxSListEntry_Pod* PxSListImpl_pop_mut(physx_PxSListImpl_Pod* self__pod) {
-        physx::PxSListImpl* self_ = reinterpret_cast<physx::PxSListImpl*>(self__pod);
-        physx::PxSListEntry* return_val = self_->pop();
-        auto return_val_pod = reinterpret_cast<physx_PxSListEntry_Pod*>(return_val);
-        return return_val_pod;
-    }
-
-    physx_PxSListEntry_Pod* PxSListImpl_flush_mut(physx_PxSListImpl_Pod* self__pod) {
-        physx::PxSListImpl* self_ = reinterpret_cast<physx::PxSListImpl*>(self__pod);
-        physx::PxSListEntry* return_val = self_->flush();
-        auto return_val_pod = reinterpret_cast<physx_PxSListEntry_Pod*>(return_val);
-        return return_val_pod;
-    }
-
-    uint32_t PxSListImpl_getSize() {
-        uint32_t return_val = PxSListImpl::getSize();
-        return return_val;
-    }
-
     physx_PxSyncImpl_Pod* PxSyncImpl_new_alloc() {
         auto return_val = new physx::PxSyncImpl();
         auto return_val_pod = reinterpret_cast<physx_PxSyncImpl_Pod*>(return_val);
@@ -2702,105 +2592,6 @@ extern "C" {
         physx_PxDebugText_Pod return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
-    }
-
-    void PxRenderBuffer_delete(physx_PxRenderBuffer_Pod* self__pod) {
-        physx::PxRenderBuffer* self_ = reinterpret_cast<physx::PxRenderBuffer*>(self__pod);
-        delete self_;
-    }
-
-    uint32_t PxRenderBuffer_getNbPoints(physx_PxRenderBuffer_Pod const* self__pod) {
-        physx::PxRenderBuffer const* self_ = reinterpret_cast<physx::PxRenderBuffer const*>(self__pod);
-        uint32_t return_val = self_->getNbPoints();
-        return return_val;
-    }
-
-    physx_PxDebugPoint_Pod const* PxRenderBuffer_getPoints(physx_PxRenderBuffer_Pod const* self__pod) {
-        physx::PxRenderBuffer const* self_ = reinterpret_cast<physx::PxRenderBuffer const*>(self__pod);
-        physx::PxDebugPoint const* return_val = self_->getPoints();
-        auto return_val_pod = reinterpret_cast<physx_PxDebugPoint_Pod const*>(return_val);
-        return return_val_pod;
-    }
-
-    void PxRenderBuffer_addPoint_mut(physx_PxRenderBuffer_Pod* self__pod, physx_PxDebugPoint_Pod const* point_pod) {
-        physx::PxRenderBuffer* self_ = reinterpret_cast<physx::PxRenderBuffer*>(self__pod);
-        physx::PxDebugPoint const& point = reinterpret_cast<physx::PxDebugPoint const&>(*point_pod);
-        self_->addPoint(point);
-    }
-
-    uint32_t PxRenderBuffer_getNbLines(physx_PxRenderBuffer_Pod const* self__pod) {
-        physx::PxRenderBuffer const* self_ = reinterpret_cast<physx::PxRenderBuffer const*>(self__pod);
-        uint32_t return_val = self_->getNbLines();
-        return return_val;
-    }
-
-    physx_PxDebugLine_Pod const* PxRenderBuffer_getLines(physx_PxRenderBuffer_Pod const* self__pod) {
-        physx::PxRenderBuffer const* self_ = reinterpret_cast<physx::PxRenderBuffer const*>(self__pod);
-        physx::PxDebugLine const* return_val = self_->getLines();
-        auto return_val_pod = reinterpret_cast<physx_PxDebugLine_Pod const*>(return_val);
-        return return_val_pod;
-    }
-
-    void PxRenderBuffer_addLine_mut(physx_PxRenderBuffer_Pod* self__pod, physx_PxDebugLine_Pod const* line_pod) {
-        physx::PxRenderBuffer* self_ = reinterpret_cast<physx::PxRenderBuffer*>(self__pod);
-        physx::PxDebugLine const& line = reinterpret_cast<physx::PxDebugLine const&>(*line_pod);
-        self_->addLine(line);
-    }
-
-    physx_PxDebugLine_Pod* PxRenderBuffer_reserveLines_mut(physx_PxRenderBuffer_Pod* self__pod, uint32_t nbLines) {
-        physx::PxRenderBuffer* self_ = reinterpret_cast<physx::PxRenderBuffer*>(self__pod);
-        physx::PxDebugLine* return_val = self_->reserveLines(nbLines);
-        auto return_val_pod = reinterpret_cast<physx_PxDebugLine_Pod*>(return_val);
-        return return_val_pod;
-    }
-
-    physx_PxDebugPoint_Pod* PxRenderBuffer_reservePoints_mut(physx_PxRenderBuffer_Pod* self__pod, uint32_t nbLines) {
-        physx::PxRenderBuffer* self_ = reinterpret_cast<physx::PxRenderBuffer*>(self__pod);
-        physx::PxDebugPoint* return_val = self_->reservePoints(nbLines);
-        auto return_val_pod = reinterpret_cast<physx_PxDebugPoint_Pod*>(return_val);
-        return return_val_pod;
-    }
-
-    uint32_t PxRenderBuffer_getNbTriangles(physx_PxRenderBuffer_Pod const* self__pod) {
-        physx::PxRenderBuffer const* self_ = reinterpret_cast<physx::PxRenderBuffer const*>(self__pod);
-        uint32_t return_val = self_->getNbTriangles();
-        return return_val;
-    }
-
-    physx_PxDebugTriangle_Pod const* PxRenderBuffer_getTriangles(physx_PxRenderBuffer_Pod const* self__pod) {
-        physx::PxRenderBuffer const* self_ = reinterpret_cast<physx::PxRenderBuffer const*>(self__pod);
-        physx::PxDebugTriangle const* return_val = self_->getTriangles();
-        auto return_val_pod = reinterpret_cast<physx_PxDebugTriangle_Pod const*>(return_val);
-        return return_val_pod;
-    }
-
-    void PxRenderBuffer_addTriangle_mut(physx_PxRenderBuffer_Pod* self__pod, physx_PxDebugTriangle_Pod const* triangle_pod) {
-        physx::PxRenderBuffer* self_ = reinterpret_cast<physx::PxRenderBuffer*>(self__pod);
-        physx::PxDebugTriangle const& triangle = reinterpret_cast<physx::PxDebugTriangle const&>(*triangle_pod);
-        self_->addTriangle(triangle);
-    }
-
-    void PxRenderBuffer_append_mut(physx_PxRenderBuffer_Pod* self__pod, physx_PxRenderBuffer_Pod const* other_pod) {
-        physx::PxRenderBuffer* self_ = reinterpret_cast<physx::PxRenderBuffer*>(self__pod);
-        physx::PxRenderBuffer const& other = reinterpret_cast<physx::PxRenderBuffer const&>(*other_pod);
-        self_->append(other);
-    }
-
-    void PxRenderBuffer_clear_mut(physx_PxRenderBuffer_Pod* self__pod) {
-        physx::PxRenderBuffer* self_ = reinterpret_cast<physx::PxRenderBuffer*>(self__pod);
-        self_->clear();
-    }
-
-    void PxRenderBuffer_shift_mut(physx_PxRenderBuffer_Pod* self__pod, physx_PxVec3_Pod const* delta_pod) {
-        physx::PxRenderBuffer* self_ = reinterpret_cast<physx::PxRenderBuffer*>(self__pod);
-        physx::PxVec3 const& delta = reinterpret_cast<physx::PxVec3 const&>(*delta_pod);
-        self_->shift(delta);
-    }
-
-    bool PxRenderBuffer_empty(physx_PxRenderBuffer_Pod const* self__pod) {
-        physx::PxRenderBuffer const* self_ = reinterpret_cast<physx::PxRenderBuffer const*>(self__pod);
-        bool return_val = self_->empty();
-        return return_val;
     }
 
     void PxProcessPxBaseCallback_delete(physx_PxProcessPxBaseCallback_Pod* self__pod) {
@@ -5108,78 +4899,6 @@ extern "C" {
         return return_val;
     }
 
-    void PxSolverConstraintPrepDesc_delete(physx_PxSolverConstraintPrepDesc_Pod* self__pod) {
-        physx::PxSolverConstraintPrepDesc* self_ = reinterpret_cast<physx::PxSolverConstraintPrepDesc*>(self__pod);
-        delete self_;
-    }
-
-    uint8_t* PxConstraintAllocator_reserveConstraintData_mut(physx_PxConstraintAllocator_Pod* self__pod, uint32_t byteSize) {
-        physx::PxConstraintAllocator* self_ = reinterpret_cast<physx::PxConstraintAllocator*>(self__pod);
-        uint8_t* return_val = self_->reserveConstraintData(byteSize);
-        return return_val;
-    }
-
-    uint8_t* PxConstraintAllocator_reserveFrictionData_mut(physx_PxConstraintAllocator_Pod* self__pod, uint32_t byteSize) {
-        physx::PxConstraintAllocator* self_ = reinterpret_cast<physx::PxConstraintAllocator*>(self__pod);
-        uint8_t* return_val = self_->reserveFrictionData(byteSize);
-        return return_val;
-    }
-
-    void PxConstraintAllocator_delete(physx_PxConstraintAllocator_Pod* self__pod) {
-        physx::PxConstraintAllocator* self_ = reinterpret_cast<physx::PxConstraintAllocator*>(self__pod);
-        delete self_;
-    }
-
-    physx_PxArticulationLimit_Pod PxArticulationLimit_new() {
-        PxArticulationLimit return_val;
-        physx_PxArticulationLimit_Pod return_val_pod;
-        memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
-        return return_val_pod;
-    }
-
-    physx_PxArticulationLimit_Pod PxArticulationLimit_new_1(float low_, float high_) {
-        PxArticulationLimit return_val(low_, high_);
-        physx_PxArticulationLimit_Pod return_val_pod;
-        memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
-        return return_val_pod;
-    }
-
-    physx_PxArticulationDrive_Pod PxArticulationDrive_new() {
-        PxArticulationDrive return_val;
-        physx_PxArticulationDrive_Pod return_val_pod;
-        memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
-        return return_val_pod;
-    }
-
-    physx_PxArticulationDrive_Pod PxArticulationDrive_new_1(float stiffness_, float damping_, float maxForce_, int32_t driveType__pod) {
-        auto driveType_ = static_cast<physx::PxArticulationDriveType::Enum>(driveType__pod);
-        PxArticulationDrive return_val(stiffness_, damping_, maxForce_, driveType_);
-        physx_PxArticulationDrive_Pod return_val_pod;
-        memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
-        return return_val_pod;
-    }
-
-    float PxTGSSolverBodyVel_projectVelocity(physx_PxTGSSolverBodyVel_Pod const* self__pod, physx_PxVec3_Pod const* lin_pod, physx_PxVec3_Pod const* ang_pod) {
-        physx::PxTGSSolverBodyVel const* self_ = reinterpret_cast<physx::PxTGSSolverBodyVel const*>(self__pod);
-        physx::PxVec3 const& lin = reinterpret_cast<physx::PxVec3 const&>(*lin_pod);
-        physx::PxVec3 const& ang = reinterpret_cast<physx::PxVec3 const&>(*ang_pod);
-        float return_val = self_->projectVelocity(lin, ang);
-        return return_val;
-    }
-
-    float PxTGSSolverBodyData_projectVelocity(physx_PxTGSSolverBodyData_Pod const* self__pod, physx_PxVec3_Pod const* linear_pod, physx_PxVec3_Pod const* angular_pod) {
-        physx::PxTGSSolverBodyData const* self_ = reinterpret_cast<physx::PxTGSSolverBodyData const*>(self__pod);
-        physx::PxVec3 const& linear = reinterpret_cast<physx::PxVec3 const&>(*linear_pod);
-        physx::PxVec3 const& angular = reinterpret_cast<physx::PxVec3 const&>(*angular_pod);
-        float return_val = self_->projectVelocity(linear, angular);
-        return return_val;
-    }
-
-    void PxTGSSolverConstraintPrepDesc_delete(physx_PxTGSSolverConstraintPrepDesc_Pod* self__pod) {
-        physx::PxTGSSolverConstraintPrepDesc* self_ = reinterpret_cast<physx::PxTGSSolverConstraintPrepDesc*>(self__pod);
-        delete self_;
-    }
-
     void PxArticulationAttachment_setRestLength_mut(physx_PxArticulationAttachment_Pod* self__pod, float restLength) {
         physx::PxArticulationAttachment* self_ = reinterpret_cast<physx::PxArticulationAttachment*>(self__pod);
         self_->setRestLength(restLength);
@@ -5268,13 +4987,14 @@ extern "C" {
         return return_val;
     }
 
-    void PxArticulationTendonJoint_setCoefficient_mut(physx_PxArticulationTendonJoint_Pod* self__pod, int32_t axis_pod, float coefficient, float recipCoefficient) {
+    void PxArticulationTendonJoint_setCoefficient_mut(physx_PxArticulationTendonJoint_Pod* self__pod, physx_PxArticulationAxis::Enum_Pod axis_pod, float coefficient, float recipCoefficient) {
         physx::PxArticulationTendonJoint* self_ = reinterpret_cast<physx::PxArticulationTendonJoint*>(self__pod);
-        auto axis = static_cast<physx::PxArticulationAxis::Enum>(axis_pod);
+        physx::PxArticulationAxis::Enum axis;
+        memcpy(&axis, &axis_pod, sizeof(axis));
         self_->setCoefficient(axis, coefficient, recipCoefficient);
     }
 
-    void PxArticulationTendonJoint_getCoefficient(physx_PxArticulationTendonJoint_Pod const* self__pod, int32_t* axis_pod, float* coefficient_pod, float* recipCoefficient_pod) {
+    void PxArticulationTendonJoint_getCoefficient(physx_PxArticulationTendonJoint_Pod const* self__pod, physx_PxArticulationAxis::Enum_Pod* axis_pod, float* coefficient_pod, float* recipCoefficient_pod) {
         physx::PxArticulationTendonJoint const* self_ = reinterpret_cast<physx::PxArticulationTendonJoint const*>(self__pod);
         physx::PxArticulationAxis::Enum& axis = reinterpret_cast<physx::PxArticulationAxis::Enum&>(*axis_pod);
         float& coefficient = *coefficient_pod;
@@ -5400,10 +5120,16 @@ extern "C" {
         return return_val;
     }
 
-    physx_PxArticulationTendonJoint_Pod* PxArticulationFixedTendon_createTendonJoint_mut(physx_PxArticulationFixedTendon_Pod* self__pod, physx_PxArticulationTendonJoint_Pod* parent_pod, int32_t axis_pod, float coefficient, float recipCoefficient, physx_PxArticulationLink_Pod* link_pod) {
+    void PxArticulationSpatialTendon_delete(physx_PxArticulationSpatialTendon_Pod* self__pod) {
+        physx::PxArticulationSpatialTendon* self_ = reinterpret_cast<physx::PxArticulationSpatialTendon*>(self__pod);
+        delete self_;
+    }
+
+    physx_PxArticulationTendonJoint_Pod* PxArticulationFixedTendon_createTendonJoint_mut(physx_PxArticulationFixedTendon_Pod* self__pod, physx_PxArticulationTendonJoint_Pod* parent_pod, physx_PxArticulationAxis::Enum_Pod axis_pod, float coefficient, float recipCoefficient, physx_PxArticulationLink_Pod* link_pod) {
         physx::PxArticulationFixedTendon* self_ = reinterpret_cast<physx::PxArticulationFixedTendon*>(self__pod);
         physx::PxArticulationTendonJoint* parent = reinterpret_cast<physx::PxArticulationTendonJoint*>(parent_pod);
-        auto axis = static_cast<physx::PxArticulationAxis::Enum>(axis_pod);
+        physx::PxArticulationAxis::Enum axis;
+        memcpy(&axis, &axis_pod, sizeof(axis));
         physx::PxArticulationLink* link = reinterpret_cast<physx::PxArticulationLink*>(link_pod);
         physx::PxArticulationTendonJoint* return_val = self_->createTendonJoint(parent, axis, coefficient, recipCoefficient, link);
         auto return_val_pod = reinterpret_cast<physx_PxArticulationTendonJoint_Pod*>(return_val);
@@ -5452,6 +5178,11 @@ extern "C" {
         physx::PxArticulationFixedTendon const* self_ = reinterpret_cast<physx::PxArticulationFixedTendon const*>(self__pod);
         char const* return_val = self_->getConcreteTypeName();
         return return_val;
+    }
+
+    void PxArticulationFixedTendon_delete(physx_PxArticulationFixedTendon_Pod* self__pod) {
+        physx::PxArticulationFixedTendon* self_ = reinterpret_cast<physx::PxArticulationFixedTendon*>(self__pod);
+        delete self_;
     }
 
     physx_PxArticulationCache_Pod PxArticulationCache_new() {
@@ -5682,22 +5413,24 @@ extern "C" {
         return return_val_pod;
     }
 
-    void PxArticulationReducedCoordinate_setArticulationFlags_mut(physx_PxArticulationReducedCoordinate_Pod* self__pod, uint8_t flags_pod) {
+    void PxArticulationReducedCoordinate_setArticulationFlags_mut(physx_PxArticulationReducedCoordinate_Pod* self__pod, physx_PxArticulationFlags_Pod flags_pod) {
         physx::PxArticulationReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate*>(self__pod);
-        auto flags = physx::PxArticulationFlags(flags_pod);
+        physx::PxArticulationFlags flags;
+        memcpy(&flags, &flags_pod, sizeof(flags));
         self_->setArticulationFlags(flags);
     }
 
-    void PxArticulationReducedCoordinate_setArticulationFlag_mut(physx_PxArticulationReducedCoordinate_Pod* self__pod, int32_t flag_pod, bool value) {
+    void PxArticulationReducedCoordinate_setArticulationFlag_mut(physx_PxArticulationReducedCoordinate_Pod* self__pod, physx_PxArticulationFlag::Enum_Pod flag_pod, bool value) {
         physx::PxArticulationReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate*>(self__pod);
-        auto flag = static_cast<physx::PxArticulationFlag::Enum>(flag_pod);
+        physx::PxArticulationFlag::Enum flag;
+        memcpy(&flag, &flag_pod, sizeof(flag));
         self_->setArticulationFlag(flag, value);
     }
 
-    uint8_t PxArticulationReducedCoordinate_getArticulationFlags(physx_PxArticulationReducedCoordinate_Pod const* self__pod) {
+    physx_PxArticulationFlags_Pod PxArticulationReducedCoordinate_getArticulationFlags(physx_PxArticulationReducedCoordinate_Pod const* self__pod) {
         physx::PxArticulationReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationReducedCoordinate const*>(self__pod);
         physx::PxArticulationFlags return_val = self_->getArticulationFlags();
-        uint8_t return_val_pod;
+        physx_PxArticulationFlags_Pod return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
@@ -6011,103 +5744,117 @@ extern "C" {
         return return_val_pod;
     }
 
-    void PxArticulationJointReducedCoordinate_setJointType_mut(physx_PxArticulationJointReducedCoordinate_Pod* self__pod, int32_t jointType_pod) {
+    void PxArticulationJointReducedCoordinate_setJointType_mut(physx_PxArticulationJointReducedCoordinate_Pod* self__pod, physx_PxArticulationJointType::Enum_Pod jointType_pod) {
         physx::PxArticulationJointReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate*>(self__pod);
-        auto jointType = static_cast<physx::PxArticulationJointType::Enum>(jointType_pod);
+        physx::PxArticulationJointType::Enum jointType;
+        memcpy(&jointType, &jointType_pod, sizeof(jointType));
         self_->setJointType(jointType);
     }
 
-    int32_t PxArticulationJointReducedCoordinate_getJointType(physx_PxArticulationJointReducedCoordinate_Pod const* self__pod) {
+    physx_PxArticulationJointType::Enum_Pod PxArticulationJointReducedCoordinate_getJointType(physx_PxArticulationJointReducedCoordinate_Pod const* self__pod) {
         physx::PxArticulationJointReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate const*>(self__pod);
         physx::PxArticulationJointType::Enum return_val = self_->getJointType();
-        int32_t return_val_pod;
+        physx_PxArticulationJointType::Enum_Pod return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
 
-    void PxArticulationJointReducedCoordinate_setMotion_mut(physx_PxArticulationJointReducedCoordinate_Pod* self__pod, int32_t axis_pod, int32_t motion_pod) {
+    void PxArticulationJointReducedCoordinate_setMotion_mut(physx_PxArticulationJointReducedCoordinate_Pod* self__pod, physx_PxArticulationAxis::Enum_Pod axis_pod, physx_PxArticulationMotion::Enum_Pod motion_pod) {
         physx::PxArticulationJointReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate*>(self__pod);
-        auto axis = static_cast<physx::PxArticulationAxis::Enum>(axis_pod);
-        auto motion = static_cast<physx::PxArticulationMotion::Enum>(motion_pod);
+        physx::PxArticulationAxis::Enum axis;
+        memcpy(&axis, &axis_pod, sizeof(axis));
+        physx::PxArticulationMotion::Enum motion;
+        memcpy(&motion, &motion_pod, sizeof(motion));
         self_->setMotion(axis, motion);
     }
 
-    int32_t PxArticulationJointReducedCoordinate_getMotion(physx_PxArticulationJointReducedCoordinate_Pod const* self__pod, int32_t axis_pod) {
+    physx_PxArticulationMotion::Enum_Pod PxArticulationJointReducedCoordinate_getMotion(physx_PxArticulationJointReducedCoordinate_Pod const* self__pod, physx_PxArticulationAxis::Enum_Pod axis_pod) {
         physx::PxArticulationJointReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate const*>(self__pod);
-        auto axis = static_cast<physx::PxArticulationAxis::Enum>(axis_pod);
+        physx::PxArticulationAxis::Enum axis;
+        memcpy(&axis, &axis_pod, sizeof(axis));
         physx::PxArticulationMotion::Enum return_val = self_->getMotion(axis);
-        int32_t return_val_pod;
+        physx_PxArticulationMotion::Enum_Pod return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
 
-    void PxArticulationJointReducedCoordinate_setLimitParams_mut(physx_PxArticulationJointReducedCoordinate_Pod* self__pod, int32_t axis_pod, physx_PxArticulationLimit_Pod const* limit_pod) {
+    void PxArticulationJointReducedCoordinate_setLimitParams_mut(physx_PxArticulationJointReducedCoordinate_Pod* self__pod, physx_PxArticulationAxis::Enum_Pod axis_pod, physx_PxArticulationLimit_Pod const* limit_pod) {
         physx::PxArticulationJointReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate*>(self__pod);
-        auto axis = static_cast<physx::PxArticulationAxis::Enum>(axis_pod);
+        physx::PxArticulationAxis::Enum axis;
+        memcpy(&axis, &axis_pod, sizeof(axis));
         physx::PxArticulationLimit const& limit = reinterpret_cast<physx::PxArticulationLimit const&>(*limit_pod);
         self_->setLimitParams(axis, limit);
     }
 
-    physx_PxArticulationLimit_Pod PxArticulationJointReducedCoordinate_getLimitParams(physx_PxArticulationJointReducedCoordinate_Pod const* self__pod, int32_t axis_pod) {
+    physx_PxArticulationLimit_Pod PxArticulationJointReducedCoordinate_getLimitParams(physx_PxArticulationJointReducedCoordinate_Pod const* self__pod, physx_PxArticulationAxis::Enum_Pod axis_pod) {
         physx::PxArticulationJointReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate const*>(self__pod);
-        auto axis = static_cast<physx::PxArticulationAxis::Enum>(axis_pod);
+        physx::PxArticulationAxis::Enum axis;
+        memcpy(&axis, &axis_pod, sizeof(axis));
         physx::PxArticulationLimit return_val = self_->getLimitParams(axis);
         physx_PxArticulationLimit_Pod return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
 
-    void PxArticulationJointReducedCoordinate_setDriveParams_mut(physx_PxArticulationJointReducedCoordinate_Pod* self__pod, int32_t axis_pod, physx_PxArticulationDrive_Pod const* drive_pod) {
+    void PxArticulationJointReducedCoordinate_setDriveParams_mut(physx_PxArticulationJointReducedCoordinate_Pod* self__pod, physx_PxArticulationAxis::Enum_Pod axis_pod, physx_PxArticulationDrive_Pod const* drive_pod) {
         physx::PxArticulationJointReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate*>(self__pod);
-        auto axis = static_cast<physx::PxArticulationAxis::Enum>(axis_pod);
+        physx::PxArticulationAxis::Enum axis;
+        memcpy(&axis, &axis_pod, sizeof(axis));
         physx::PxArticulationDrive const& drive = reinterpret_cast<physx::PxArticulationDrive const&>(*drive_pod);
         self_->setDriveParams(axis, drive);
     }
 
-    physx_PxArticulationDrive_Pod PxArticulationJointReducedCoordinate_getDriveParams(physx_PxArticulationJointReducedCoordinate_Pod const* self__pod, int32_t axis_pod) {
+    physx_PxArticulationDrive_Pod PxArticulationJointReducedCoordinate_getDriveParams(physx_PxArticulationJointReducedCoordinate_Pod const* self__pod, physx_PxArticulationAxis::Enum_Pod axis_pod) {
         physx::PxArticulationJointReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate const*>(self__pod);
-        auto axis = static_cast<physx::PxArticulationAxis::Enum>(axis_pod);
+        physx::PxArticulationAxis::Enum axis;
+        memcpy(&axis, &axis_pod, sizeof(axis));
         physx::PxArticulationDrive return_val = self_->getDriveParams(axis);
         physx_PxArticulationDrive_Pod return_val_pod;
         memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
         return return_val_pod;
     }
 
-    void PxArticulationJointReducedCoordinate_setDriveTarget_mut(physx_PxArticulationJointReducedCoordinate_Pod* self__pod, int32_t axis_pod, float target, bool autowake) {
+    void PxArticulationJointReducedCoordinate_setDriveTarget_mut(physx_PxArticulationJointReducedCoordinate_Pod* self__pod, physx_PxArticulationAxis::Enum_Pod axis_pod, float target, bool autowake) {
         physx::PxArticulationJointReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate*>(self__pod);
-        auto axis = static_cast<physx::PxArticulationAxis::Enum>(axis_pod);
+        physx::PxArticulationAxis::Enum axis;
+        memcpy(&axis, &axis_pod, sizeof(axis));
         self_->setDriveTarget(axis, target, autowake);
     }
 
-    float PxArticulationJointReducedCoordinate_getDriveTarget(physx_PxArticulationJointReducedCoordinate_Pod const* self__pod, int32_t axis_pod) {
+    float PxArticulationJointReducedCoordinate_getDriveTarget(physx_PxArticulationJointReducedCoordinate_Pod const* self__pod, physx_PxArticulationAxis::Enum_Pod axis_pod) {
         physx::PxArticulationJointReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate const*>(self__pod);
-        auto axis = static_cast<physx::PxArticulationAxis::Enum>(axis_pod);
+        physx::PxArticulationAxis::Enum axis;
+        memcpy(&axis, &axis_pod, sizeof(axis));
         float return_val = self_->getDriveTarget(axis);
         return return_val;
     }
 
-    void PxArticulationJointReducedCoordinate_setDriveVelocity_mut(physx_PxArticulationJointReducedCoordinate_Pod* self__pod, int32_t axis_pod, float targetVel, bool autowake) {
+    void PxArticulationJointReducedCoordinate_setDriveVelocity_mut(physx_PxArticulationJointReducedCoordinate_Pod* self__pod, physx_PxArticulationAxis::Enum_Pod axis_pod, float targetVel, bool autowake) {
         physx::PxArticulationJointReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate*>(self__pod);
-        auto axis = static_cast<physx::PxArticulationAxis::Enum>(axis_pod);
+        physx::PxArticulationAxis::Enum axis;
+        memcpy(&axis, &axis_pod, sizeof(axis));
         self_->setDriveVelocity(axis, targetVel, autowake);
     }
 
-    float PxArticulationJointReducedCoordinate_getDriveVelocity(physx_PxArticulationJointReducedCoordinate_Pod const* self__pod, int32_t axis_pod) {
+    float PxArticulationJointReducedCoordinate_getDriveVelocity(physx_PxArticulationJointReducedCoordinate_Pod const* self__pod, physx_PxArticulationAxis::Enum_Pod axis_pod) {
         physx::PxArticulationJointReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate const*>(self__pod);
-        auto axis = static_cast<physx::PxArticulationAxis::Enum>(axis_pod);
+        physx::PxArticulationAxis::Enum axis;
+        memcpy(&axis, &axis_pod, sizeof(axis));
         float return_val = self_->getDriveVelocity(axis);
         return return_val;
     }
 
-    void PxArticulationJointReducedCoordinate_setArmature_mut(physx_PxArticulationJointReducedCoordinate_Pod* self__pod, int32_t axis_pod, float armature) {
+    void PxArticulationJointReducedCoordinate_setArmature_mut(physx_PxArticulationJointReducedCoordinate_Pod* self__pod, physx_PxArticulationAxis::Enum_Pod axis_pod, float armature) {
         physx::PxArticulationJointReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate*>(self__pod);
-        auto axis = static_cast<physx::PxArticulationAxis::Enum>(axis_pod);
+        physx::PxArticulationAxis::Enum axis;
+        memcpy(&axis, &axis_pod, sizeof(axis));
         self_->setArmature(axis, armature);
     }
 
-    float PxArticulationJointReducedCoordinate_getArmature(physx_PxArticulationJointReducedCoordinate_Pod const* self__pod, int32_t axis_pod) {
+    float PxArticulationJointReducedCoordinate_getArmature(physx_PxArticulationJointReducedCoordinate_Pod const* self__pod, physx_PxArticulationAxis::Enum_Pod axis_pod) {
         physx::PxArticulationJointReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate const*>(self__pod);
-        auto axis = static_cast<physx::PxArticulationAxis::Enum>(axis_pod);
+        physx::PxArticulationAxis::Enum axis;
+        memcpy(&axis, &axis_pod, sizeof(axis));
         float return_val = self_->getArmature(axis);
         return return_val;
     }
@@ -6134,28 +5881,32 @@ extern "C" {
         return return_val;
     }
 
-    void PxArticulationJointReducedCoordinate_setJointPosition_mut(physx_PxArticulationJointReducedCoordinate_Pod* self__pod, int32_t axis_pod, float jointPos) {
+    void PxArticulationJointReducedCoordinate_setJointPosition_mut(physx_PxArticulationJointReducedCoordinate_Pod* self__pod, physx_PxArticulationAxis::Enum_Pod axis_pod, float jointPos) {
         physx::PxArticulationJointReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate*>(self__pod);
-        auto axis = static_cast<physx::PxArticulationAxis::Enum>(axis_pod);
+        physx::PxArticulationAxis::Enum axis;
+        memcpy(&axis, &axis_pod, sizeof(axis));
         self_->setJointPosition(axis, jointPos);
     }
 
-    float PxArticulationJointReducedCoordinate_getJointPosition(physx_PxArticulationJointReducedCoordinate_Pod const* self__pod, int32_t axis_pod) {
+    float PxArticulationJointReducedCoordinate_getJointPosition(physx_PxArticulationJointReducedCoordinate_Pod const* self__pod, physx_PxArticulationAxis::Enum_Pod axis_pod) {
         physx::PxArticulationJointReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate const*>(self__pod);
-        auto axis = static_cast<physx::PxArticulationAxis::Enum>(axis_pod);
+        physx::PxArticulationAxis::Enum axis;
+        memcpy(&axis, &axis_pod, sizeof(axis));
         float return_val = self_->getJointPosition(axis);
         return return_val;
     }
 
-    void PxArticulationJointReducedCoordinate_setJointVelocity_mut(physx_PxArticulationJointReducedCoordinate_Pod* self__pod, int32_t axis_pod, float jointVel) {
+    void PxArticulationJointReducedCoordinate_setJointVelocity_mut(physx_PxArticulationJointReducedCoordinate_Pod* self__pod, physx_PxArticulationAxis::Enum_Pod axis_pod, float jointVel) {
         physx::PxArticulationJointReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate*>(self__pod);
-        auto axis = static_cast<physx::PxArticulationAxis::Enum>(axis_pod);
+        physx::PxArticulationAxis::Enum axis;
+        memcpy(&axis, &axis_pod, sizeof(axis));
         self_->setJointVelocity(axis, jointVel);
     }
 
-    float PxArticulationJointReducedCoordinate_getJointVelocity(physx_PxArticulationJointReducedCoordinate_Pod const* self__pod, int32_t axis_pod) {
+    float PxArticulationJointReducedCoordinate_getJointVelocity(physx_PxArticulationJointReducedCoordinate_Pod const* self__pod, physx_PxArticulationAxis::Enum_Pod axis_pod) {
         physx::PxArticulationJointReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate const*>(self__pod);
-        auto axis = static_cast<physx::PxArticulationAxis::Enum>(axis_pod);
+        physx::PxArticulationAxis::Enum axis;
+        memcpy(&axis, &axis_pod, sizeof(axis));
         float return_val = self_->getJointVelocity(axis);
         return return_val;
     }
@@ -6164,6 +5915,11 @@ extern "C" {
         physx::PxArticulationJointReducedCoordinate const* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate const*>(self__pod);
         char const* return_val = self_->getConcreteTypeName();
         return return_val;
+    }
+
+    void PxArticulationJointReducedCoordinate_delete(physx_PxArticulationJointReducedCoordinate_Pod* self__pod) {
+        physx::PxArticulationJointReducedCoordinate* self_ = reinterpret_cast<physx::PxArticulationJointReducedCoordinate*>(self__pod);
+        delete self_;
     }
 
     void PxShape_release_mut(physx_PxShape_Pod* self__pod) {
@@ -6891,164 +6647,6 @@ extern "C" {
         return return_val;
     }
 
-    physx_PxContactStreamIterator_Pod PxContactStreamIterator_new(uint8_t const* contactPatches, uint8_t const* contactPoints, uint32_t const* contactFaceIndices, uint32_t nbPatches, uint32_t nbContacts) {
-        PxContactStreamIterator return_val(contactPatches, contactPoints, contactFaceIndices, nbPatches, nbContacts);
-        physx_PxContactStreamIterator_Pod return_val_pod;
-        memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
-        return return_val_pod;
-    }
-
-    bool PxContactStreamIterator_hasNextPatch(physx_PxContactStreamIterator_Pod const* self__pod) {
-        physx::PxContactStreamIterator const* self_ = reinterpret_cast<physx::PxContactStreamIterator const*>(self__pod);
-        bool return_val = self_->hasNextPatch();
-        return return_val;
-    }
-
-    uint32_t PxContactStreamIterator_getTotalContactCount(physx_PxContactStreamIterator_Pod const* self__pod) {
-        physx::PxContactStreamIterator const* self_ = reinterpret_cast<physx::PxContactStreamIterator const*>(self__pod);
-        uint32_t return_val = self_->getTotalContactCount();
-        return return_val;
-    }
-
-    uint32_t PxContactStreamIterator_getTotalPatchCount(physx_PxContactStreamIterator_Pod const* self__pod) {
-        physx::PxContactStreamIterator const* self_ = reinterpret_cast<physx::PxContactStreamIterator const*>(self__pod);
-        uint32_t return_val = self_->getTotalPatchCount();
-        return return_val;
-    }
-
-    void PxContactStreamIterator_nextPatch_mut(physx_PxContactStreamIterator_Pod* self__pod) {
-        physx::PxContactStreamIterator* self_ = reinterpret_cast<physx::PxContactStreamIterator*>(self__pod);
-        self_->nextPatch();
-    }
-
-    bool PxContactStreamIterator_hasNextContact(physx_PxContactStreamIterator_Pod const* self__pod) {
-        physx::PxContactStreamIterator const* self_ = reinterpret_cast<physx::PxContactStreamIterator const*>(self__pod);
-        bool return_val = self_->hasNextContact();
-        return return_val;
-    }
-
-    void PxContactStreamIterator_nextContact_mut(physx_PxContactStreamIterator_Pod* self__pod) {
-        physx::PxContactStreamIterator* self_ = reinterpret_cast<physx::PxContactStreamIterator*>(self__pod);
-        self_->nextContact();
-    }
-
-    physx_PxVec3_Pod const* PxContactStreamIterator_getContactNormal(physx_PxContactStreamIterator_Pod const* self__pod) {
-        physx::PxContactStreamIterator const* self_ = reinterpret_cast<physx::PxContactStreamIterator const*>(self__pod);
-        physx::PxVec3 const& return_val = self_->getContactNormal();
-        auto return_val_pod = reinterpret_cast<physx_PxVec3_Pod const*>(&return_val);
-        return return_val_pod;
-    }
-
-    float PxContactStreamIterator_getInvMassScale0(physx_PxContactStreamIterator_Pod const* self__pod) {
-        physx::PxContactStreamIterator const* self_ = reinterpret_cast<physx::PxContactStreamIterator const*>(self__pod);
-        float return_val = self_->getInvMassScale0();
-        return return_val;
-    }
-
-    float PxContactStreamIterator_getInvMassScale1(physx_PxContactStreamIterator_Pod const* self__pod) {
-        physx::PxContactStreamIterator const* self_ = reinterpret_cast<physx::PxContactStreamIterator const*>(self__pod);
-        float return_val = self_->getInvMassScale1();
-        return return_val;
-    }
-
-    float PxContactStreamIterator_getInvInertiaScale0(physx_PxContactStreamIterator_Pod const* self__pod) {
-        physx::PxContactStreamIterator const* self_ = reinterpret_cast<physx::PxContactStreamIterator const*>(self__pod);
-        float return_val = self_->getInvInertiaScale0();
-        return return_val;
-    }
-
-    float PxContactStreamIterator_getInvInertiaScale1(physx_PxContactStreamIterator_Pod const* self__pod) {
-        physx::PxContactStreamIterator const* self_ = reinterpret_cast<physx::PxContactStreamIterator const*>(self__pod);
-        float return_val = self_->getInvInertiaScale1();
-        return return_val;
-    }
-
-    float PxContactStreamIterator_getMaxImpulse(physx_PxContactStreamIterator_Pod const* self__pod) {
-        physx::PxContactStreamIterator const* self_ = reinterpret_cast<physx::PxContactStreamIterator const*>(self__pod);
-        float return_val = self_->getMaxImpulse();
-        return return_val;
-    }
-
-    physx_PxVec3_Pod const* PxContactStreamIterator_getTargetVel(physx_PxContactStreamIterator_Pod const* self__pod) {
-        physx::PxContactStreamIterator const* self_ = reinterpret_cast<physx::PxContactStreamIterator const*>(self__pod);
-        physx::PxVec3 const& return_val = self_->getTargetVel();
-        auto return_val_pod = reinterpret_cast<physx_PxVec3_Pod const*>(&return_val);
-        return return_val_pod;
-    }
-
-    physx_PxVec3_Pod const* PxContactStreamIterator_getContactPoint(physx_PxContactStreamIterator_Pod const* self__pod) {
-        physx::PxContactStreamIterator const* self_ = reinterpret_cast<physx::PxContactStreamIterator const*>(self__pod);
-        physx::PxVec3 const& return_val = self_->getContactPoint();
-        auto return_val_pod = reinterpret_cast<physx_PxVec3_Pod const*>(&return_val);
-        return return_val_pod;
-    }
-
-    float PxContactStreamIterator_getSeparation(physx_PxContactStreamIterator_Pod const* self__pod) {
-        physx::PxContactStreamIterator const* self_ = reinterpret_cast<physx::PxContactStreamIterator const*>(self__pod);
-        float return_val = self_->getSeparation();
-        return return_val;
-    }
-
-    uint32_t PxContactStreamIterator_getFaceIndex0(physx_PxContactStreamIterator_Pod const* self__pod) {
-        physx::PxContactStreamIterator const* self_ = reinterpret_cast<physx::PxContactStreamIterator const*>(self__pod);
-        uint32_t return_val = self_->getFaceIndex0();
-        return return_val;
-    }
-
-    uint32_t PxContactStreamIterator_getFaceIndex1(physx_PxContactStreamIterator_Pod const* self__pod) {
-        physx::PxContactStreamIterator const* self_ = reinterpret_cast<physx::PxContactStreamIterator const*>(self__pod);
-        uint32_t return_val = self_->getFaceIndex1();
-        return return_val;
-    }
-
-    float PxContactStreamIterator_getStaticFriction(physx_PxContactStreamIterator_Pod const* self__pod) {
-        physx::PxContactStreamIterator const* self_ = reinterpret_cast<physx::PxContactStreamIterator const*>(self__pod);
-        float return_val = self_->getStaticFriction();
-        return return_val;
-    }
-
-    float PxContactStreamIterator_getDynamicFriction(physx_PxContactStreamIterator_Pod const* self__pod) {
-        physx::PxContactStreamIterator const* self_ = reinterpret_cast<physx::PxContactStreamIterator const*>(self__pod);
-        float return_val = self_->getDynamicFriction();
-        return return_val;
-    }
-
-    float PxContactStreamIterator_getRestitution(physx_PxContactStreamIterator_Pod const* self__pod) {
-        physx::PxContactStreamIterator const* self_ = reinterpret_cast<physx::PxContactStreamIterator const*>(self__pod);
-        float return_val = self_->getRestitution();
-        return return_val;
-    }
-
-    float PxContactStreamIterator_getDamping(physx_PxContactStreamIterator_Pod const* self__pod) {
-        physx::PxContactStreamIterator const* self_ = reinterpret_cast<physx::PxContactStreamIterator const*>(self__pod);
-        float return_val = self_->getDamping();
-        return return_val;
-    }
-
-    uint32_t PxContactStreamIterator_getMaterialFlags(physx_PxContactStreamIterator_Pod const* self__pod) {
-        physx::PxContactStreamIterator const* self_ = reinterpret_cast<physx::PxContactStreamIterator const*>(self__pod);
-        uint32_t return_val = self_->getMaterialFlags();
-        return return_val;
-    }
-
-    uint16_t PxContactStreamIterator_getMaterialIndex0(physx_PxContactStreamIterator_Pod const* self__pod) {
-        physx::PxContactStreamIterator const* self_ = reinterpret_cast<physx::PxContactStreamIterator const*>(self__pod);
-        uint16_t return_val = self_->getMaterialIndex0();
-        return return_val;
-    }
-
-    uint16_t PxContactStreamIterator_getMaterialIndex1(physx_PxContactStreamIterator_Pod const* self__pod) {
-        physx::PxContactStreamIterator const* self_ = reinterpret_cast<physx::PxContactStreamIterator const*>(self__pod);
-        uint16_t return_val = self_->getMaterialIndex1();
-        return return_val;
-    }
-
-    bool PxContactStreamIterator_advanceToIndex_mut(physx_PxContactStreamIterator_Pod* self__pod, uint32_t initialIndex) {
-        physx::PxContactStreamIterator* self_ = reinterpret_cast<physx::PxContactStreamIterator*>(self__pod);
-        bool return_val = self_->advanceToIndex(initialIndex);
-        return return_val;
-    }
-
     physx_PxVec3_Pod const* PxContactSet_getPoint(physx_PxContactSet_Pod const* self__pod, uint32_t i) {
         physx::PxContactSet const* self_ = reinterpret_cast<physx::PxContactSet const*>(self__pod);
         physx::PxVec3 const& return_val = self_->getPoint(i);
@@ -7227,6 +6825,11 @@ extern "C" {
         physx::PxBase const* observed = reinterpret_cast<physx::PxBase const*>(observed_pod);
         auto deletionEvent = static_cast<physx::PxDeletionEventFlag::Enum>(deletionEvent_pod);
         self_->onRelease(observed, userData, deletionEvent);
+    }
+
+    void PxBaseMaterial_delete(physx_PxBaseMaterial_Pod* self__pod) {
+        physx::PxBaseMaterial* self_ = reinterpret_cast<physx::PxBaseMaterial*>(self__pod);
+        delete self_;
     }
 
     bool PxBaseMaterial_isKindOf(physx_PxBaseMaterial_Pod const* self__pod, char const* name) {
@@ -8642,9 +8245,10 @@ extern "C" {
         return return_val;
     }
 
-    uint32_t PxSimulationStatistics_getRbPairStats(physx_PxSimulationStatistics_Pod const* self__pod, int32_t pairType_pod, int32_t g0_pod, int32_t g1_pod) {
+    uint32_t PxSimulationStatistics_getRbPairStats(physx_PxSimulationStatistics_Pod const* self__pod, physx_RbPairStatsType_Pod pairType_pod, int32_t g0_pod, int32_t g1_pod) {
         physx::PxSimulationStatistics const* self_ = reinterpret_cast<physx::PxSimulationStatistics const*>(self__pod);
-        auto pairType = static_cast<physx::PxSimulationStatistics::RbPairStatsType>(pairType_pod);
+        physx::RbPairStatsType pairType;
+        memcpy(&pairType, &pairType_pod, sizeof(pairType));
         auto g0 = static_cast<physx::PxGeometryType::Enum>(g0_pod);
         auto g1 = static_cast<physx::PxGeometryType::Enum>(g1_pod);
         uint32_t return_val = self_->getRbPairStats(pairType, g0, g1);
@@ -8710,763 +8314,6 @@ extern "C" {
         self_->drawText(text);
     }
 
-    physx_PxDominanceGroupPair_Pod PxDominanceGroupPair_new(uint8_t a, uint8_t b) {
-        PxDominanceGroupPair return_val(a, b);
-        physx_PxDominanceGroupPair_Pod return_val_pod;
-        memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
-        return return_val_pod;
-    }
-
-    void PxBroadPhaseCallback_delete(physx_PxBroadPhaseCallback_Pod* self__pod) {
-        physx::PxBroadPhaseCallback* self_ = reinterpret_cast<physx::PxBroadPhaseCallback*>(self__pod);
-        delete self_;
-    }
-
-    void PxBroadPhaseCallback_onObjectOutOfBounds_mut(physx_PxBroadPhaseCallback_Pod* self__pod, physx_PxShape_Pod* shape_pod, physx_PxActor_Pod* actor_pod) {
-        physx::PxBroadPhaseCallback* self_ = reinterpret_cast<physx::PxBroadPhaseCallback*>(self__pod);
-        physx::PxShape& shape = reinterpret_cast<physx::PxShape&>(*shape_pod);
-        physx::PxActor& actor = reinterpret_cast<physx::PxActor&>(*actor_pod);
-        self_->onObjectOutOfBounds(shape, actor);
-    }
-
-    void PxBroadPhaseCallback_onObjectOutOfBounds_mut_1(physx_PxBroadPhaseCallback_Pod* self__pod, physx_PxAggregate_Pod* aggregate_pod) {
-        physx::PxBroadPhaseCallback* self_ = reinterpret_cast<physx::PxBroadPhaseCallback*>(self__pod);
-        physx::PxAggregate& aggregate = reinterpret_cast<physx::PxAggregate&>(*aggregate_pod);
-        self_->onObjectOutOfBounds(aggregate);
-    }
-
-    void PxScene_release_mut(physx_PxScene_Pod* self__pod) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        self_->release();
-    }
-
-    void PxScene_setFlag_mut(physx_PxScene_Pod* self__pod, int32_t flag_pod, bool value) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        auto flag = static_cast<physx::PxSceneFlag::Enum>(flag_pod);
-        self_->setFlag(flag, value);
-    }
-
-    uint32_t PxScene_getFlags(physx_PxScene_Pod const* self__pod) {
-        physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
-        physx::PxSceneFlags return_val = self_->getFlags();
-        uint32_t return_val_pod;
-        memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
-        return return_val_pod;
-    }
-
-    void PxScene_setLimits_mut(physx_PxScene_Pod* self__pod, physx_PxSceneLimits_Pod const* limits_pod) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        physx::PxSceneLimits const& limits = reinterpret_cast<physx::PxSceneLimits const&>(*limits_pod);
-        self_->setLimits(limits);
-    }
-
-    physx_PxSceneLimits_Pod PxScene_getLimits(physx_PxScene_Pod const* self__pod) {
-        physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
-        physx::PxSceneLimits return_val = self_->getLimits();
-        physx_PxSceneLimits_Pod return_val_pod;
-        memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
-        return return_val_pod;
-    }
-
-    physx_PxPhysics_Pod* PxScene_getPhysics_mut(physx_PxScene_Pod* self__pod) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        physx::PxPhysics& return_val = self_->getPhysics();
-        auto return_val_pod = reinterpret_cast<physx_PxPhysics_Pod*>(&return_val);
-        return return_val_pod;
-    }
-
-    uint32_t PxScene_getTimestamp(physx_PxScene_Pod const* self__pod) {
-        physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
-        uint32_t return_val = self_->getTimestamp();
-        return return_val;
-    }
-
-    bool PxScene_addArticulation_mut(physx_PxScene_Pod* self__pod, physx_PxArticulationReducedCoordinate_Pod* articulation_pod) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        physx::PxArticulationReducedCoordinate& articulation = reinterpret_cast<physx::PxArticulationReducedCoordinate&>(*articulation_pod);
-        bool return_val = self_->addArticulation(articulation);
-        return return_val;
-    }
-
-    void PxScene_removeArticulation_mut(physx_PxScene_Pod* self__pod, physx_PxArticulationReducedCoordinate_Pod* articulation_pod, bool wakeOnLostTouch) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        physx::PxArticulationReducedCoordinate& articulation = reinterpret_cast<physx::PxArticulationReducedCoordinate&>(*articulation_pod);
-        self_->removeArticulation(articulation, wakeOnLostTouch);
-    }
-
-    bool PxScene_addActor_mut(physx_PxScene_Pod* self__pod, physx_PxActor_Pod* actor_pod, physx_PxBVH_Pod const* bvh_pod) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        physx::PxActor& actor = reinterpret_cast<physx::PxActor&>(*actor_pod);
-        physx::PxBVH const* bvh = reinterpret_cast<physx::PxBVH const*>(bvh_pod);
-        bool return_val = self_->addActor(actor, bvh);
-        return return_val;
-    }
-
-    bool PxScene_addActors_mut(physx_PxScene_Pod* self__pod, physx_PxActor_Pod* const* actors_pod, uint32_t nbActors) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        physx::PxActor* const* actors = reinterpret_cast<physx::PxActor* const*>(actors_pod);
-        bool return_val = self_->addActors(actors, nbActors);
-        return return_val;
-    }
-
-    bool PxScene_addActors_mut_1(physx_PxScene_Pod* self__pod, physx_PxPruningStructure_Pod const* pruningStructure_pod) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        physx::PxPruningStructure const& pruningStructure = reinterpret_cast<physx::PxPruningStructure const&>(*pruningStructure_pod);
-        bool return_val = self_->addActors(pruningStructure);
-        return return_val;
-    }
-
-    void PxScene_removeActor_mut(physx_PxScene_Pod* self__pod, physx_PxActor_Pod* actor_pod, bool wakeOnLostTouch) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        physx::PxActor& actor = reinterpret_cast<physx::PxActor&>(*actor_pod);
-        self_->removeActor(actor, wakeOnLostTouch);
-    }
-
-    void PxScene_removeActors_mut(physx_PxScene_Pod* self__pod, physx_PxActor_Pod* const* actors_pod, uint32_t nbActors, bool wakeOnLostTouch) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        physx::PxActor* const* actors = reinterpret_cast<physx::PxActor* const*>(actors_pod);
-        self_->removeActors(actors, nbActors, wakeOnLostTouch);
-    }
-
-    bool PxScene_addAggregate_mut(physx_PxScene_Pod* self__pod, physx_PxAggregate_Pod* aggregate_pod) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        physx::PxAggregate& aggregate = reinterpret_cast<physx::PxAggregate&>(*aggregate_pod);
-        bool return_val = self_->addAggregate(aggregate);
-        return return_val;
-    }
-
-    void PxScene_removeAggregate_mut(physx_PxScene_Pod* self__pod, physx_PxAggregate_Pod* aggregate_pod, bool wakeOnLostTouch) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        physx::PxAggregate& aggregate = reinterpret_cast<physx::PxAggregate&>(*aggregate_pod);
-        self_->removeAggregate(aggregate, wakeOnLostTouch);
-    }
-
-    bool PxScene_addCollection_mut(physx_PxScene_Pod* self__pod, physx_PxCollection_Pod const* collection_pod) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        physx::PxCollection const& collection = reinterpret_cast<physx::PxCollection const&>(*collection_pod);
-        bool return_val = self_->addCollection(collection);
-        return return_val;
-    }
-
-    uint32_t PxScene_getNbActors(physx_PxScene_Pod const* self__pod, uint16_t types_pod) {
-        physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
-        auto types = physx::PxActorTypeFlags(types_pod);
-        uint32_t return_val = self_->getNbActors(types);
-        return return_val;
-    }
-
-    uint32_t PxScene_getActors(physx_PxScene_Pod const* self__pod, uint16_t types_pod, physx_PxActor_Pod** userBuffer_pod, uint32_t bufferSize, uint32_t startIndex) {
-        physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
-        auto types = physx::PxActorTypeFlags(types_pod);
-        physx::PxActor** userBuffer = reinterpret_cast<physx::PxActor**>(userBuffer_pod);
-        uint32_t return_val = self_->getActors(types, userBuffer, bufferSize, startIndex);
-        return return_val;
-    }
-
-    physx_PxActor_Pod** PxScene_getActiveActors_mut(physx_PxScene_Pod* self__pod, uint32_t* nbActorsOut_pod) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        uint32_t& nbActorsOut = *nbActorsOut_pod;
-        physx::PxActor** return_val = self_->getActiveActors(nbActorsOut);
-        auto return_val_pod = reinterpret_cast<physx_PxActor_Pod**>(return_val);
-        return return_val_pod;
-    }
-
-    uint32_t PxScene_getNbArticulations(physx_PxScene_Pod const* self__pod) {
-        physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
-        uint32_t return_val = self_->getNbArticulations();
-        return return_val;
-    }
-
-    uint32_t PxScene_getArticulations(physx_PxScene_Pod const* self__pod, physx_PxArticulationReducedCoordinate_Pod** userBuffer_pod, uint32_t bufferSize, uint32_t startIndex) {
-        physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
-        physx::PxArticulationReducedCoordinate** userBuffer = reinterpret_cast<physx::PxArticulationReducedCoordinate**>(userBuffer_pod);
-        uint32_t return_val = self_->getArticulations(userBuffer, bufferSize, startIndex);
-        return return_val;
-    }
-
-    uint32_t PxScene_getNbConstraints(physx_PxScene_Pod const* self__pod) {
-        physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
-        uint32_t return_val = self_->getNbConstraints();
-        return return_val;
-    }
-
-    uint32_t PxScene_getConstraints(physx_PxScene_Pod const* self__pod, physx_PxConstraint_Pod** userBuffer_pod, uint32_t bufferSize, uint32_t startIndex) {
-        physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
-        physx::PxConstraint** userBuffer = reinterpret_cast<physx::PxConstraint**>(userBuffer_pod);
-        uint32_t return_val = self_->getConstraints(userBuffer, bufferSize, startIndex);
-        return return_val;
-    }
-
-    uint32_t PxScene_getNbAggregates(physx_PxScene_Pod const* self__pod) {
-        physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
-        uint32_t return_val = self_->getNbAggregates();
-        return return_val;
-    }
-
-    uint32_t PxScene_getAggregates(physx_PxScene_Pod const* self__pod, physx_PxAggregate_Pod** userBuffer_pod, uint32_t bufferSize, uint32_t startIndex) {
-        physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
-        physx::PxAggregate** userBuffer = reinterpret_cast<physx::PxAggregate**>(userBuffer_pod);
-        uint32_t return_val = self_->getAggregates(userBuffer, bufferSize, startIndex);
-        return return_val;
-    }
-
-    void PxScene_setDominanceGroupPair_mut(physx_PxScene_Pod* self__pod, uint8_t group1, uint8_t group2, physx_PxDominanceGroupPair_Pod const* dominance_pod) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        physx::PxDominanceGroupPair const& dominance = reinterpret_cast<physx::PxDominanceGroupPair const&>(*dominance_pod);
-        self_->setDominanceGroupPair(group1, group2, dominance);
-    }
-
-    physx_PxDominanceGroupPair_Pod PxScene_getDominanceGroupPair(physx_PxScene_Pod const* self__pod, uint8_t group1, uint8_t group2) {
-        physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
-        physx::PxDominanceGroupPair return_val = self_->getDominanceGroupPair(group1, group2);
-        physx_PxDominanceGroupPair_Pod return_val_pod;
-        memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
-        return return_val_pod;
-    }
-
-    physx_PxCpuDispatcher_Pod* PxScene_getCpuDispatcher(physx_PxScene_Pod const* self__pod) {
-        physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
-        physx::PxCpuDispatcher* return_val = self_->getCpuDispatcher();
-        auto return_val_pod = reinterpret_cast<physx_PxCpuDispatcher_Pod*>(return_val);
-        return return_val_pod;
-    }
-
-    uint8_t PxScene_createClient_mut(physx_PxScene_Pod* self__pod) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        uint8_t return_val = self_->createClient();
-        return return_val;
-    }
-
-    void PxScene_setSimulationEventCallback_mut(physx_PxScene_Pod* self__pod, physx_PxSimulationEventCallback_Pod* callback_pod) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        physx::PxSimulationEventCallback* callback = reinterpret_cast<physx::PxSimulationEventCallback*>(callback_pod);
-        self_->setSimulationEventCallback(callback);
-    }
-
-    physx_PxSimulationEventCallback_Pod* PxScene_getSimulationEventCallback(physx_PxScene_Pod const* self__pod) {
-        physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
-        physx::PxSimulationEventCallback* return_val = self_->getSimulationEventCallback();
-        auto return_val_pod = reinterpret_cast<physx_PxSimulationEventCallback_Pod*>(return_val);
-        return return_val_pod;
-    }
-
-    void PxScene_setContactModifyCallback_mut(physx_PxScene_Pod* self__pod, physx_PxContactModifyCallback_Pod* callback_pod) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        physx::PxContactModifyCallback* callback = reinterpret_cast<physx::PxContactModifyCallback*>(callback_pod);
-        self_->setContactModifyCallback(callback);
-    }
-
-    void PxScene_setCCDContactModifyCallback_mut(physx_PxScene_Pod* self__pod, physx_PxCCDContactModifyCallback_Pod* callback_pod) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        physx::PxCCDContactModifyCallback* callback = reinterpret_cast<physx::PxCCDContactModifyCallback*>(callback_pod);
-        self_->setCCDContactModifyCallback(callback);
-    }
-
-    physx_PxContactModifyCallback_Pod* PxScene_getContactModifyCallback(physx_PxScene_Pod const* self__pod) {
-        physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
-        physx::PxContactModifyCallback* return_val = self_->getContactModifyCallback();
-        auto return_val_pod = reinterpret_cast<physx_PxContactModifyCallback_Pod*>(return_val);
-        return return_val_pod;
-    }
-
-    physx_PxCCDContactModifyCallback_Pod* PxScene_getCCDContactModifyCallback(physx_PxScene_Pod const* self__pod) {
-        physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
-        physx::PxCCDContactModifyCallback* return_val = self_->getCCDContactModifyCallback();
-        auto return_val_pod = reinterpret_cast<physx_PxCCDContactModifyCallback_Pod*>(return_val);
-        return return_val_pod;
-    }
-
-    void PxScene_setBroadPhaseCallback_mut(physx_PxScene_Pod* self__pod, physx_PxBroadPhaseCallback_Pod* callback_pod) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        physx::PxBroadPhaseCallback* callback = reinterpret_cast<physx::PxBroadPhaseCallback*>(callback_pod);
-        self_->setBroadPhaseCallback(callback);
-    }
-
-    physx_PxBroadPhaseCallback_Pod* PxScene_getBroadPhaseCallback(physx_PxScene_Pod const* self__pod) {
-        physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
-        physx::PxBroadPhaseCallback* return_val = self_->getBroadPhaseCallback();
-        auto return_val_pod = reinterpret_cast<physx_PxBroadPhaseCallback_Pod*>(return_val);
-        return return_val_pod;
-    }
-
-    void PxScene_setFilterShaderData_mut(physx_PxScene_Pod* self__pod, void const* data, uint32_t dataSize) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        self_->setFilterShaderData(data, dataSize);
-    }
-
-    void const* PxScene_getFilterShaderData(physx_PxScene_Pod const* self__pod) {
-        physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
-        void const* return_val = self_->getFilterShaderData();
-        return return_val;
-    }
-
-    uint32_t PxScene_getFilterShaderDataSize(physx_PxScene_Pod const* self__pod) {
-        physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
-        uint32_t return_val = self_->getFilterShaderDataSize();
-        return return_val;
-    }
-
-    bool PxScene_resetFiltering_mut(physx_PxScene_Pod* self__pod, physx_PxActor_Pod* actor_pod) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        physx::PxActor& actor = reinterpret_cast<physx::PxActor&>(*actor_pod);
-        bool return_val = self_->resetFiltering(actor);
-        return return_val;
-    }
-
-    bool PxScene_resetFiltering_mut_1(physx_PxScene_Pod* self__pod, physx_PxRigidActor_Pod* actor_pod, physx_PxShape_Pod* const* shapes_pod, uint32_t shapeCount) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        physx::PxRigidActor& actor = reinterpret_cast<physx::PxRigidActor&>(*actor_pod);
-        physx::PxShape* const* shapes = reinterpret_cast<physx::PxShape* const*>(shapes_pod);
-        bool return_val = self_->resetFiltering(actor, shapes, shapeCount);
-        return return_val;
-    }
-
-    int32_t PxScene_getKinematicKinematicFilteringMode(physx_PxScene_Pod const* self__pod) {
-        physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
-        physx::PxPairFilteringMode::Enum return_val = self_->getKinematicKinematicFilteringMode();
-        int32_t return_val_pod;
-        memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
-        return return_val_pod;
-    }
-
-    int32_t PxScene_getStaticKinematicFilteringMode(physx_PxScene_Pod const* self__pod) {
-        physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
-        physx::PxPairFilteringMode::Enum return_val = self_->getStaticKinematicFilteringMode();
-        int32_t return_val_pod;
-        memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
-        return return_val_pod;
-    }
-
-    bool PxScene_simulate_mut(physx_PxScene_Pod* self__pod, float elapsedTime, physx_PxBaseTask_Pod* completionTask_pod, void* scratchMemBlock, uint32_t scratchMemBlockSize, bool controlSimulation) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        physx::PxBaseTask* completionTask = reinterpret_cast<physx::PxBaseTask*>(completionTask_pod);
-        bool return_val = self_->simulate(elapsedTime, completionTask, scratchMemBlock, scratchMemBlockSize, controlSimulation);
-        return return_val;
-    }
-
-    bool PxScene_advance_mut(physx_PxScene_Pod* self__pod, physx_PxBaseTask_Pod* completionTask_pod) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        physx::PxBaseTask* completionTask = reinterpret_cast<physx::PxBaseTask*>(completionTask_pod);
-        bool return_val = self_->advance(completionTask);
-        return return_val;
-    }
-
-    bool PxScene_collide_mut(physx_PxScene_Pod* self__pod, float elapsedTime, physx_PxBaseTask_Pod* completionTask_pod, void* scratchMemBlock, uint32_t scratchMemBlockSize, bool controlSimulation) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        physx::PxBaseTask* completionTask = reinterpret_cast<physx::PxBaseTask*>(completionTask_pod);
-        bool return_val = self_->collide(elapsedTime, completionTask, scratchMemBlock, scratchMemBlockSize, controlSimulation);
-        return return_val;
-    }
-
-    bool PxScene_checkResults_mut(physx_PxScene_Pod* self__pod, bool block) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        bool return_val = self_->checkResults(block);
-        return return_val;
-    }
-
-    bool PxScene_fetchCollision_mut(physx_PxScene_Pod* self__pod, bool block) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        bool return_val = self_->fetchCollision(block);
-        return return_val;
-    }
-
-    bool PxScene_fetchResults_mut(physx_PxScene_Pod* self__pod, bool block, uint32_t* errorState) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        bool return_val = self_->fetchResults(block, errorState);
-        return return_val;
-    }
-
-    bool PxScene_fetchResultsStart_mut(physx_PxScene_Pod* self__pod, physx_PxContactPairHeader_Pod const** contactPairs_pod, uint32_t* nbContactPairs_pod, bool block) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        physx::PxContactPairHeader const*& contactPairs = reinterpret_cast<physx::PxContactPairHeader const*&>(*contactPairs_pod);
-        uint32_t& nbContactPairs = *nbContactPairs_pod;
-        bool return_val = self_->fetchResultsStart(contactPairs, nbContactPairs, block);
-        return return_val;
-    }
-
-    void PxScene_processCallbacks_mut(physx_PxScene_Pod* self__pod, physx_PxBaseTask_Pod* continuation_pod) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        physx::PxBaseTask* continuation = reinterpret_cast<physx::PxBaseTask*>(continuation_pod);
-        self_->processCallbacks(continuation);
-    }
-
-    void PxScene_fetchResultsFinish_mut(physx_PxScene_Pod* self__pod, uint32_t* errorState) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        self_->fetchResultsFinish(errorState);
-    }
-
-    void PxScene_fetchResultsParticleSystem_mut(physx_PxScene_Pod* self__pod) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        self_->fetchResultsParticleSystem();
-    }
-
-    void PxScene_flushSimulation_mut(physx_PxScene_Pod* self__pod, bool sendPendingReports) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        self_->flushSimulation(sendPendingReports);
-    }
-
-    void PxScene_setGravity_mut(physx_PxScene_Pod* self__pod, physx_PxVec3_Pod const* vec_pod) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        physx::PxVec3 const& vec = reinterpret_cast<physx::PxVec3 const&>(*vec_pod);
-        self_->setGravity(vec);
-    }
-
-    physx_PxVec3_Pod PxScene_getGravity(physx_PxScene_Pod const* self__pod) {
-        physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
-        physx::PxVec3 return_val = self_->getGravity();
-        physx_PxVec3_Pod return_val_pod;
-        memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
-        return return_val_pod;
-    }
-
-    void PxScene_setBounceThresholdVelocity_mut(physx_PxScene_Pod* self__pod, float t) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        self_->setBounceThresholdVelocity(t);
-    }
-
-    float PxScene_getBounceThresholdVelocity(physx_PxScene_Pod const* self__pod) {
-        physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
-        float return_val = self_->getBounceThresholdVelocity();
-        return return_val;
-    }
-
-    void PxScene_setCCDMaxPasses_mut(physx_PxScene_Pod* self__pod, uint32_t ccdMaxPasses) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        self_->setCCDMaxPasses(ccdMaxPasses);
-    }
-
-    uint32_t PxScene_getCCDMaxPasses(physx_PxScene_Pod const* self__pod) {
-        physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
-        uint32_t return_val = self_->getCCDMaxPasses();
-        return return_val;
-    }
-
-    void PxScene_setCCDMaxSeparation_mut(physx_PxScene_Pod* self__pod, float t) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        self_->setCCDMaxSeparation(t);
-    }
-
-    float PxScene_getCCDMaxSeparation(physx_PxScene_Pod const* self__pod) {
-        physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
-        float return_val = self_->getCCDMaxSeparation();
-        return return_val;
-    }
-
-    void PxScene_setCCDThreshold_mut(physx_PxScene_Pod* self__pod, float t) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        self_->setCCDThreshold(t);
-    }
-
-    float PxScene_getCCDThreshold(physx_PxScene_Pod const* self__pod) {
-        physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
-        float return_val = self_->getCCDThreshold();
-        return return_val;
-    }
-
-    void PxScene_setMaxBiasCoefficient_mut(physx_PxScene_Pod* self__pod, float t) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        self_->setMaxBiasCoefficient(t);
-    }
-
-    float PxScene_getMaxBiasCoefficient(physx_PxScene_Pod const* self__pod) {
-        physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
-        float return_val = self_->getMaxBiasCoefficient();
-        return return_val;
-    }
-
-    void PxScene_setFrictionOffsetThreshold_mut(physx_PxScene_Pod* self__pod, float t) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        self_->setFrictionOffsetThreshold(t);
-    }
-
-    float PxScene_getFrictionOffsetThreshold(physx_PxScene_Pod const* self__pod) {
-        physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
-        float return_val = self_->getFrictionOffsetThreshold();
-        return return_val;
-    }
-
-    void PxScene_setFrictionCorrelationDistance_mut(physx_PxScene_Pod* self__pod, float t) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        self_->setFrictionCorrelationDistance(t);
-    }
-
-    float PxScene_getFrictionCorrelationDistance(physx_PxScene_Pod const* self__pod) {
-        physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
-        float return_val = self_->getFrictionCorrelationDistance();
-        return return_val;
-    }
-
-    int32_t PxScene_getFrictionType(physx_PxScene_Pod const* self__pod) {
-        physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
-        physx::PxFrictionType::Enum return_val = self_->getFrictionType();
-        int32_t return_val_pod;
-        memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
-        return return_val_pod;
-    }
-
-    int32_t PxScene_getSolverType(physx_PxScene_Pod const* self__pod) {
-        physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
-        physx::PxSolverType::Enum return_val = self_->getSolverType();
-        int32_t return_val_pod;
-        memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
-        return return_val_pod;
-    }
-
-    bool PxScene_setVisualizationParameter_mut(physx_PxScene_Pod* self__pod, int32_t param_pod, float value) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        auto param = static_cast<physx::PxVisualizationParameter::Enum>(param_pod);
-        bool return_val = self_->setVisualizationParameter(param, value);
-        return return_val;
-    }
-
-    float PxScene_getVisualizationParameter(physx_PxScene_Pod const* self__pod, int32_t paramEnum_pod) {
-        physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
-        auto paramEnum = static_cast<physx::PxVisualizationParameter::Enum>(paramEnum_pod);
-        float return_val = self_->getVisualizationParameter(paramEnum);
-        return return_val;
-    }
-
-    void PxScene_setVisualizationCullingBox_mut(physx_PxScene_Pod* self__pod, physx_PxBounds3_Pod const* box_pod) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        physx::PxBounds3 const& box = reinterpret_cast<physx::PxBounds3 const&>(*box_pod);
-        self_->setVisualizationCullingBox(box);
-    }
-
-    physx_PxBounds3_Pod PxScene_getVisualizationCullingBox(physx_PxScene_Pod const* self__pod) {
-        physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
-        physx::PxBounds3 return_val = self_->getVisualizationCullingBox();
-        physx_PxBounds3_Pod return_val_pod;
-        memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
-        return return_val_pod;
-    }
-
-    physx_PxRenderBuffer_Pod const* PxScene_getRenderBuffer_mut(physx_PxScene_Pod* self__pod) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        physx::PxRenderBuffer const& return_val = self_->getRenderBuffer();
-        auto return_val_pod = reinterpret_cast<physx_PxRenderBuffer_Pod const*>(&return_val);
-        return return_val_pod;
-    }
-
-    void PxScene_getSimulationStatistics(physx_PxScene_Pod const* self__pod, physx_PxSimulationStatistics_Pod* stats_pod) {
-        physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
-        physx::PxSimulationStatistics& stats = reinterpret_cast<physx::PxSimulationStatistics&>(*stats_pod);
-        self_->getSimulationStatistics(stats);
-    }
-
-    int32_t PxScene_getBroadPhaseType(physx_PxScene_Pod const* self__pod) {
-        physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
-        physx::PxBroadPhaseType::Enum return_val = self_->getBroadPhaseType();
-        int32_t return_val_pod;
-        memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
-        return return_val_pod;
-    }
-
-    bool PxScene_getBroadPhaseCaps(physx_PxScene_Pod const* self__pod, physx_PxBroadPhaseCaps_Pod* caps_pod) {
-        physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
-        physx::PxBroadPhaseCaps& caps = reinterpret_cast<physx::PxBroadPhaseCaps&>(*caps_pod);
-        bool return_val = self_->getBroadPhaseCaps(caps);
-        return return_val;
-    }
-
-    uint32_t PxScene_getNbBroadPhaseRegions(physx_PxScene_Pod const* self__pod) {
-        physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
-        uint32_t return_val = self_->getNbBroadPhaseRegions();
-        return return_val;
-    }
-
-    uint32_t PxScene_getBroadPhaseRegions(physx_PxScene_Pod const* self__pod, physx_PxBroadPhaseRegionInfo_Pod* userBuffer_pod, uint32_t bufferSize, uint32_t startIndex) {
-        physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
-        physx::PxBroadPhaseRegionInfo* userBuffer = reinterpret_cast<physx::PxBroadPhaseRegionInfo*>(userBuffer_pod);
-        uint32_t return_val = self_->getBroadPhaseRegions(userBuffer, bufferSize, startIndex);
-        return return_val;
-    }
-
-    uint32_t PxScene_addBroadPhaseRegion_mut(physx_PxScene_Pod* self__pod, physx_PxBroadPhaseRegion_Pod const* region_pod, bool populateRegion) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        physx::PxBroadPhaseRegion const& region = reinterpret_cast<physx::PxBroadPhaseRegion const&>(*region_pod);
-        uint32_t return_val = self_->addBroadPhaseRegion(region, populateRegion);
-        return return_val;
-    }
-
-    bool PxScene_removeBroadPhaseRegion_mut(physx_PxScene_Pod* self__pod, uint32_t handle) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        bool return_val = self_->removeBroadPhaseRegion(handle);
-        return return_val;
-    }
-
-    physx_PxTaskManager_Pod* PxScene_getTaskManager(physx_PxScene_Pod const* self__pod) {
-        physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
-        physx::PxTaskManager* return_val = self_->getTaskManager();
-        auto return_val_pod = reinterpret_cast<physx_PxTaskManager_Pod*>(return_val);
-        return return_val_pod;
-    }
-
-    void PxScene_lockRead_mut(physx_PxScene_Pod* self__pod, char const* file, uint32_t line) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        self_->lockRead(file, line);
-    }
-
-    void PxScene_unlockRead_mut(physx_PxScene_Pod* self__pod) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        self_->unlockRead();
-    }
-
-    void PxScene_lockWrite_mut(physx_PxScene_Pod* self__pod, char const* file, uint32_t line) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        self_->lockWrite(file, line);
-    }
-
-    void PxScene_unlockWrite_mut(physx_PxScene_Pod* self__pod) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        self_->unlockWrite();
-    }
-
-    void PxScene_setNbContactDataBlocks_mut(physx_PxScene_Pod* self__pod, uint32_t numBlocks) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        self_->setNbContactDataBlocks(numBlocks);
-    }
-
-    uint32_t PxScene_getNbContactDataBlocksUsed(physx_PxScene_Pod const* self__pod) {
-        physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
-        uint32_t return_val = self_->getNbContactDataBlocksUsed();
-        return return_val;
-    }
-
-    uint32_t PxScene_getMaxNbContactDataBlocksUsed(physx_PxScene_Pod const* self__pod) {
-        physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
-        uint32_t return_val = self_->getMaxNbContactDataBlocksUsed();
-        return return_val;
-    }
-
-    uint32_t PxScene_getContactReportStreamBufferSize(physx_PxScene_Pod const* self__pod) {
-        physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
-        uint32_t return_val = self_->getContactReportStreamBufferSize();
-        return return_val;
-    }
-
-    void PxScene_setSolverBatchSize_mut(physx_PxScene_Pod* self__pod, uint32_t solverBatchSize) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        self_->setSolverBatchSize(solverBatchSize);
-    }
-
-    uint32_t PxScene_getSolverBatchSize(physx_PxScene_Pod const* self__pod) {
-        physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
-        uint32_t return_val = self_->getSolverBatchSize();
-        return return_val;
-    }
-
-    void PxScene_setSolverArticulationBatchSize_mut(physx_PxScene_Pod* self__pod, uint32_t solverBatchSize) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        self_->setSolverArticulationBatchSize(solverBatchSize);
-    }
-
-    uint32_t PxScene_getSolverArticulationBatchSize(physx_PxScene_Pod const* self__pod) {
-        physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
-        uint32_t return_val = self_->getSolverArticulationBatchSize();
-        return return_val;
-    }
-
-    float PxScene_getWakeCounterResetValue(physx_PxScene_Pod const* self__pod) {
-        physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
-        float return_val = self_->getWakeCounterResetValue();
-        return return_val;
-    }
-
-    void PxScene_shiftOrigin_mut(physx_PxScene_Pod* self__pod, physx_PxVec3_Pod const* shift_pod) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        physx::PxVec3 const& shift = reinterpret_cast<physx::PxVec3 const&>(*shift_pod);
-        self_->shiftOrigin(shift);
-    }
-
-    physx_PxPvdSceneClient_Pod* PxScene_getScenePvdClient_mut(physx_PxScene_Pod* self__pod) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        physx::PxPvdSceneClient* return_val = self_->getScenePvdClient();
-        auto return_val_pod = reinterpret_cast<physx_PxPvdSceneClient_Pod*>(return_val);
-        return return_val_pod;
-    }
-
-    void PxScene_copyArticulationData_mut(physx_PxScene_Pod* self__pod, void* data, void* index, int32_t dataType_pod, uint32_t nbCopyArticulations, void* copyEvent) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        auto dataType = static_cast<physx::PxArticulationGpuDataType::Enum>(dataType_pod);
-        self_->copyArticulationData(data, index, dataType, nbCopyArticulations, copyEvent);
-    }
-
-    void PxScene_applyArticulationData_mut(physx_PxScene_Pod* self__pod, void* data, void* index, int32_t dataType_pod, uint32_t nbUpdatedArticulations, void* waitEvent, void* signalEvent) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        auto dataType = static_cast<physx::PxArticulationGpuDataType::Enum>(dataType_pod);
-        self_->applyArticulationData(data, index, dataType, nbUpdatedArticulations, waitEvent, signalEvent);
-    }
-
-    void PxScene_copySoftBodyData_mut(physx_PxScene_Pod* self__pod, void** data, void* dataSizes, void* softBodyIndices, int32_t flag_pod, uint32_t nbCopySoftBodies, uint32_t maxSize, void* copyEvent) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        auto flag = static_cast<physx::PxSoftBodyDataFlag::Enum>(flag_pod);
-        self_->copySoftBodyData(data, dataSizes, softBodyIndices, flag, nbCopySoftBodies, maxSize, copyEvent);
-    }
-
-    void PxScene_applySoftBodyData_mut(physx_PxScene_Pod* self__pod, void** data, void* dataSizes, void* softBodyIndices, int32_t flag_pod, uint32_t nbUpdatedSoftBodies, uint32_t maxSize, void* applyEvent) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        auto flag = static_cast<physx::PxSoftBodyDataFlag::Enum>(flag_pod);
-        self_->applySoftBodyData(data, dataSizes, softBodyIndices, flag, nbUpdatedSoftBodies, maxSize, applyEvent);
-    }
-
-    void PxScene_copyContactData_mut(physx_PxScene_Pod* self__pod, void* data, uint32_t maxContactPairs, void* numContactPairs, void* copyEvent) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        self_->copyContactData(data, maxContactPairs, numContactPairs, copyEvent);
-    }
-
-    void PxScene_copyBodyData_mut(physx_PxScene_Pod* self__pod, physx_PxGpuBodyData_Pod* data_pod, physx_PxGpuActorPair_Pod* index_pod, uint32_t nbCopyActors, void* copyEvent) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        physx::PxGpuBodyData* data = reinterpret_cast<physx::PxGpuBodyData*>(data_pod);
-        physx::PxGpuActorPair* index = reinterpret_cast<physx::PxGpuActorPair*>(index_pod);
-        self_->copyBodyData(data, index, nbCopyActors, copyEvent);
-    }
-
-    void PxScene_applyActorData_mut(physx_PxScene_Pod* self__pod, void* data, physx_PxGpuActorPair_Pod* index_pod, int32_t flag_pod, uint32_t nbUpdatedActors, void* waitEvent, void* signalEvent) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        physx::PxGpuActorPair* index = reinterpret_cast<physx::PxGpuActorPair*>(index_pod);
-        auto flag = static_cast<physx::PxActorCacheFlag::Enum>(flag_pod);
-        self_->applyActorData(data, index, flag, nbUpdatedActors, waitEvent, signalEvent);
-    }
-
-    void PxScene_computeDenseJacobians_mut(physx_PxScene_Pod* self__pod, physx_PxIndexDataPair_Pod const* indices_pod, uint32_t nbIndices, void* computeEvent) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        physx::PxIndexDataPair const* indices = reinterpret_cast<physx::PxIndexDataPair const*>(indices_pod);
-        self_->computeDenseJacobians(indices, nbIndices, computeEvent);
-    }
-
-    void PxScene_computeGeneralizedMassMatrices_mut(physx_PxScene_Pod* self__pod, physx_PxIndexDataPair_Pod const* indices_pod, uint32_t nbIndices, void* computeEvent) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        physx::PxIndexDataPair const* indices = reinterpret_cast<physx::PxIndexDataPair const*>(indices_pod);
-        self_->computeGeneralizedMassMatrices(indices, nbIndices, computeEvent);
-    }
-
-    void PxScene_computeGeneralizedGravityForces_mut(physx_PxScene_Pod* self__pod, physx_PxIndexDataPair_Pod const* indices_pod, uint32_t nbIndices, void* computeEvent) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        physx::PxIndexDataPair const* indices = reinterpret_cast<physx::PxIndexDataPair const*>(indices_pod);
-        self_->computeGeneralizedGravityForces(indices, nbIndices, computeEvent);
-    }
-
-    void PxScene_computeCoriolisAndCentrifugalForces_mut(physx_PxScene_Pod* self__pod, physx_PxIndexDataPair_Pod const* indices_pod, uint32_t nbIndices, void* computeEvent) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        physx::PxIndexDataPair const* indices = reinterpret_cast<physx::PxIndexDataPair const*>(indices_pod);
-        self_->computeCoriolisAndCentrifugalForces(indices, nbIndices, computeEvent);
-    }
-
-    physx_PxgDynamicsMemoryConfig_Pod PxScene_getGpuDynamicsConfig(physx_PxScene_Pod const* self__pod) {
-        physx::PxScene const* self_ = reinterpret_cast<physx::PxScene const*>(self__pod);
-        physx::PxgDynamicsMemoryConfig return_val = self_->getGpuDynamicsConfig();
-        physx_PxgDynamicsMemoryConfig_Pod return_val_pod;
-        memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
-        return return_val_pod;
-    }
-
-    void PxScene_applyParticleBufferData_mut(physx_PxScene_Pod* self__pod, uint32_t const* indices, physx_PxGpuParticleBufferIndexPair_Pod const* bufferIndexPair_pod, uint32_t const* flags_pod, uint32_t nbUpdatedBuffers, void* waitEvent, void* signalEvent) {
-        physx::PxScene* self_ = reinterpret_cast<physx::PxScene*>(self__pod);
-        physx::PxGpuParticleBufferIndexPair const* bufferIndexPair = reinterpret_cast<physx::PxGpuParticleBufferIndexPair const*>(bufferIndexPair_pod);
-        physx::PxParticleBufferFlags const* flags = reinterpret_cast<physx::PxParticleBufferFlags const*>(flags_pod);
-        self_->applyParticleBufferData(indices, bufferIndexPair, flags, nbUpdatedBuffers, waitEvent, signalEvent);
-    }
-
     physx_PxSceneReadLock_Pod* PxSceneReadLock_new_alloc(physx_PxScene_Pod* scene_pod, char const* file, uint32_t line) {
         physx::PxScene& scene = reinterpret_cast<physx::PxScene&>(*scene_pod);
         auto return_val = new physx::PxSceneReadLock(scene, file, line);
@@ -9488,145 +8335,6 @@ extern "C" {
 
     void PxSceneWriteLock_delete(physx_PxSceneWriteLock_Pod* self__pod) {
         physx::PxSceneWriteLock* self_ = reinterpret_cast<physx::PxSceneWriteLock*>(self__pod);
-        delete self_;
-    }
-
-    physx_PxContactPairExtraDataItem_Pod PxContactPairExtraDataItem_new() {
-        PxContactPairExtraDataItem return_val;
-        physx_PxContactPairExtraDataItem_Pod return_val_pod;
-        memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
-        return return_val_pod;
-    }
-
-    physx_PxContactPairVelocity_Pod PxContactPairVelocity_new() {
-        PxContactPairVelocity return_val;
-        physx_PxContactPairVelocity_Pod return_val_pod;
-        memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
-        return return_val_pod;
-    }
-
-    physx_PxContactPairPose_Pod PxContactPairPose_new() {
-        PxContactPairPose return_val;
-        physx_PxContactPairPose_Pod return_val_pod;
-        memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
-        return return_val_pod;
-    }
-
-    physx_PxContactPairIndex_Pod PxContactPairIndex_new() {
-        PxContactPairIndex return_val;
-        physx_PxContactPairIndex_Pod return_val_pod;
-        memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
-        return return_val_pod;
-    }
-
-    physx_PxContactPairExtraDataIterator_Pod PxContactPairExtraDataIterator_new(uint8_t const* stream, uint32_t size) {
-        PxContactPairExtraDataIterator return_val(stream, size);
-        physx_PxContactPairExtraDataIterator_Pod return_val_pod;
-        memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
-        return return_val_pod;
-    }
-
-    bool PxContactPairExtraDataIterator_nextItemSet_mut(physx_PxContactPairExtraDataIterator_Pod* self__pod) {
-        physx::PxContactPairExtraDataIterator* self_ = reinterpret_cast<physx::PxContactPairExtraDataIterator*>(self__pod);
-        bool return_val = self_->nextItemSet();
-        return return_val;
-    }
-
-    physx_PxContactPairHeader_Pod PxContactPairHeader_new() {
-        PxContactPairHeader return_val;
-        physx_PxContactPairHeader_Pod return_val_pod;
-        memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
-        return return_val_pod;
-    }
-
-    physx_PxContactPair_Pod PxContactPair_new() {
-        PxContactPair return_val;
-        physx_PxContactPair_Pod return_val_pod;
-        memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
-        return return_val_pod;
-    }
-
-    uint32_t PxContactPair_extractContacts(physx_PxContactPair_Pod const* self__pod, physx_PxContactPairPoint_Pod* userBuffer_pod, uint32_t bufferSize) {
-        physx::PxContactPair const* self_ = reinterpret_cast<physx::PxContactPair const*>(self__pod);
-        physx::PxContactPairPoint* userBuffer = reinterpret_cast<physx::PxContactPairPoint*>(userBuffer_pod);
-        uint32_t return_val = self_->extractContacts(userBuffer, bufferSize);
-        return return_val;
-    }
-
-    void PxContactPair_bufferContacts(physx_PxContactPair_Pod const* self__pod, physx_PxContactPair_Pod* newPair_pod, uint8_t* bufferMemory) {
-        physx::PxContactPair const* self_ = reinterpret_cast<physx::PxContactPair const*>(self__pod);
-        physx::PxContactPair* newPair = reinterpret_cast<physx::PxContactPair*>(newPair_pod);
-        self_->bufferContacts(newPair, bufferMemory);
-    }
-
-    uint32_t const* PxContactPair_getInternalFaceIndices(physx_PxContactPair_Pod const* self__pod) {
-        physx::PxContactPair const* self_ = reinterpret_cast<physx::PxContactPair const*>(self__pod);
-        uint32_t const* return_val = self_->getInternalFaceIndices();
-        return return_val;
-    }
-
-    physx_PxTriggerPair_Pod PxTriggerPair_new() {
-        PxTriggerPair return_val;
-        physx_PxTriggerPair_Pod return_val_pod;
-        memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
-        return return_val_pod;
-    }
-
-    physx_PxConstraintInfo_Pod PxConstraintInfo_new() {
-        PxConstraintInfo return_val;
-        physx_PxConstraintInfo_Pod return_val_pod;
-        memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
-        return return_val_pod;
-    }
-
-    physx_PxConstraintInfo_Pod PxConstraintInfo_new_1(physx_PxConstraint_Pod* c_pod, void* extRef, uint32_t t) {
-        physx::PxConstraint* c = reinterpret_cast<physx::PxConstraint*>(c_pod);
-        PxConstraintInfo return_val(c, extRef, t);
-        physx_PxConstraintInfo_Pod return_val_pod;
-        memcpy(&return_val_pod, &return_val, sizeof(return_val_pod));
-        return return_val_pod;
-    }
-
-    void PxSimulationEventCallback_onConstraintBreak_mut(physx_PxSimulationEventCallback_Pod* self__pod, physx_PxConstraintInfo_Pod* constraints_pod, uint32_t count) {
-        physx::PxSimulationEventCallback* self_ = reinterpret_cast<physx::PxSimulationEventCallback*>(self__pod);
-        physx::PxConstraintInfo* constraints = reinterpret_cast<physx::PxConstraintInfo*>(constraints_pod);
-        self_->onConstraintBreak(constraints, count);
-    }
-
-    void PxSimulationEventCallback_onWake_mut(physx_PxSimulationEventCallback_Pod* self__pod, physx_PxActor_Pod** actors_pod, uint32_t count) {
-        physx::PxSimulationEventCallback* self_ = reinterpret_cast<physx::PxSimulationEventCallback*>(self__pod);
-        physx::PxActor** actors = reinterpret_cast<physx::PxActor**>(actors_pod);
-        self_->onWake(actors, count);
-    }
-
-    void PxSimulationEventCallback_onSleep_mut(physx_PxSimulationEventCallback_Pod* self__pod, physx_PxActor_Pod** actors_pod, uint32_t count) {
-        physx::PxSimulationEventCallback* self_ = reinterpret_cast<physx::PxSimulationEventCallback*>(self__pod);
-        physx::PxActor** actors = reinterpret_cast<physx::PxActor**>(actors_pod);
-        self_->onSleep(actors, count);
-    }
-
-    void PxSimulationEventCallback_onContact_mut(physx_PxSimulationEventCallback_Pod* self__pod, physx_PxContactPairHeader_Pod const* pairHeader_pod, physx_PxContactPair_Pod const* pairs_pod, uint32_t nbPairs) {
-        physx::PxSimulationEventCallback* self_ = reinterpret_cast<physx::PxSimulationEventCallback*>(self__pod);
-        physx::PxContactPairHeader const& pairHeader = reinterpret_cast<physx::PxContactPairHeader const&>(*pairHeader_pod);
-        physx::PxContactPair const* pairs = reinterpret_cast<physx::PxContactPair const*>(pairs_pod);
-        self_->onContact(pairHeader, pairs, nbPairs);
-    }
-
-    void PxSimulationEventCallback_onTrigger_mut(physx_PxSimulationEventCallback_Pod* self__pod, physx_PxTriggerPair_Pod* pairs_pod, uint32_t count) {
-        physx::PxSimulationEventCallback* self_ = reinterpret_cast<physx::PxSimulationEventCallback*>(self__pod);
-        physx::PxTriggerPair* pairs = reinterpret_cast<physx::PxTriggerPair*>(pairs_pod);
-        self_->onTrigger(pairs, count);
-    }
-
-    void PxSimulationEventCallback_onAdvance_mut(physx_PxSimulationEventCallback_Pod* self__pod, physx_PxRigidBody_Pod const* const* bodyBuffer_pod, physx_PxTransform_Pod const* poseBuffer_pod, uint32_t count) {
-        physx::PxSimulationEventCallback* self_ = reinterpret_cast<physx::PxSimulationEventCallback*>(self__pod);
-        physx::PxRigidBody const* const* bodyBuffer = reinterpret_cast<physx::PxRigidBody const* const*>(bodyBuffer_pod);
-        physx::PxTransform const* poseBuffer = reinterpret_cast<physx::PxTransform const*>(poseBuffer_pod);
-        self_->onAdvance(bodyBuffer, poseBuffer, count);
-    }
-
-    void PxSimulationEventCallback_delete(physx_PxSimulationEventCallback_Pod* self__pod) {
-        physx::PxSimulationEventCallback* self_ = reinterpret_cast<physx::PxSimulationEventCallback*>(self__pod);
         delete self_;
     }
 
@@ -12709,6 +11417,11 @@ extern "C" {
         physx::PxSceneQuerySystem* return_val = PxCreateExternalSceneQuerySystem(desc, contextID);
         auto return_val_pod = reinterpret_cast<physx_PxSceneQuerySystem_Pod*>(return_val);
         return return_val_pod;
+    }
+
+    void PxCustomSceneQuerySystem_delete(physx_PxCustomSceneQuerySystem_Pod* self__pod) {
+        physx::PxCustomSceneQuerySystem* self_ = reinterpret_cast<physx::PxCustomSceneQuerySystem*>(self__pod);
+        delete self_;
     }
 
     uint32_t PxCustomSceneQuerySystem_addPruner_mut(physx_PxCustomSceneQuerySystem_Pod* self__pod, int32_t primaryType_pod, int32_t secondaryType_pod, uint32_t preallocated) {
